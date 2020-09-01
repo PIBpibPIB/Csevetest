@@ -22,15 +22,13 @@
 
 using System;
 
-namespace netDxf.Tables
-{
+namespace netDxf.Tables {
     /// <summary>
     /// Event data for changes or substitutions of table objects in entities or other tables.
     /// </summary>
     /// <typeparam name="T">A table object</typeparam>
     public class TableObjectChangedEventArgs<T> :
-        EventArgs
-    {
+        EventArgs {
         #region private fields
 
         private readonly T oldValue;
@@ -45,8 +43,7 @@ namespace netDxf.Tables
         /// </summary>
         /// <param name="oldTable">The previous table object.</param>
         /// <param name="newTable">The new table object.</param>
-        public TableObjectChangedEventArgs(T oldTable, T newTable)
-        {
+        public TableObjectChangedEventArgs(T oldTable, T newTable) {
             this.oldValue = oldTable;
             this.newValue = newTable;
         }
@@ -58,16 +55,14 @@ namespace netDxf.Tables
         /// <summary>
         /// Gets the previous property value.
         /// </summary>
-        public T OldValue
-        {
+        public T OldValue {
             get { return this.oldValue; }
         }
 
         /// <summary>
         /// Gets or sets the new property value.
         /// </summary>
-        public T NewValue
-        {
+        public T NewValue {
             get { return this.newValue; }
             set { this.newValue = value; }
         }

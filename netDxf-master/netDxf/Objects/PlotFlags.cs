@@ -22,15 +22,13 @@
 
 using System;
 
-namespace netDxf.Objects
-{
+namespace netDxf.Objects {
     /// <summary>
     /// Defines the plot settings flag.
     /// </summary>
     /// <remarks>Bit flag.</remarks>
     [Flags]
-    public enum PlotFlags
-    {
+    public enum PlotFlags {
         /// <summary>
         /// Plot viewport borders.
         /// </summary>

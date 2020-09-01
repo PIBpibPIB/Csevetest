@@ -22,14 +22,12 @@
 
 using System;
 
-namespace netDxf.Entities
-{
+namespace netDxf.Entities {
     /// <summary>
     /// Represents a tolerance, indicates the amount by which the geometric characteristic can deviate from a perfect form.
     /// </summary>
     public class ToleranceValue :
-        ICloneable
-    {
+        ICloneable {
         #region private fields
 
         private bool showDiameterSymbol;
@@ -43,8 +41,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Initializes a new instance of the <c>ToleranceValue</c> class.
         /// </summary>
-        public ToleranceValue()
-        {
+        public ToleranceValue() {
             this.showDiameterSymbol = false;
             this.tolerance = string.Empty;
             this.materialCondition = ToleranceMaterialCondition.None;
@@ -56,8 +53,7 @@ namespace netDxf.Entities
         /// <param name="showDiameterSymbol">Show a diameter symbol before the tolerance value.</param>
         /// <param name="value">Tolerance value.</param>
         /// <param name="materialCondition">Tolerance material condition.</param>
-        public ToleranceValue(bool showDiameterSymbol, string value, ToleranceMaterialCondition materialCondition)
-        {
+        public ToleranceValue(bool showDiameterSymbol, string value, ToleranceMaterialCondition materialCondition) {
             this.showDiameterSymbol = showDiameterSymbol;
             this.tolerance = value;
             this.materialCondition = materialCondition;
@@ -70,8 +66,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets if the tolerance diameter symbol will be shown.
         /// </summary>
-        public bool ShowDiameterSymbol
-        {
+        public bool ShowDiameterSymbol {
             get { return this.showDiameterSymbol; }
             set { this.showDiameterSymbol = value; }
         }
@@ -79,8 +74,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets the tolerance value.
         /// </summary>
-        public string Value
-        {
+        public string Value {
             get { return this.tolerance; }
             set { this.tolerance = value; }
         }
@@ -88,8 +82,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets the tolerance material condition.
         /// </summary>
-        public ToleranceMaterialCondition MaterialCondition
-        {
+        public ToleranceMaterialCondition MaterialCondition {
             get { return this.materialCondition; }
             set { this.materialCondition = value; }
         }
@@ -102,10 +95,8 @@ namespace netDxf.Entities
         /// Creates a new ToleranceValue that is a copy of the current instance.
         /// </summary>
         /// <returns>A new ToleranceValue that is a copy of this instance.</returns>
-        public object Clone()
-        {
-            return new ToleranceValue
-            {
+        public object Clone() {
+            return new ToleranceValue {
                 ShowDiameterSymbol = this.showDiameterSymbol,
                 Value = this.tolerance,
                 MaterialCondition = this.materialCondition

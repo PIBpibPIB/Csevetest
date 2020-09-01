@@ -20,17 +20,15 @@
 
 #endregion
 
-using System;
 using netDxf.Entities;
+using System;
 
-namespace netDxf.Collections
-{
+namespace netDxf.Collections {
     /// <summary>
     /// Represents the arguments thrown by the <see cref="AttributeDefinitionDictionary">AttributeDefinitionDictionary</see> events.
     /// </summary>
     public class AttributeDefinitionDictionaryEventArgs :
-        EventArgs
-    {
+        EventArgs {
         #region private fields
 
         private readonly AttributeDefinition item;
@@ -44,8 +42,7 @@ namespace netDxf.Collections
         /// Initializes a new instance of <c>AttributeDefinitionDictionaryEventArgs</c>.
         /// </summary>
         /// <param name="item">Item that is being added or removed from the dictionary.</param>
-        public AttributeDefinitionDictionaryEventArgs(AttributeDefinition item)
-        {
+        public AttributeDefinitionDictionaryEventArgs(AttributeDefinition item) {
             this.item = item;
             this.cancel = false;
         }
@@ -57,8 +54,7 @@ namespace netDxf.Collections
         /// <summary>
         /// Get the item that is being added to or removed from the dictionary.
         /// </summary>
-        public AttributeDefinition Item
-        {
+        public AttributeDefinition Item {
             get { return this.item; }
         }
 
@@ -66,8 +62,7 @@ namespace netDxf.Collections
         /// Gets or sets if the operation must be canceled.
         /// </summary>
         /// <remarks>This property is used by the BeforeAddItem and BeforeRemoveItem events to cancel the add or remove operations.</remarks>
-        public bool Cancel
-        {
+        public bool Cancel {
             get { return this.cancel; }
             set { this.cancel = value; }
         }

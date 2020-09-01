@@ -20,28 +20,24 @@
 
 #endregion
 
+using netDxf.Tables;
 using System;
 using System.Collections.Generic;
-using netDxf.Tables;
 
-namespace netDxf.Collections
-{
+namespace netDxf.Collections {
     /// <summary>
     /// Represents a collection of viewports.
     /// </summary>
     public sealed class VPorts :
-        TableObjects<VPort>
-    {
+        TableObjects<VPort> {
         #region constructor
 
         internal VPorts(DxfDocument document)
-            : this(document, null)
-        {
+            : this(document, null) {
         }
 
         internal VPorts(DxfDocument document, string handle)
-            : base(document, DxfObjectCode.VportTable, handle)
-        {
+            : base(document, DxfObjectCode.VportTable, handle) {
             this.MaxCapacity = short.MaxValue;
 
             if (this.list.Count >= this.MaxCapacity)
@@ -70,8 +66,7 @@ namespace netDxf.Collections
         /// If a viewports already exists with the same name as the instance that is being added the method returns the existing viewports,
         /// if not it will return the new viewports.
         /// </returns>
-        internal override VPort Add(VPort vport, bool assignHandle)
-        {
+        internal override VPort Add(VPort vport, bool assignHandle) {
             throw new ArgumentException("VPorts cannot be added to the collection. There is only one VPort in the list the \"*Active\".", nameof(vport));
 
             //if (this.list.Count >= this.maxCapacity)
@@ -97,8 +92,7 @@ namespace netDxf.Collections
         /// <param name="name"><see cref="VPort">VPort</see> name to remove from the document.</param>
         /// <returns>True if the viewports has been successfully removed, or false otherwise.</returns>
         /// <remarks>Reserved viewports or any other referenced by objects cannot be removed.</remarks>
-        public override bool Remove(string name)
-        {
+        public override bool Remove(string name) {
             throw new ArgumentException("VPorts cannot be removed from the collection.", nameof(name));
 
             //return this.Remove(this[name]);
@@ -110,8 +104,7 @@ namespace netDxf.Collections
         /// <param name="item"><see cref="VPort">VPort</see> to remove from the document.</param>
         /// <returns>True if the viewports has been successfully removed, or false otherwise.</returns>
         /// <remarks>Reserved viewports or any other referenced by objects cannot be removed.</remarks>
-        public override bool Remove(VPort item)
-        {
+        public override bool Remove(VPort item) {
             throw new ArgumentException("VPorts cannot be removed from the collection.", nameof(item));
 
             //if (vport == null)

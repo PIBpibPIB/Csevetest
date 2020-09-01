@@ -20,29 +20,25 @@
 
 #endregion
 
-using System;
-using System.Collections.Generic;
 using netDxf.Objects;
 using netDxf.Tables;
+using System;
+using System.Collections.Generic;
 
-namespace netDxf.Collections
-{
+namespace netDxf.Collections {
     /// <summary>
     /// Represents a collection of multiline styles.
     /// </summary>
     public sealed class MLineStyles :
-        TableObjects<MLineStyle>
-    {
+        TableObjects<MLineStyle> {
         #region constructor
 
         internal MLineStyles(DxfDocument document)
-            : this(document, null)
-        {
+            : this(document, null) {
         }
 
         internal MLineStyles(DxfDocument document, string handle)
-            : base(document, DxfObjectCode.MLineStyleDictionary, handle)
-        {
+            : base(document, DxfObjectCode.MLineStyleDictionary, handle) {
             this.MaxCapacity = short.MaxValue;
         }
 
@@ -59,8 +55,7 @@ namespace netDxf.Collections
         /// If a multiline style already exists with the same name as the instance that is being added the method returns the existing multiline style,
         /// if not it will return the new multiline style.
         /// </returns>
-        internal override MLineStyle Add(MLineStyle style, bool assignHandle)
-        {
+        internal override MLineStyle Add(MLineStyle style, bool assignHandle) {
             if (this.list.Count >= this.MaxCapacity)
                 throw new OverflowException(string.Format("Table overflow. The maximum number of elements the table {0} can have is {1}", this.CodeName, this.MaxCapacity));
             if (style == null)
@@ -75,8 +70,7 @@ namespace netDxf.Collections
 
             this.list.Add(style.Name, style);
             this.references.Add(style.Name, new List<DxfObject>());
-            foreach (MLineStyleElement element in style.Elements)
-            {
+            foreach (MLineStyleElement element in style.Elements) {
                 element.Linetype = this.Owner.Linetypes.Add(element.Linetype);
                 this.Owner.Linetypes.References[element.Linetype.Name].Add(style);
             }
@@ -99,8 +93,7 @@ namespace netDxf.Collections
         /// <param name="name"><see cref="MLineStyle">MLineStyle</see> name to remove from the document.</param>
         /// <returns>True if the multiline style has been successfully removed, or false otherwise.</returns>
         /// <remarks>Reserved multiline styles or any other referenced by objects cannot be removed.</remarks>
-        public override bool Remove(string name)
-        {
+        public override bool Remove(string name) {
             return this.Remove(this[name]);
         }
 
@@ -110,8 +103,7 @@ namespace netDxf.Collections
         /// <param name="item"><see cref="MLineStyle">MLineStyle</see> to remove from the document.</param>
         /// <returns>True if the multiline style has been successfully removed, or false otherwise.</returns>
         /// <remarks>Reserved multiline styles or any other referenced by objects cannot be removed.</remarks>
-        public override bool Remove(MLineStyle item)
-        {
+        public override bool Remove(MLineStyle item) {
             if (item == null)
                 return false;
 
@@ -124,8 +116,7 @@ namespace netDxf.Collections
             if (this.references[item.Name].Count != 0)
                 return false;
 
-            foreach (MLineStyleElement element in item.Elements)
-            {
+            foreach (MLineStyleElement element in item.Elements) {
                 this.Owner.Linetypes.References[element.Linetype.Name].Remove(item);
             }
 
@@ -148,35 +139,31 @@ namespace netDxf.Collections
 
         #region MLineStyle events
 
-        private void Item_NameChanged(TableObject sender, TableObjectChangedEventArgs<string> e)
-        {
+        private void Item_NameChanged(TableObject sender, TableObjectChangedEventArgs<string> e) {
             if (this.Contains(e.NewValue))
                 throw new ArgumentException("There is already another multiline style with the same name.");
 
             this.list.Remove(sender.Name);
-            this.list.Add(e.NewValue, (MLineStyle) sender);
+            this.list.Add(e.NewValue, (MLineStyle)sender);
 
             List<DxfObject> refs = this.references[sender.Name];
             this.references.Remove(sender.Name);
             this.references.Add(e.NewValue, refs);
         }
 
-        private void MLineStyle_ElementLinetypeChanged(MLineStyle sender, TableObjectChangedEventArgs<Linetype> e)
-        {
+        private void MLineStyle_ElementLinetypeChanged(MLineStyle sender, TableObjectChangedEventArgs<Linetype> e) {
             this.Owner.Linetypes.References[e.OldValue.Name].Remove(sender);
 
             e.NewValue = this.Owner.Linetypes.Add(e.NewValue);
             this.Owner.Linetypes.References[e.NewValue.Name].Add(sender);
         }
 
-        private void MLineStyle_ElementAdded(MLineStyle sender, MLineStyleElementChangeEventArgs e)
-        {
+        private void MLineStyle_ElementAdded(MLineStyle sender, MLineStyleElementChangeEventArgs e) {
             e.Item.Linetype = this.Owner.Linetypes.Add(e.Item.Linetype);
             //this.Owner.Linetypes.References[e.Item.Linetype.Name].Add(sender);
         }
 
-        private void MLineStyle_ElementRemoved(MLineStyle sender, MLineStyleElementChangeEventArgs e)
-        {
+        private void MLineStyle_ElementRemoved(MLineStyle sender, MLineStyleElementChangeEventArgs e) {
             this.Owner.Linetypes.References[e.Item.Linetype.Name].Remove(sender);
         }
 

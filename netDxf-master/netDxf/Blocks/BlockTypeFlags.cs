@@ -22,14 +22,12 @@
 
 using System;
 
-namespace netDxf.Blocks
-{
+namespace netDxf.Blocks {
     /// <summary>
     /// Block-type flags (bit-coded values, may be combined).
     /// </summary>
     [Flags]
-    public enum BlockTypeFlags
-    {
+    public enum BlockTypeFlags {
         /// <summary>
         /// Indicates none of the following flags apply.
         /// </summary>

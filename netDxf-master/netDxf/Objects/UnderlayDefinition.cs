@@ -22,14 +22,12 @@
 
 using netDxf.Tables;
 
-namespace netDxf.Objects
-{
+namespace netDxf.Objects {
     /// <summary>
     /// Represents an underlay definition.
     /// </summary>
     public abstract class UnderlayDefinition :
-        TableObject
-    {
+        TableObject {
         #region private fields
 
         private readonly UnderlayType type;
@@ -46,12 +44,10 @@ namespace netDxf.Objects
         /// <param name="file">Underlay file name with full or relative path.</param>
         /// <param name="type">Underlay type.</param>
         protected UnderlayDefinition(string name, string file, UnderlayType type)
-            : base(name, DxfObjectCode.UnderlayDefinition, false)
-        {
+            : base(name, DxfObjectCode.UnderlayDefinition, false) {
             this.file = file;
             this.type = type;
-            switch (type)
-            {
+            switch (type) {
                 case UnderlayType.DGN:
                     this.CodeName = DxfObjectCode.UnderlayDgnDefinition;
                     break;
@@ -71,16 +67,14 @@ namespace netDxf.Objects
         /// <summary>
         /// Get the underlay type.
         /// </summary>
-        public UnderlayType Type
-        {
+        public UnderlayType Type {
             get { return this.type; }
         }
 
         /// <summary>
         /// Gets the underlay file.
         /// </summary>
-        public string File
-        {
+        public string File {
             get { return this.file; }
         }
 

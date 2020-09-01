@@ -23,8 +23,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace netDxf.Entities
-{
+namespace netDxf.Entities {
     /// <summary>
     /// Represent a loop of a <see cref="Hatch">hatch</see> boundaries.
     /// </summary>
@@ -37,12 +36,10 @@ namespace netDxf.Entities
     /// Lines, arcs, ellipse arcs, open polylines, and open splines are open paths so more entities should exist to make a closed loop.
     /// </remarks>
     public class HatchBoundaryPath :
-        ICloneable
-    {
+        ICloneable {
         #region Hatch boundary path edge classes
 
-        public enum EdgeType
-        {
+        public enum EdgeType {
             Polyline = 0,
             Line = 1,
             Arc = 2,
@@ -51,12 +48,10 @@ namespace netDxf.Entities
         }
 
         public abstract class Edge :
-            ICloneable
-        {
+            ICloneable {
             public readonly EdgeType Type;
 
-            protected Edge(EdgeType type)
-            {
+            protected Edge(EdgeType type) {
                 this.Type = type;
             }
 
@@ -65,76 +60,61 @@ namespace netDxf.Entities
         }
 
         public class Polyline :
-            Edge
-        {
+            Edge {
             public Vector3[] Vertexes; // location: (x, y) bulge: z
             public bool IsClosed;
 
             public Polyline()
-                : base(EdgeType.Polyline)
-            {
+                : base(EdgeType.Polyline) {
             }
 
             public Polyline(EntityObject entity)
-                : base(EdgeType.Polyline)
-            {
+                : base(EdgeType.Polyline) {
                 if (entity == null)
                     throw new ArgumentNullException(nameof(entity));
-                if (entity.Type == EntityType.LightWeightPolyline)
-                {
-                    Entities.LwPolyline poly = (Entities.LwPolyline) entity;
+                if (entity.Type == EntityType.LightWeightPolyline) {
+                    Entities.LwPolyline poly = (Entities.LwPolyline)entity;
                     if (!poly.IsClosed)
                         throw new ArgumentException("Only closed polyline are supported as hatch boundary edges.", nameof(entity));
 
                     this.Vertexes = new Vector3[poly.Vertexes.Count];
-                    for (int i = 0; i < poly.Vertexes.Count; i++)
-                    {
+                    for (int i = 0; i < poly.Vertexes.Count; i++) {
                         this.Vertexes[i] = new Vector3(poly.Vertexes[i].Position.X, poly.Vertexes[i].Position.Y, poly.Vertexes[i].Bulge);
                     }
                     this.IsClosed = true;
-                }
-                else if (entity.Type == EntityType.Polyline)
-                {
-                    Entities.Polyline poly = (Entities.Polyline) entity;
+                } else if (entity.Type == EntityType.Polyline) {
+                    Entities.Polyline poly = (Entities.Polyline)entity;
                     if (!poly.IsClosed)
                         throw new ArgumentException("Only closed polyline are supported as hatch boundary edges.", nameof(entity));
 
                     this.Vertexes = new Vector3[poly.Vertexes.Count];
-                    for (int i = 0; i < poly.Vertexes.Count; i++)
-                    {
+                    for (int i = 0; i < poly.Vertexes.Count; i++) {
                         this.Vertexes[i] = new Vector3(poly.Vertexes[i].Position.X, poly.Vertexes[i].Position.Y, 0.0);
                     }
                     this.IsClosed = true;
-                }
-                else
+                } else
                     throw new ArgumentException("The entity is not a LwPolyline or a Polyline", nameof(entity));
             }
 
-            public static Polyline ConvertFrom(EntityObject entity)
-            {
+            public static Polyline ConvertFrom(EntityObject entity) {
                 return new Polyline(entity);
             }
 
-            public override EntityObject ConvertTo()
-            {
+            public override EntityObject ConvertTo() {
                 List<LwPolylineVertex> points = new List<LwPolylineVertex>(this.Vertexes.Length);
-                foreach (Vector3 point in this.Vertexes)
-                {
+                foreach (Vector3 point in this.Vertexes) {
                     points.Add(new LwPolylineVertex(point.X, point.Y, point.Z));
                 }
                 return new Entities.LwPolyline(points, this.IsClosed);
             }
 
-            public override object Clone()
-            {
-                Polyline copy = new Polyline
-                {
+            public override object Clone() {
+                Polyline copy = new Polyline {
                     Vertexes = new Vector3[this.Vertexes.Length],
                     IsClosed = this.IsClosed
                 };
 
-                for (int i = 0; i < this.Vertexes.Length; i++)
-                {
+                for (int i = 0; i < this.Vertexes.Length; i++) {
                     copy.Vertexes[i] = this.Vertexes[i];
                 }
                 return copy;
@@ -142,19 +122,16 @@ namespace netDxf.Entities
         }
 
         public class Line :
-            Edge
-        {
+            Edge {
             public Vector2 Start;
             public Vector2 End;
 
             public Line()
-                : base(EdgeType.Line)
-            {
+                : base(EdgeType.Line) {
             }
 
             public Line(EntityObject entity)
-                : base(EdgeType.Line)
-            {
+                : base(EdgeType.Line) {
                 if (entity == null)
                     throw new ArgumentNullException(nameof(entity));
 
@@ -166,20 +143,16 @@ namespace netDxf.Entities
                 this.End = new Vector2(line.EndPoint.X, line.EndPoint.Y);
             }
 
-            public static Line ConvertFrom(EntityObject entity)
-            {
+            public static Line ConvertFrom(EntityObject entity) {
                 return new Line(entity);
             }
 
-            public override EntityObject ConvertTo()
-            {
+            public override EntityObject ConvertTo() {
                 return new Entities.Line(this.Start, this.End);
             }
 
-            public override object Clone()
-            {
-                Line copy = new Line
-                {
+            public override object Clone() {
+                Line copy = new Line {
                     Start = this.Start,
                     End = this.End
                 };
@@ -189,8 +162,7 @@ namespace netDxf.Entities
         }
 
         public class Arc :
-            Edge
-        {
+            Edge {
             public Vector2 Center;
             public double Radius;
             public double StartAngle;
@@ -198,20 +170,17 @@ namespace netDxf.Entities
             public bool IsCounterclockwise;
 
             public Arc()
-                : base(EdgeType.Arc)
-            {
+                : base(EdgeType.Arc) {
             }
 
             public Arc(EntityObject entity)
-                : base(EdgeType.Arc)
-            {
+                : base(EdgeType.Arc) {
                 if (entity == null)
                     throw new ArgumentNullException(nameof(entity));
 
-                switch (entity.Type)
-                {
+                switch (entity.Type) {
                     case EntityType.Arc:
-                        Entities.Arc arc = (Entities.Arc) entity;
+                        Entities.Arc arc = (Entities.Arc)entity;
                         this.Center = new Vector2(arc.Center.X, arc.Center.Y);
                         this.Radius = arc.Radius;
                         this.StartAngle = arc.StartAngle;
@@ -219,7 +188,7 @@ namespace netDxf.Entities
                         this.IsCounterclockwise = true;
                         break;
                     case EntityType.Circle:
-                        Entities.Circle circle = (Circle) entity;
+                        Entities.Circle circle = (Circle)entity;
                         this.Center = new Vector2(circle.Center.X, circle.Center.Y);
                         this.Radius = circle.Radius;
                         this.StartAngle = 0.0;
@@ -231,13 +200,11 @@ namespace netDxf.Entities
                 }
             }
 
-            public static Arc ConvertFrom(EntityObject entity)
-            {
+            public static Arc ConvertFrom(EntityObject entity) {
                 return new Arc(entity);
             }
 
-            public override EntityObject ConvertTo()
-            {
+            public override EntityObject ConvertTo() {
                 if (MathHelper.IsEqual(MathHelper.NormalizeAngle(this.StartAngle), MathHelper.NormalizeAngle(this.EndAngle)))
                     return new Entities.Circle(this.Center, this.Radius);
                 if (this.IsCounterclockwise)
@@ -246,10 +213,8 @@ namespace netDxf.Entities
                 return new Entities.Arc(this.Center, this.Radius, 360 - this.EndAngle, 360 - this.StartAngle);
             }
 
-            public override object Clone()
-            {
-                Arc copy = new Arc
-                {
+            public override object Clone() {
+                Arc copy = new Arc {
                     Center = this.Center,
                     Radius = this.Radius,
                     StartAngle = this.StartAngle,
@@ -262,8 +227,7 @@ namespace netDxf.Entities
         }
 
         public class Ellipse :
-            Edge
-        {
+            Edge {
             public Vector2 Center;
             public Vector2 EndMajorAxis;
             public double MinorRatio;
@@ -272,13 +236,11 @@ namespace netDxf.Entities
             public bool IsCounterclockwise;
 
             public Ellipse()
-                : base(EdgeType.Ellipse)
-            {
+                : base(EdgeType.Ellipse) {
             }
 
             public Ellipse(EntityObject entity)
-                : base(EdgeType.Ellipse)
-            {
+                : base(EdgeType.Ellipse) {
                 if (entity == null)
                     throw new ArgumentNullException(nameof(entity));
 
@@ -287,42 +249,36 @@ namespace netDxf.Entities
                     throw new ArgumentException("The entity is not an Ellipse", nameof(entity));
 
                 this.Center = new Vector2(ellipse.Center.X, ellipse.Center.Y);
-                double sine = 0.5*ellipse.MajorAxis*Math.Sin(ellipse.Rotation*MathHelper.DegToRad);
-                double cosine = 0.5*ellipse.MajorAxis*Math.Cos(ellipse.Rotation*MathHelper.DegToRad);
+                double sine = 0.5 * ellipse.MajorAxis * Math.Sin(ellipse.Rotation * MathHelper.DegToRad);
+                double cosine = 0.5 * ellipse.MajorAxis * Math.Cos(ellipse.Rotation * MathHelper.DegToRad);
                 this.EndMajorAxis = new Vector2(cosine, sine);
-                this.MinorRatio = ellipse.MinorAxis/ellipse.MajorAxis;
-                if (ellipse.IsFullEllipse)
-                {
+                this.MinorRatio = ellipse.MinorAxis / ellipse.MajorAxis;
+                if (ellipse.IsFullEllipse) {
                     this.StartAngle = 0.0;
                     this.EndAngle = 360.0;
-                }
-                else
-                {
+                } else {
                     this.StartAngle = ellipse.StartAngle;
                     this.EndAngle = ellipse.EndAngle;
                 }
                 this.IsCounterclockwise = true;
             }
 
-            public static Ellipse ConvertFrom(EntityObject entity)
-            {
+            public static Ellipse ConvertFrom(EntityObject entity) {
                 return new Ellipse(entity);
             }
 
-            public override EntityObject ConvertTo()
-            {
+            public override EntityObject ConvertTo() {
                 Vector3 center = new Vector3(this.Center.X, this.Center.Y, 0.0);
                 Vector3 axisPoint = new Vector3(this.EndMajorAxis.X, this.EndMajorAxis.Y, 0.0);
                 Vector3 ocsAxisPoint = MathHelper.Transform(axisPoint,
                     Vector3.UnitZ,
                     CoordinateSystem.World,
                     CoordinateSystem.Object);
-                double rotation = Vector2.Angle(new Vector2(ocsAxisPoint.X, ocsAxisPoint.Y))*MathHelper.RadToDeg;
-                double majorAxis = 2*axisPoint.Modulus();
-                return new Entities.Ellipse
-                {
+                double rotation = Vector2.Angle(new Vector2(ocsAxisPoint.X, ocsAxisPoint.Y)) * MathHelper.RadToDeg;
+                double majorAxis = 2 * axisPoint.Modulus();
+                return new Entities.Ellipse {
                     MajorAxis = majorAxis,
-                    MinorAxis = majorAxis*this.MinorRatio,
+                    MinorAxis = majorAxis * this.MinorRatio,
                     Rotation = rotation,
                     Center = center,
                     StartAngle = this.IsCounterclockwise ? this.StartAngle : 360 - this.EndAngle,
@@ -330,10 +286,8 @@ namespace netDxf.Entities
                 };
             }
 
-            public override object Clone()
-            {
-                Ellipse copy = new Ellipse
-                {
+            public override object Clone() {
+                Ellipse copy = new Ellipse {
                     Center = this.Center,
                     EndMajorAxis = this.EndMajorAxis,
                     MinorRatio = this.MinorRatio,
@@ -347,8 +301,7 @@ namespace netDxf.Entities
         }
 
         public class Spline :
-            Edge
-        {
+            Edge {
             public short Degree;
             public bool IsRational;
             public bool IsPeriodic;
@@ -356,13 +309,11 @@ namespace netDxf.Entities
             public Vector3[] ControlPoints; // location: (x, y) weight: z
 
             public Spline()
-                : base(EdgeType.Spline)
-            {
+                : base(EdgeType.Spline) {
             }
 
             public Spline(EntityObject entity)
-                : base(EdgeType.Spline)
-            {
+                : base(EdgeType.Spline) {
                 if (entity == null)
                     throw new ArgumentNullException(nameof(entity));
 
@@ -376,48 +327,39 @@ namespace netDxf.Entities
                 if (spline.ControlPoints.Count == 0)
                     throw new ArgumentException("The HatchBoundaryPath spline edge requires a spline entity with control points.", nameof(entity));
                 this.ControlPoints = new Vector3[spline.ControlPoints.Count];
-                for (int i = 0; i < spline.ControlPoints.Count; i++)
-                {
+                for (int i = 0; i < spline.ControlPoints.Count; i++) {
                     this.ControlPoints[i] = new Vector3(spline.ControlPoints[i].Position.X, spline.ControlPoints[i].Position.Y, spline.ControlPoints[i].Weigth);
                 }
                 this.Knots = new double[spline.Knots.Count];
-                for (int i = 0; i < spline.Knots.Count; i++)
-                {
+                for (int i = 0; i < spline.Knots.Count; i++) {
                     this.Knots[i] = spline.Knots[i];
                 }
             }
 
-            public static Spline ConvertFrom(EntityObject entity)
-            {
+            public static Spline ConvertFrom(EntityObject entity) {
                 return new Spline(entity);
             }
 
-            public override EntityObject ConvertTo()
-            {
+            public override EntityObject ConvertTo() {
                 List<SplineVertex> ctrl = new List<SplineVertex>(this.ControlPoints.Length);
-                foreach (Vector3 point in this.ControlPoints)
-                {
+                foreach (Vector3 point in this.ControlPoints) {
                     ctrl.Add(new SplineVertex(point.X, point.Y, point.Z));
                 }
                 return new Entities.Spline(ctrl, new List<double>(this.Knots), this.Degree);
             }
 
-            public override object Clone()
-            {
-                Spline copy = new Spline
-                {
+            public override object Clone() {
+                Spline copy = new Spline {
                     Degree = this.Degree,
                     IsRational = this.IsRational,
                     IsPeriodic = this.IsPeriodic,
                     Knots = new double[this.Knots.Length],
                     ControlPoints = new Vector3[this.ControlPoints.Length],
                 };
-                for (int i = 0; i < this.Knots.Length; i++)
-                {
+                for (int i = 0; i < this.Knots.Length; i++) {
                     copy.Knots[i] = this.Knots[i];
                 }
-                for (int i = 0; i < this.ControlPoints.Length; i++)
-                {
+                for (int i = 0; i < this.ControlPoints.Length; i++) {
                     copy.ControlPoints[i] = this.ControlPoints[i];
                 }
                 return copy;
@@ -440,8 +382,7 @@ namespace netDxf.Entities
         /// Initializes a new instance of the <c>Hatch</c> class.
         /// </summary>
         /// <param name="edges">List of entities that makes a loop for the hatch boundary paths.</param>
-        public HatchBoundaryPath(IEnumerable<EntityObject> edges)
-        {
+        public HatchBoundaryPath(IEnumerable<EntityObject> edges) {
             if (edges == null)
                 throw new ArgumentNullException(nameof(edges));
             this.edges = new List<Edge>();
@@ -450,8 +391,7 @@ namespace netDxf.Entities
             this.Update();
         }
 
-        internal HatchBoundaryPath(IEnumerable<Edge> edges)
-        {
+        internal HatchBoundaryPath(IEnumerable<Edge> edges) {
             if (edges == null)
                 throw new ArgumentNullException(nameof(edges));
             this.pathType = HatchBoundaryPathTypeFlags.Derived | HatchBoundaryPathTypeFlags.External;
@@ -466,16 +406,14 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets the list of entities that makes a loop for the hatch boundary paths.
         /// </summary>
-        public IReadOnlyList<Edge> Edges
-        {
+        public IReadOnlyList<Edge> Edges {
             get { return this.edges; }
         }
 
         /// <summary>
         /// Gets the boundary path type flag.
         /// </summary>
-        public HatchBoundaryPathTypeFlags PathType
-        {
+        public HatchBoundaryPathTypeFlags PathType {
             get { return this.pathType; }
             internal set { this.pathType = value; }
         }
@@ -484,8 +422,7 @@ namespace netDxf.Entities
         /// Gets the list of entities that makes the boundary.
         /// </summary>
         /// <remarks>If the boundary path belongs to a non-associative hatch this list will contain zero entities.</remarks>
-        public IReadOnlyList<EntityObject> Entities
-        {
+        public IReadOnlyList<EntityObject> Entities {
             get { return this.contour; }
         }
 
@@ -493,18 +430,15 @@ namespace netDxf.Entities
 
         #region internal methods
 
-        internal void AddContour(EntityObject entity)
-        {
+        internal void AddContour(EntityObject entity) {
             this.contour.Add(entity);
         }
 
-        internal void ClearContour()
-        {
+        internal void ClearContour() {
             this.contour.Clear();
         }
 
-        internal bool RemoveContour(EntityObject entity)
-        {
+        internal bool RemoveContour(EntityObject entity) {
             return this.contour.Remove(entity);
         }
 
@@ -519,8 +453,7 @@ namespace netDxf.Entities
         /// It is necessary to manually call this method when changes to the boundary entities are made. This is only applicable to associative hatches,
         /// non-associative hatches has no associated boundary entities.
         /// </remarks>
-        public void Update()
-        {
+        public void Update() {
             this.SetInternalInfo(this.contour);
         }
 
@@ -528,21 +461,18 @@ namespace netDxf.Entities
 
         #region private methods
 
-        private void SetInternalInfo(IEnumerable<EntityObject> entities)
-        {
+        private void SetInternalInfo(IEnumerable<EntityObject> entities) {
             bool containsClosedPolyline = false;
             this.edges.Clear();
 
-            foreach (EntityObject entity in entities)
-            {
+            foreach (EntityObject entity in entities) {
                 if (this.pathType.HasFlag(HatchBoundaryPathTypeFlags.Polyline))
                     if (this.edges.Count >= 1)
                         throw new ArgumentException("Closed polylines cannot be combined with other entities to make a hatch boundary path.");
 
                 // it seems that AutoCad does not have problems on creating loops that theoretically does not make sense, like, for example an internal loop that is made of a single arc.
                 // so if AutoCAD is OK with that I am too, the program that make use of this information will take care of this inconsistencies
-                switch (entity.Type)
-                {
+                switch (entity.Type) {
                     case EntityType.Arc:
                         if (containsClosedPolyline)
                             throw new ArgumentException("Closed polylines cannot be combined with other entities to make a hatch boundary path.");
@@ -566,14 +496,12 @@ namespace netDxf.Entities
                     case EntityType.LightWeightPolyline:
                         if (containsClosedPolyline)
                             throw new ArgumentException("Closed polylines cannot be combined with other entities to make a hatch boundary path.");
-                        LwPolyline poly = (LwPolyline) entity;
-                        if (poly.IsClosed)
-                        {
+                        LwPolyline poly = (LwPolyline)entity;
+                        if (poly.IsClosed) {
                             this.edges.Add(Polyline.ConvertFrom(entity)); // A polyline HatchBoundaryPath must be closed
                             this.pathType |= HatchBoundaryPathTypeFlags.Polyline;
                             containsClosedPolyline = true;
-                        }
-                        else
+                        } else
                             this.SetInternalInfo(poly.Explode()); // open polylines will always be exploded, only one polyline can be present in a path
                         break;
                     case EntityType.Spline:
@@ -595,23 +523,19 @@ namespace netDxf.Entities
         /// Creates a new HatchBoundaryPath that is a copy of the current instance.
         /// </summary>
         /// <returns>A new HatchBoundaryPath that is a copy of this instance.</returns>
-        public object Clone()
-        {
+        public object Clone() {
             HatchBoundaryPath copy;
 
             //// the hatch is associative
-            if (this.contour.Count > 0)
-            {
+            if (this.contour.Count > 0) {
                 List<EntityObject> copyContour = new List<EntityObject>();
                 foreach (EntityObject entity in this.contour)
                     copyContour.Add((EntityObject)entity.Clone());
                 copy = new HatchBoundaryPath(copyContour);
-            }
-            else
-            {
+            } else {
                 List<Edge> copyEdges = new List<Edge>();
                 foreach (Edge edge in this.edges)
-                    copyEdges.Add((Edge) edge.Clone());
+                    copyEdges.Add((Edge)edge.Clone());
                 copy = new HatchBoundaryPath(copyEdges);
             }
             copy.PathType = this.pathType;

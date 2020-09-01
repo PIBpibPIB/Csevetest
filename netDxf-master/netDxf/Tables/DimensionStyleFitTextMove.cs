@@ -20,13 +20,11 @@
 
 #endregion
 
-namespace netDxf.Tables
-{
+namespace netDxf.Tables {
     /// <summary>
     /// Controls the placement of dimension text when it is moved from the default position, that is, the position defined by the dimension style.
     /// </summary>
-    public enum DimensionStyleFitTextMove
-    {
+    public enum DimensionStyleFitTextMove {
         /// <summary>
         /// Moves the dimension line with dimension text.
         /// </summary>

@@ -22,14 +22,12 @@
 
 using System;
 
-namespace netDxf.Entities
-{
+namespace netDxf.Entities {
     /// <summary>
     /// Defines the vertex type.
     /// </summary>
     [Flags]
-    internal enum VertexTypeFlags
-    {
+    internal enum VertexTypeFlags {
         /// <summary>
         /// 2d polyline vertex.
         /// </summary>

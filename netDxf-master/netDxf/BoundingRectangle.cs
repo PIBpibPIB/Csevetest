@@ -23,13 +23,11 @@
 using System;
 using System.Collections.Generic;
 
-namespace netDxf
-{
+namespace netDxf {
     /// <summary>
     /// Represents an axis aligned bounding rectangle.
     /// </summary>
-    public class BoundingRectangle
-    {
+    public class BoundingRectangle {
         #region private fields
 
         private Vector2 min;
@@ -46,18 +44,17 @@ namespace netDxf
         /// <param name="majorAxis">Major axis of the ellipse.</param>
         /// <param name="minorAxis">Minor axis of the ellipse.</param>
         /// <param name="rotation">Rotation in degrees of the ellipse.</param>
-        public BoundingRectangle(Vector2 center, double majorAxis, double minorAxis, double rotation)
-        {
-            double rot = rotation*MathHelper.DegToRad;
-            double a = majorAxis*0.5*Math.Cos(rot);
-            double b = minorAxis*0.5*Math.Sin(rot);
-            double c = majorAxis*0.5*Math.Sin(rot);
-            double d = minorAxis*0.5*Math.Cos(rot);
+        public BoundingRectangle(Vector2 center, double majorAxis, double minorAxis, double rotation) {
+            double rot = rotation * MathHelper.DegToRad;
+            double a = majorAxis * 0.5 * Math.Cos(rot);
+            double b = minorAxis * 0.5 * Math.Sin(rot);
+            double c = majorAxis * 0.5 * Math.Sin(rot);
+            double d = minorAxis * 0.5 * Math.Cos(rot);
 
-            double width = Math.Sqrt(a*a + b*b)*2;
-            double height = Math.Sqrt(c*c + d*d)*2;
-            this.min = new Vector2(center.X - width*0.5, center.Y - height*0.5);
-            this.max = new Vector2(center.X + width*0.5, center.Y + height*0.5);
+            double width = Math.Sqrt(a * a + b * b) * 2;
+            double height = Math.Sqrt(c * c + d * d) * 2;
+            this.min = new Vector2(center.X - width * 0.5, center.Y - height * 0.5);
+            this.max = new Vector2(center.X + width * 0.5, center.Y + height * 0.5);
         }
 
         /// <summary>
@@ -65,8 +62,7 @@ namespace netDxf
         /// </summary>
         /// <param name="center">Center of the bounding rectangle.</param>
         /// <param name="radius">Radius of the circle.</param>
-        public BoundingRectangle(Vector2 center, double radius)
-        {
+        public BoundingRectangle(Vector2 center, double radius) {
             this.min = new Vector2(center.X - radius, center.Y - radius);
             this.max = new Vector2(center.X + radius, center.Y + radius);
         }
@@ -77,10 +73,9 @@ namespace netDxf
         /// <param name="center">Center of the bounding rectangle.</param>
         /// <param name="width">Width of the bounding rectangle.</param>
         /// <param name="height">Height of the bounding rectangle.</param>
-        public BoundingRectangle(Vector2 center, double width, double height)
-        {
-            this.min = new Vector2(center.X - width*0.5, center.Y - height*0.5);
-            this.max = new Vector2(center.X + width*0.5, center.Y + height*0.5);
+        public BoundingRectangle(Vector2 center, double width, double height) {
+            this.min = new Vector2(center.X - width * 0.5, center.Y - height * 0.5);
+            this.max = new Vector2(center.X + width * 0.5, center.Y + height * 0.5);
         }
 
         /// <summary>
@@ -88,8 +83,7 @@ namespace netDxf
         /// </summary>
         /// <param name="min">Lower-left corner.</param>
         /// <param name="max">Upper-right corner.</param>
-        public BoundingRectangle(Vector2 min, Vector2 max)
-        {
+        public BoundingRectangle(Vector2 min, Vector2 max) {
             this.min = min;
             this.max = max;
         }
@@ -98,8 +92,7 @@ namespace netDxf
         /// Initializes a new axis aligned bounding rectangle.
         /// </summary>
         /// <param name="points">A list of Vector2.</param>
-        public BoundingRectangle(IEnumerable<Vector2> points)
-        {
+        public BoundingRectangle(IEnumerable<Vector2> points) {
             if (points == null)
                 throw new ArgumentNullException(nameof(points));
 
@@ -109,8 +102,7 @@ namespace netDxf
             double maxY = double.MinValue;
 
             bool any = false;
-            foreach (Vector2 point in points)
-            {
+            foreach (Vector2 point in points) {
                 any = true;
                 if (minX > point.X)
                     minX = point.X;
@@ -121,13 +113,10 @@ namespace netDxf
                 if (maxY < point.Y)
                     maxY = point.Y;
             }
-            if (any)
-            {
+            if (any) {
                 this.min = new Vector2(minX, minY);
                 this.max = new Vector2(maxX, maxY);
-            }
-            else
-            {
+            } else {
                 this.min = new Vector2(double.MinValue, double.MinValue);
                 this.max = new Vector2(double.MaxValue, double.MaxValue);
             }
@@ -140,8 +129,7 @@ namespace netDxf
         /// <summary>
         /// Gets or sets the bounding rectangle lower-left corner.
         /// </summary>
-        public Vector2 Min
-        {
+        public Vector2 Min {
             get { return this.min; }
             set { this.min = value; }
         }
@@ -149,8 +137,7 @@ namespace netDxf
         /// <summary>
         /// Gets or sets the bounding rectangle upper-right corner.
         /// </summary>
-        public Vector2 Max
-        {
+        public Vector2 Max {
             get { return this.max; }
             set { this.max = value; }
         }
@@ -158,32 +145,28 @@ namespace netDxf
         /// <summary>
         /// Gets the bounding rectangle center.
         /// </summary>
-        public Vector2 Center
-        {
-            get { return (this.min + this.max)*0.5; }
+        public Vector2 Center {
+            get { return (this.min + this.max) * 0.5; }
         }
 
         /// <summary>
         /// Gets the radius of the circle that contains the bounding rectangle.
         /// </summary>
-        public double Radius
-        {
-            get { return Vector2.Distance(this.min, this.max)*0.5; }
+        public double Radius {
+            get { return Vector2.Distance(this.min, this.max) * 0.5; }
         }
 
         /// <summary>
         /// Gets the bounding rectangle width.
         /// </summary>
-        public double Width
-        {
+        public double Width {
             get { return this.max.X - this.min.X; }
         }
 
         /// <summary>
         /// Gets the bounding rectangle height.
         /// </summary>
-        public double Height
-        {
+        public double Height {
             get { return this.max.Y - this.min.Y; }
         }
 
@@ -197,8 +180,7 @@ namespace netDxf
         /// <param name="point">Vector2 to check.</param>
         /// <returns>True if the point is inside the bounding rectangle, false otherwise.</returns>
         /// <remarks></remarks>
-        public bool PointInside(Vector2 point)
-        {
+        public bool PointInside(Vector2 point) {
             return point.X >= this.min.X && point.X <= this.max.X && point.Y >= this.min.Y && point.Y <= this.max.Y;
         }
 
@@ -208,8 +190,7 @@ namespace netDxf
         /// <param name="aabr1">A bounding rectangle.</param>
         /// <param name="aabr2">A bounding rectangle.</param>
         /// <returns>The resulting bounding rectangle.</returns>
-        public static BoundingRectangle Union(BoundingRectangle aabr1, BoundingRectangle aabr2)
-        {
+        public static BoundingRectangle Union(BoundingRectangle aabr1, BoundingRectangle aabr2) {
             if (aabr1 == null && aabr2 == null)
                 return null;
             if (aabr1 == null)
@@ -219,8 +200,7 @@ namespace netDxf
 
             Vector2 min = new Vector2();
             Vector2 max = new Vector2();
-            for (int i = 0; i < 2; i++)
-            {
+            for (int i = 0; i < 2; i++) {
                 if (aabr1.Min[i] <= aabr2.Min[i])
                     min[i] = aabr1.Min[i];
                 else
@@ -239,8 +219,7 @@ namespace netDxf
         /// </summary>
         /// <param name="rectangles">A list of bounding rectangles.</param>
         /// <returns>The resulting bounding rectangle.</returns>
-        public static BoundingRectangle Union(IEnumerable<BoundingRectangle> rectangles)
-        {
+        public static BoundingRectangle Union(IEnumerable<BoundingRectangle> rectangles) {
             if (rectangles == null)
                 throw new ArgumentNullException(nameof(rectangles));
 

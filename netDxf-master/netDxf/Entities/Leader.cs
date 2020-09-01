@@ -20,31 +20,27 @@
 
 #endregion
 
-using System;
-using System.Collections.Generic;
 using netDxf.Blocks;
 using netDxf.Collections;
 using netDxf.Tables;
+using System;
+using System.Collections.Generic;
 
-namespace netDxf.Entities
-{
+namespace netDxf.Entities {
     /// <summary>
     /// Represents a leader <see cref="EntityObject">entity</see>.
     /// </summary>
     public class Leader :
-        EntityObject
-    {
+        EntityObject {
         #region delegates and events
 
         public delegate void LeaderStyleChangedEventHandler(Leader sender, TableObjectChangedEventArgs<DimensionStyle> e);
 
         public event LeaderStyleChangedEventHandler LeaderStyleChanged;
 
-        protected virtual DimensionStyle OnDimensionStyleChangedEvent(DimensionStyle oldStyle, DimensionStyle newStyle)
-        {
+        protected virtual DimensionStyle OnDimensionStyleChangedEvent(DimensionStyle oldStyle, DimensionStyle newStyle) {
             LeaderStyleChangedEventHandler ae = this.LeaderStyleChanged;
-            if (ae != null)
-            {
+            if (ae != null) {
                 TableObjectChangedEventArgs<DimensionStyle> eventArgs = new TableObjectChangedEventArgs<DimensionStyle>(oldStyle, newStyle);
                 ae(this, eventArgs);
                 return eventArgs.NewValue;
@@ -60,8 +56,7 @@ namespace netDxf.Entities
 
         public event DimensionStyleOverrideAddedEventHandler DimensionStyleOverrideAdded;
 
-        protected virtual void OnDimensionStyleOverrideAddedEvent(DimensionStyleOverride item)
-        {
+        protected virtual void OnDimensionStyleOverrideAddedEvent(DimensionStyleOverride item) {
             DimensionStyleOverrideAddedEventHandler ae = this.DimensionStyleOverrideAdded;
             if (ae != null)
                 ae(this, new DimensionStyleOverrideChangeEventArgs(item));
@@ -71,8 +66,7 @@ namespace netDxf.Entities
 
         public event DimensionStyleOverrideRemovedEventHandler DimensionStyleOverrideRemoved;
 
-        protected virtual void OnDimensionStyleOverrideRemovedEvent(DimensionStyleOverride item)
-        {
+        protected virtual void OnDimensionStyleOverrideRemovedEvent(DimensionStyleOverride item) {
             DimensionStyleOverrideRemovedEventHandler ae = this.DimensionStyleOverrideRemoved;
             if (ae != null)
                 ae(this, new DimensionStyleOverrideChangeEventArgs(item));
@@ -101,22 +95,20 @@ namespace netDxf.Entities
         /// Initializes a new instance of the <c>Leader</c> class.
         /// </summary>
         public Leader(IEnumerable<Vector2> vertexes)
-            : this(vertexes, DimensionStyle.Default)
-        {
+            : this(vertexes, DimensionStyle.Default) {
         }
 
         /// <summary>
         /// Initializes a new instance of the <c>Leader</c> class.
         /// </summary>
         public Leader(IEnumerable<Vector2> vertexes, DimensionStyle style)
-            : base(EntityType.Leader, DxfObjectCode.Leader)
-        {
+            : base(EntityType.Leader, DxfObjectCode.Leader) {
             if (vertexes == null)
                 throw new ArgumentNullException(nameof(vertexes));
             this.vertexes = new List<Vector2>(vertexes);
             if (this.vertexes.Count < 2)
                 throw new ArgumentOutOfRangeException(nameof(vertexes), this.vertexes.Count, "The leader vertexes list requires at least two points.");
-            if(style == null)
+            if (style == null)
                 throw new ArgumentNullException(nameof(style));
             this.style = style;
             this.hasHookline = false;
@@ -137,16 +129,14 @@ namespace netDxf.Entities
         /// Initializes a new instance of the <c>Leader</c> class.
         /// </summary>
         public Leader(string text, IEnumerable<Vector2> vertexes)
-            : this(text, vertexes, DimensionStyle.Default)
-        {
+            : this(text, vertexes, DimensionStyle.Default) {
         }
 
         /// <summary>
         /// Initializes a new instance of the <c>Leader</c> class.
         /// </summary>
         public Leader(string text, IEnumerable<Vector2> vertexes, DimensionStyle style)
-            : base(EntityType.Leader, DxfObjectCode.Leader)
-        {
+            : base(EntityType.Leader, DxfObjectCode.Leader) {
             if (vertexes == null)
                 throw new ArgumentNullException(nameof(vertexes));
             this.vertexes = new List<Vector2>(vertexes);
@@ -175,16 +165,14 @@ namespace netDxf.Entities
         /// Initializes a new instance of the <c>Leader</c> class.
         /// </summary>
         public Leader(ToleranceEntry tolerance, IEnumerable<Vector2> vertexes)
-            : this(tolerance, vertexes, DimensionStyle.Default)
-        {
+            : this(tolerance, vertexes, DimensionStyle.Default) {
         }
 
         /// <summary>
         /// Initializes a new instance of the <c>Leader</c> class.
         /// </summary>
         public Leader(ToleranceEntry tolerance, IEnumerable<Vector2> vertexes, DimensionStyle style)
-            : base(EntityType.Leader, DxfObjectCode.Leader)
-        {
+            : base(EntityType.Leader, DxfObjectCode.Leader) {
             if (vertexes == null)
                 throw new ArgumentNullException(nameof(vertexes));
             this.vertexes = new List<Vector2>(vertexes);
@@ -212,16 +200,14 @@ namespace netDxf.Entities
         /// Initializes a new instance of the <c>Leader</c> class.
         /// </summary>
         public Leader(Block block, IEnumerable<Vector2> vertexes)
-            : this(block, vertexes, DimensionStyle.Default)
-        {
+            : this(block, vertexes, DimensionStyle.Default) {
         }
 
         /// <summary>
         /// Initializes a new instance of the <c>Leader</c> class.
         /// </summary>
         public Leader(Block block, IEnumerable<Vector2> vertexes, DimensionStyle style)
-            : base(EntityType.Leader, DxfObjectCode.Leader)
-        {
+            : base(EntityType.Leader, DxfObjectCode.Leader) {
             if (vertexes == null)
                 throw new ArgumentNullException(nameof(vertexes));
             this.vertexes = new List<Vector2>(vertexes);
@@ -252,11 +238,9 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets the leader style.
         /// </summary>
-        public DimensionStyle Style
-        {
+        public DimensionStyle Style {
             get { return this.style; }
-            set
-            {
+            set {
                 if (value == null)
                     throw new ArgumentNullException(nameof(value));
                 this.style = this.OnDimensionStyleChangedEvent(this.style, value);
@@ -270,16 +254,14 @@ namespace netDxf.Entities
         /// Any dimension style value stored in this list will override its corresponding value in the assigned style to
         /// the dimension.
         /// </remarks>
-        public DimensionStyleOverrideDictionary StyleOverrides
-        {
+        public DimensionStyleOverrideDictionary StyleOverrides {
             get { return this.styleOverrides; }
         }
 
         /// <summary>
         /// Gets or sets if the arrowhead is drawn.
         /// </summary>
-        public bool ShowArrowhead
-        {
+        public bool ShowArrowhead {
             get { return this.showArrowhead; }
             set { this.showArrowhead = value; }
         }
@@ -287,8 +269,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets the way the leader is drawn.
         /// </summary>
-        public LeaderPathType PathType
-        {
+        public LeaderPathType PathType {
             get { return this.pathType; }
             set { this.pathType = value; }
         }
@@ -296,8 +277,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets the leader vertexes list in local coordinates.
         /// </summary>
-        public List<Vector2> Vertexes
-        {
+        public List<Vector2> Vertexes {
             get { return this.vertexes; }
         }
 
@@ -310,13 +290,10 @@ namespace netDxf.Entities
         /// <br />
         /// Set the annotation property to null to create a Leader without annotation.
         /// </remarks>
-        public EntityObject Annotation
-        {
+        public EntityObject Annotation {
             get { return this.annotation; }
-            set
-            {
-                if (value != null)
-                {
+            set {
+                if (value != null) {
                     if (!(value.Type == EntityType.MText ||
                           value.Type == EntityType.Text ||
                           value.Type == EntityType.Insert ||
@@ -344,8 +321,7 @@ namespace netDxf.Entities
         /// This property allows easy access to the last leader vertex, aka leader hook position.
         /// Remember the leader vertexes list must have at least two points.
         /// </remarks>
-        public Vector2 Hook
-        {
+        public Vector2 Hook {
             get { return this.vertexes[this.vertexes.Count - 1]; }
             set { this.vertexes[this.vertexes.Count - 1] = value; }
         }
@@ -357,13 +333,10 @@ namespace netDxf.Entities
         /// If set to true an additional vertex point (StartHookLine) will be created before the leader end point (hook).
         /// By default, only leaders with text annotation have hook lines.
         /// </remarks>
-        public bool HasHookline
-        {
+        public bool HasHookline {
             get { return this.hasHookline; }
-            set
-            {
-                if (this.hasHookline != value)
-                {
+            set {
+                if (this.hasHookline != value) {
                     if (value)
                         this.vertexes.Insert(this.vertexes.Count - 1, this.CalculateHookLine());
                     else
@@ -376,11 +349,9 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets the leader line color if the style parameter DIMCLRD is set as BYBLOCK.
         /// </summary>
-        public AciColor LineColor
-        {
+        public AciColor LineColor {
             get { return this.lineColor; }
-            set
-            {
+            set {
                 if (value == null)
                     throw new ArgumentNullException(nameof(value));
                 this.lineColor = value;
@@ -390,11 +361,9 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets the entity <see cref="Vector3">normal</see>.
         /// </summary>
-        public new Vector3 Normal
-        {
+        public new Vector3 Normal {
             get { return base.Normal; }
-            set
-            {
+            set {
                 this.ChangeAnnotationCoordinateSystem(value, this.elevation);
                 base.Normal = value;
             }
@@ -404,11 +373,9 @@ namespace netDxf.Entities
         /// Gets or sets the leader elevation.
         /// </summary>
         /// <remarks>This is the distance from the origin to the plane of the leader.</remarks>
-        public double Elevation
-        {
+        public double Elevation {
             get { return this.elevation; }
-            set
-            {
+            set {
                 this.ChangeAnnotationCoordinateSystem(this.Normal, value);
                 this.elevation = value;
             }
@@ -417,8 +384,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets the offset from the last leader vertex (hook) to the annotation position.
         /// </summary>
-        public Vector2 Offset
-        {
+        public Vector2 Offset {
             get { return this.offset; }
             set { this.offset = value; }
         }
@@ -437,15 +403,13 @@ namespace netDxf.Entities
         /// <remarks>
         /// This method should be manually called if the annotation position is modified, or the leader properties like Style, Annotation, TextVerticalPosition, and/or Offset.
         /// </remarks>
-        public void Update(bool resetAnnotationPosition)
-        {
+        public void Update(bool resetAnnotationPosition) {
             if (resetAnnotationPosition)
                 this.ResetAnnotationPosition();
             else
                 this.ResetHookPosition();
 
-            if (this.hasHookline)
-            {
+            if (this.hasHookline) {
                 Vector2 vertex = this.CalculateHookLine();
                 this.vertexes[this.vertexes.Count - 2] = vertex;
             }
@@ -458,8 +422,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Resets the leader hook position according to the annotation position.
         /// </summary>
-        private void ResetHookPosition()
-        {
+        private void ResetHookPosition() {
             if (this.vertexes.Count < 2)
                 throw new Exception("The leader vertexes list requires at least two points.");
 
@@ -484,32 +447,25 @@ namespace netDxf.Entities
                 textColor = (AciColor)styleOverride.Value;
 
             Vector3 ocsHook;
-            switch (this.annotation.Type)
-            {
+            switch (this.annotation.Type) {
                 case EntityType.MText:
-                    MText mText = (MText) this.annotation;
+                    MText mText = (MText)this.annotation;
                     ocsHook = MathHelper.Transform(mText.Position, this.Normal, CoordinateSystem.World, CoordinateSystem.Object);
                     int mTextSide = Math.Sign(ocsHook.X - this.vertexes[this.vertexes.Count - 2].X);
 
-                    if (textVerticalPlacement == DimensionStyleTextVerticalPlacement.Centered)
-                    {
+                    if (textVerticalPlacement == DimensionStyleTextVerticalPlacement.Centered) {
                         double xOffset;
 
-                        if (mTextSide >= 0)
-                        {
+                        if (mTextSide >= 0) {
                             mText.AttachmentPoint = MTextAttachmentPoint.MiddleLeft;
                             xOffset = -textOffset * dimScale;
-                        }
-                        else
-                        {
+                        } else {
                             mText.AttachmentPoint = MTextAttachmentPoint.MiddleRight;
                             xOffset = textOffset * dimScale;
                         }
                         this.vertexes[this.vertexes.Count - 1] = new Vector2(ocsHook.X + xOffset, ocsHook.Y) - this.offset;
-                    }
-                    else
-                    {
-                        ocsHook -= new Vector3(mTextSide* textOffset * dimScale, textOffset * dimScale, 0.0);
+                    } else {
+                        ocsHook -= new Vector3(mTextSide * textOffset * dimScale, textOffset * dimScale, 0.0);
                         mText.AttachmentPoint = mTextSide >= 0 ? MTextAttachmentPoint.BottomLeft : MTextAttachmentPoint.BottomRight;
                         this.vertexes[this.vertexes.Count - 1] = new Vector2(ocsHook.X, ocsHook.Y) - this.offset;
                     }
@@ -518,41 +474,35 @@ namespace netDxf.Entities
                     break;
 
                 case EntityType.Insert:
-                    Insert ins = (Insert) this.annotation;
+                    Insert ins = (Insert)this.annotation;
                     ocsHook = MathHelper.Transform(ins.Position, this.Normal, CoordinateSystem.World, CoordinateSystem.Object);
                     this.vertexes[this.vertexes.Count - 1] = new Vector2(ocsHook.X, ocsHook.Y) - this.offset;
                     ins.Color = textColor.IsByBlock ? AciColor.ByLayer : textColor;
                     break;
 
                 case EntityType.Tolerance:
-                    Tolerance tol = (Tolerance) this.annotation;
+                    Tolerance tol = (Tolerance)this.annotation;
                     ocsHook = MathHelper.Transform(tol.Position, this.Normal, CoordinateSystem.World, CoordinateSystem.Object);
                     this.vertexes[this.vertexes.Count - 1] = new Vector2(ocsHook.X, ocsHook.Y) - this.offset;
                     tol.Color = textColor.IsByBlock ? AciColor.ByLayer : textColor;
                     break;
 
                 case EntityType.Text:
-                    Text text = (Text) this.annotation;
+                    Text text = (Text)this.annotation;
                     ocsHook = MathHelper.Transform(text.Position, this.Normal, CoordinateSystem.World, CoordinateSystem.Object);
                     int textSide = Math.Sign(ocsHook.X - this.vertexes[this.vertexes.Count - 2].X);
-                    if (textVerticalPlacement == DimensionStyleTextVerticalPlacement.Centered)
-                    {
+                    if (textVerticalPlacement == DimensionStyleTextVerticalPlacement.Centered) {
                         double xOffset;
 
-                        if (textSide >= 0)
-                        {
+                        if (textSide >= 0) {
                             text.Alignment = TextAlignment.MiddleLeft;
                             xOffset = -textOffset * dimScale;
-                        }
-                        else
-                        {
+                        } else {
                             text.Alignment = TextAlignment.MiddleRight;
                             xOffset = textOffset * dimScale;
                         }
                         this.vertexes[this.vertexes.Count - 1] = new Vector2(ocsHook.X + xOffset, ocsHook.Y) - this.offset;
-                    }
-                    else
-                    {
+                    } else {
                         ocsHook -= new Vector3(textSide * textOffset * dimScale, textOffset * dimScale, 0.0);
                         text.Alignment = textSide >= 0 ? TextAlignment.BottomLeft : TextAlignment.BottomRight;
                         this.vertexes[this.vertexes.Count - 1] = new Vector2(ocsHook.X, ocsHook.Y) - this.offset;
@@ -568,8 +518,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Resets the annotation position according to the leader hook.
         /// </summary>
-        private void ResetAnnotationPosition()
-        {
+        private void ResetAnnotationPosition() {
             if (this.vertexes.Count < 2)
                 throw new Exception("The leader vertexes list requires at least two points.");
 
@@ -595,30 +544,23 @@ namespace netDxf.Entities
 
             Vector2 hook = this.vertexes[this.vertexes.Count - 1];
             Vector2 position;
-            switch (this.annotation.Type)
-            {
+            switch (this.annotation.Type) {
                 case EntityType.MText:
-                    MText mText = (MText) this.annotation;
+                    MText mText = (MText)this.annotation;
                     Vector2 dir = this.vertexes[this.vertexes.Count - 1] - this.vertexes[this.vertexes.Count - 2];
                     double mTextXoffset = 0.0;
                     int mTextSide = Math.Sign(dir.X);
-                    if (textVerticalPlacement == DimensionStyleTextVerticalPlacement.Centered)
-                    {
-                        if (mTextSide >= 0)
-                        {
+                    if (textVerticalPlacement == DimensionStyleTextVerticalPlacement.Centered) {
+                        if (mTextSide >= 0) {
                             mText.AttachmentPoint = MTextAttachmentPoint.MiddleLeft;
                             mTextXoffset = -textOffset * dimScale;
-                        }
-                        else
-                        {
+                        } else {
                             mText.AttachmentPoint = MTextAttachmentPoint.MiddleRight;
                             mTextXoffset = textOffset * dimScale;
                         }
                         position = hook;
-                    }
-                    else
-                    {
-                        position = hook + new Vector2(mTextSide* textOffset * dimScale, textOffset * dimScale);
+                    } else {
+                        position = hook + new Vector2(mTextSide * textOffset * dimScale, textOffset * dimScale);
                         mText.AttachmentPoint = mTextSide >= 0 ? MTextAttachmentPoint.BottomLeft : MTextAttachmentPoint.BottomRight;
                     }
 
@@ -629,41 +571,35 @@ namespace netDxf.Entities
                     break;
 
                 case EntityType.Insert:
-                    Insert ins = (Insert) this.annotation;
+                    Insert ins = (Insert)this.annotation;
                     position = hook + this.offset;
                     ins.Position = MathHelper.Transform(new Vector3(position.X, position.Y, this.elevation), this.Normal, CoordinateSystem.Object, CoordinateSystem.World);
                     ins.Color = textColor.IsByBlock ? AciColor.ByLayer : textColor;
                     break;
 
                 case EntityType.Tolerance:
-                    Tolerance tol = (Tolerance) this.annotation;
+                    Tolerance tol = (Tolerance)this.annotation;
                     position = hook + this.offset;
                     tol.Position = MathHelper.Transform(new Vector3(position.X, position.Y, this.elevation), this.Normal, CoordinateSystem.Object, CoordinateSystem.World);
                     tol.Color = textColor.IsByBlock ? AciColor.ByLayer : textColor;
                     break;
 
                 case EntityType.Text:
-                    Text text = (Text) this.annotation;
+                    Text text = (Text)this.annotation;
                     double textXoffset = 0.0;
                     Vector2 textDir = this.vertexes[this.vertexes.Count - 1] - this.vertexes[this.vertexes.Count - 2];
                     int textSide = Math.Sign(textDir.X);
 
-                    if (textVerticalPlacement == DimensionStyleTextVerticalPlacement.Centered)
-                    {
-                        if (textSide >= 0)
-                        {
+                    if (textVerticalPlacement == DimensionStyleTextVerticalPlacement.Centered) {
+                        if (textSide >= 0) {
                             text.Alignment = TextAlignment.MiddleLeft;
                             textXoffset = -textOffset * dimScale;
-                        }
-                        else
-                        {
+                        } else {
                             text.Alignment = TextAlignment.MiddleRight;
                             textXoffset = textOffset * dimScale;
                         }
                         position = hook;
-                    }
-                    else
-                    {
+                    } else {
                         position = hook + new Vector2(textSide * textOffset * dimScale, textOffset * dimScale);
                         text.Alignment = textSide >= 0 ? TextAlignment.BottomLeft : TextAlignment.BottomRight;
                     }
@@ -679,8 +615,7 @@ namespace netDxf.Entities
             }
         }
 
-        private MText BuildAnnotation(string text)
-        {
+        private MText BuildAnnotation(string text) {
             Vector2 hook = this.vertexes[this.vertexes.Count - 1];
             Vector2 dir = this.vertexes[this.vertexes.Count - 1] - this.vertexes[this.vertexes.Count - 2];
             int side = Math.Sign(dir.X);
@@ -688,30 +623,23 @@ namespace netDxf.Entities
             Vector2 position;
             MTextAttachmentPoint attachment;
             double mTextXoffset = 0.0;
-            if (this.style.TextVerticalPlacement == DimensionStyleTextVerticalPlacement.Centered)
-            {
-                if (side >= 0)
-                {
+            if (this.style.TextVerticalPlacement == DimensionStyleTextVerticalPlacement.Centered) {
+                if (side >= 0) {
                     attachment = MTextAttachmentPoint.MiddleLeft;
                     mTextXoffset = -this.style.TextOffset * this.style.DimScaleOverall;
-                }
-                else
-                {
+                } else {
                     attachment = MTextAttachmentPoint.MiddleRight;
                     mTextXoffset = this.style.TextOffset * this.style.DimScaleOverall;
                 }
                 position = hook;
-            }
-            else
-            {
+            } else {
                 position = hook + new Vector2(side * this.style.TextOffset * this.style.DimScaleOverall, this.style.TextOffset * this.style.DimScaleOverall);
                 attachment = side >= 0 ? MTextAttachmentPoint.BottomLeft : MTextAttachmentPoint.BottomRight;
             }
 
             position = position + this.offset;
             Vector3 mTextPosition = MathHelper.Transform(new Vector3(position.X - mTextXoffset, position.Y, this.elevation), this.Normal, CoordinateSystem.Object, CoordinateSystem.World);
-            MText entity = new MText(text, mTextPosition, this.style.TextHeight * this.style.DimScaleOverall, 0.0, this.style.TextStyle)
-            {
+            MText entity = new MText(text, mTextPosition, this.style.TextHeight * this.style.DimScaleOverall, 0.0, this.style.TextStyle) {
                 Color = this.style.TextColor.IsByBlock ? AciColor.ByLayer : this.style.TextColor,
                 AttachmentPoint = attachment
             };
@@ -719,25 +647,20 @@ namespace netDxf.Entities
             return entity;
         }
 
-        private Insert BuildAnnotation(Block block)
-        {
-            return new Insert(block, this.vertexes[this.vertexes.Count - 1])
-            {
+        private Insert BuildAnnotation(Block block) {
+            return new Insert(block, this.vertexes[this.vertexes.Count - 1]) {
                 Color = this.style.TextColor.IsByBlock ? AciColor.ByLayer : this.style.TextColor
             };
         }
 
-        private Tolerance BuildAnnotation(ToleranceEntry tolerance)
-        {
-            return new Tolerance(tolerance, this.vertexes[this.vertexes.Count - 1])
-            {
+        private Tolerance BuildAnnotation(ToleranceEntry tolerance) {
+            return new Tolerance(tolerance, this.vertexes[this.vertexes.Count - 1]) {
                 Color = this.style.TextColor.IsByBlock ? AciColor.ByLayer : this.style.TextColor,
                 Style = this.style
             };
         }
 
-        private Vector2 CalculateHookLine()
-        {
+        private Vector2 CalculateHookLine() {
             if (this.vertexes.Count < 2)
                 throw new Exception("The leader vertexes list requires at least two points.");
 
@@ -751,31 +674,28 @@ namespace netDxf.Entities
 
             Vector2 v = this.Vertexes[this.Vertexes.Count - 1] - this.Vertexes[this.Vertexes.Count - 2];
             Vector2 dir = v.X >= 0 ? Vector2.UnitX : -Vector2.UnitX;
-            if (this.annotation != null)
-            {
-                switch (this.annotation.Type)
-                {
+            if (this.annotation != null) {
+                switch (this.annotation.Type) {
                     case EntityType.MText:
-                        dir = Vector2.Rotate(dir, ((MText) this.annotation).Rotation*MathHelper.DegToRad);
+                        dir = Vector2.Rotate(dir, ((MText)this.annotation).Rotation * MathHelper.DegToRad);
                         break;
                     case EntityType.Text:
-                        dir = Vector2.Rotate(dir, ((Text) this.annotation).Rotation*MathHelper.DegToRad);
+                        dir = Vector2.Rotate(dir, ((Text)this.annotation).Rotation * MathHelper.DegToRad);
                         break;
                     case EntityType.Insert:
-                        dir = Vector2.Rotate(dir, ((Insert) this.annotation).Rotation*MathHelper.DegToRad);
+                        dir = Vector2.Rotate(dir, ((Insert)this.annotation).Rotation * MathHelper.DegToRad);
                         break;
                     case EntityType.Tolerance:
-                        dir = Vector2.Rotate(dir, ((Tolerance) this.annotation).Rotation*MathHelper.DegToRad);
+                        dir = Vector2.Rotate(dir, ((Tolerance)this.annotation).Rotation * MathHelper.DegToRad);
                         break;
                     default:
                         throw new ArgumentException("Only MText, Text, Insert, and Tolerance entities are supported as a leader annotation.", nameof(this.annotation));
                 }
             }
-            return  this.Hook - dir * arrowSize * dimScale;
+            return this.Hook - dir * arrowSize * dimScale;
         }
 
-        private void ChangeAnnotationCoordinateSystem(Vector3 newNormal, double newElevation)
-        {
+        private void ChangeAnnotationCoordinateSystem(Vector3 newNormal, double newElevation) {
             if (this.annotation == null)
                 return;
 
@@ -783,8 +703,7 @@ namespace netDxf.Entities
             Vector3 ocsPosition;
             Vector3 wcsPosition;
             this.annotation.Normal = newNormal;
-            switch (this.annotation.Type)
-            {
+            switch (this.annotation.Type) {
                 case EntityType.MText:
                     position = ((MText)this.annotation).Position;
                     ocsPosition = MathHelper.Transform(position, this.Normal, CoordinateSystem.World, CoordinateSystem.Object);
@@ -820,32 +739,29 @@ namespace netDxf.Entities
         /// Creates a new Leader that is a copy of the current instance.
         /// </summary>
         /// <returns>A new Leader that is a copy of this instance.</returns>
-        public override object Clone()
-        {
-            Leader entity = new Leader(this.vertexes)
-            {
+        public override object Clone() {
+            Leader entity = new Leader(this.vertexes) {
                 //EntityObject properties
-                Layer = (Layer) this.Layer.Clone(),
-                Linetype = (Linetype) this.Linetype.Clone(),
-                Color = (AciColor) this.Color.Clone(),
+                Layer = (Layer)this.Layer.Clone(),
+                Linetype = (Linetype)this.Linetype.Clone(),
+                Color = (AciColor)this.Color.Clone(),
                 Lineweight = this.Lineweight,
-                Transparency = (Transparency) this.Transparency.Clone(),
+                Transparency = (Transparency)this.Transparency.Clone(),
                 LinetypeScale = this.LinetypeScale,
                 Normal = this.Normal,
                 IsVisible = this.IsVisible,
                 //Leader properties
                 Elevation = this.elevation,
-                Style = (DimensionStyle) this.style.Clone(),
+                Style = (DimensionStyle)this.style.Clone(),
                 ShowArrowhead = this.showArrowhead,
                 PathType = this.pathType,
                 Offset = this.offset,
                 LineColor = this.lineColor,
-                Annotation = (EntityObject) this.annotation?.Clone(),
+                Annotation = (EntityObject)this.annotation?.Clone(),
                 hasHookline = this.hasHookline // do not call directly the property, the vertexes list already includes it if it has a hook line
             };
 
-            foreach (DimensionStyleOverride styleOverride in this.StyleOverrides.Values)
-            {
+            foreach (DimensionStyleOverride styleOverride in this.StyleOverrides.Values) {
                 object copy;
                 ICloneable value = styleOverride.Value as ICloneable;
                 copy = value != null ? value.Clone() : styleOverride.Value;
@@ -854,7 +770,7 @@ namespace netDxf.Entities
             }
 
             foreach (XData data in this.XData.Values)
-                entity.XData.Add((XData) data.Clone());
+                entity.XData.Add((XData)data.Clone());
 
             return entity;
         }
@@ -863,25 +779,21 @@ namespace netDxf.Entities
 
         #region Dimension style overrides events
 
-        private void StyleOverrides_BeforeAddItem(DimensionStyleOverrideDictionary sender, DimensionStyleOverrideDictionaryEventArgs e)
-        {
+        private void StyleOverrides_BeforeAddItem(DimensionStyleOverrideDictionary sender, DimensionStyleOverrideDictionaryEventArgs e) {
             DimensionStyleOverride old;
             if (sender.TryGetValue(e.Item.Type, out old))
                 if (ReferenceEquals(old.Value, e.Item.Value))
                     e.Cancel = true;
         }
 
-        private void StyleOverrides_AddItem(DimensionStyleOverrideDictionary sender, DimensionStyleOverrideDictionaryEventArgs e)
-        {
+        private void StyleOverrides_AddItem(DimensionStyleOverrideDictionary sender, DimensionStyleOverrideDictionaryEventArgs e) {
             this.OnDimensionStyleOverrideAddedEvent(e.Item);
         }
 
-        private void StyleOverrides_BeforeRemoveItem(DimensionStyleOverrideDictionary sender, DimensionStyleOverrideDictionaryEventArgs e)
-        {
+        private void StyleOverrides_BeforeRemoveItem(DimensionStyleOverrideDictionary sender, DimensionStyleOverrideDictionaryEventArgs e) {
         }
 
-        private void StyleOverrides_RemoveItem(DimensionStyleOverrideDictionary sender, DimensionStyleOverrideDictionaryEventArgs e)
-        {
+        private void StyleOverrides_RemoveItem(DimensionStyleOverrideDictionary sender, DimensionStyleOverrideDictionaryEventArgs e) {
             this.OnDimensionStyleOverrideRemovedEvent(e.Item);
         }
 

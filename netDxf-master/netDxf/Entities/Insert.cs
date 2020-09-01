@@ -20,29 +20,26 @@
 
 #endregion
 
-using System;
-using System.Collections.Generic;
 using netDxf.Blocks;
 using netDxf.Collections;
 using netDxf.Tables;
 using netDxf.Units;
+using System;
+using System.Collections.Generic;
 
-namespace netDxf.Entities
-{
+namespace netDxf.Entities {
     /// <summary>
     /// Represents a block insertion <see cref="EntityObject">entity</see>.
     /// </summary>
     public class Insert :
-        EntityObject
-    {
+        EntityObject {
         #region delegates and events
 
         public delegate void AttributeAddedEventHandler(Insert sender, AttributeChangeEventArgs e);
 
         public event AttributeAddedEventHandler AttributeAdded;
 
-        protected virtual void OnAttributeAddedEvent(Attribute item)
-        {
+        protected virtual void OnAttributeAddedEvent(Attribute item) {
             AttributeAddedEventHandler ae = this.AttributeAdded;
             if (ae != null)
                 ae(this, new AttributeChangeEventArgs(item));
@@ -52,8 +49,7 @@ namespace netDxf.Entities
 
         public event AttributeRemovedEventHandler AttributeRemoved;
 
-        protected virtual void OnAttributeRemovedEvent(Attribute item)
-        {
+        protected virtual void OnAttributeRemovedEvent(Attribute item) {
             AttributeRemovedEventHandler ae = this.AttributeRemoved;
             if (ae != null)
                 ae(this, new AttributeChangeEventArgs(item));
@@ -75,14 +71,12 @@ namespace netDxf.Entities
         #region constructors
 
         internal Insert(List<Attribute> attributes)
-            : base(EntityType.Insert, DxfObjectCode.Insert)
-        {
-            if(attributes == null)
+            : base(EntityType.Insert, DxfObjectCode.Insert) {
+            if (attributes == null)
                 throw new ArgumentNullException(nameof(attributes));
             this.attributes = new AttributeCollection(attributes);
-            foreach (Attribute att in this.attributes)
-            {
-                if(att.Owner!=null)
+            foreach (Attribute att in this.attributes) {
+                if (att.Owner != null)
                     throw new ArgumentException("The attributes list contains at least an attribute that already has an owner.", nameof(attributes));
                 att.Owner = this;
             }
@@ -96,8 +90,7 @@ namespace netDxf.Entities
         /// </summary>
         /// <param name="block">Insert <see cref="Block">block definition</see>.</param>
         public Insert(Block block)
-            : this(block, Vector3.Zero)
-        {
+            : this(block, Vector3.Zero) {
         }
 
         /// <summary>
@@ -106,8 +99,7 @@ namespace netDxf.Entities
         /// <param name="block">Insert block definition.</param>
         /// <param name="position">Insert <see cref="Vector2">position</see> in world coordinates.</param>
         public Insert(Block block, Vector2 position)
-            : this(block, new Vector3(position.X, position.Y, 0.0))
-        {
+            : this(block, new Vector3(position.X, position.Y, 0.0)) {
         }
 
         /// <summary>
@@ -116,8 +108,7 @@ namespace netDxf.Entities
         /// <param name="block">Insert block definition.</param>
         /// <param name="position">Insert <see cref="Vector3">point</see> in world coordinates.</param>
         public Insert(Block block, Vector3 position)
-            : base(EntityType.Insert, DxfObjectCode.Insert)
-        {
+            : base(EntityType.Insert, DxfObjectCode.Insert) {
             if (block == null)
                 throw new ArgumentNullException(nameof(block));
 
@@ -128,10 +119,8 @@ namespace netDxf.Entities
             this.endSequence = new EndSequence(this);
 
             List<Attribute> atts = new List<Attribute>(block.AttributeDefinitions.Count);
-            foreach (AttributeDefinition attdef in block.AttributeDefinitions.Values)
-            {
-                Attribute att = new Attribute(attdef)
-                {
+            foreach (AttributeDefinition attdef in block.AttributeDefinitions.Values) {
+                Attribute att = new Attribute(attdef) {
                     Position = attdef.Position + this.position - this.block.Origin,
                     Owner = this
                 };
@@ -148,16 +137,14 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets the insert list of <see cref="Attribute">attributes</see>.
         /// </summary>
-        public AttributeCollection Attributes
-        {
+        public AttributeCollection Attributes {
             get { return this.attributes; }
         }
 
         /// <summary>
         /// Gets the insert <see cref="Block">block definition</see>.
         /// </summary>
-        public Block Block
-        {
+        public Block Block {
             get { return this.block; }
             internal set { this.block = value; }
         }
@@ -165,8 +152,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets the <see cref="Vector3">position</see> in world coordinates.
         /// </summary>
-        public Vector3 Position
-        {
+        public Vector3 Position {
             get { return this.position; }
             set { this.position = value; }
         }
@@ -174,8 +160,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets the insert <see cref="Vector3">scale</see>.
         /// </summary>
-        public Vector3 Scale
-        {
+        public Vector3 Scale {
             get { return this.scale; }
             set { this.scale = value; }
         }
@@ -183,8 +168,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets the insert rotation along the normal vector in degrees.
         /// </summary>
-        public double Rotation
-        {
+        public double Rotation {
             get { return this.rotation; }
             set { this.rotation = MathHelper.NormalizeAngle(value); }
         }
@@ -193,8 +177,7 @@ namespace netDxf.Entities
 
         #region internal properties
 
-        internal EndSequence EndSequence
-        {
+        internal EndSequence EndSequence {
             get { return this.endSequence; }
         }
 
@@ -207,23 +190,19 @@ namespace netDxf.Entities
         /// </summary>
         /// <remarks>This method will automatically call the TransformAttributes method, to keep all attributes position and orientation up to date.</remarks>
         /// <remarks></remarks>
-        public void Sync()
-        {
+        public void Sync() {
             List<Attribute> atts = new List<Attribute>(this.block.AttributeDefinitions.Count);
 
             // remove all attributes in the actual insert
-            foreach (Attribute att in this.attributes)
-            {
+            foreach (Attribute att in this.attributes) {
                 this.OnAttributeRemovedEvent(att);
                 att.Handle = null;
                 att.Owner = null;
             }
 
             // add any new attributes from the attribute definitions of the block
-            foreach (AttributeDefinition attdef in this.block.AttributeDefinitions.Values)
-            {
-                Attribute att = new Attribute(attdef)
-                {
+            foreach (AttributeDefinition attdef in this.block.AttributeDefinitions.Values) {
+                Attribute att = new Attribute(attdef) {
                     Owner = this
                 };
                 atts.Add(att);
@@ -239,12 +218,11 @@ namespace netDxf.Entities
         /// </summary>
         /// <param name="insertionUnits">The insertion units.</param>
         /// <returns>The insert rotation matrix.</returns>
-        public Matrix3 GetTransformation(DrawingUnits insertionUnits)
-        {
+        public Matrix3 GetTransformation(DrawingUnits insertionUnits) {
             double docScale = UnitHelper.ConversionFactor(this.Block.Record.Units, insertionUnits);
             Matrix3 trans = MathHelper.ArbitraryAxis(this.Normal);
-            trans *= Matrix3.RotationZ(this.rotation*MathHelper.DegToRad);
-            trans *= Matrix3.Scale(this.scale*docScale);
+            trans *= Matrix3.RotationZ(this.rotation * MathHelper.DegToRad);
+            trans *= Matrix3.Scale(this.scale * docScale);
 
             return trans;
         }
@@ -261,8 +239,7 @@ namespace netDxf.Entities
         /// This method only applies to attributes that have a definition, some dxf files might generate attributes that have no definition in the block.<br />
         /// At the moment the attribute width factor and oblique angle are not calculated, this is applied to inserts with non uniform scaling.
         /// </remarks>
-        public void TransformAttributes()
-        {
+        public void TransformAttributes() {
             // if the insert does not contain attributes there is nothing to do
             if (this.attributes.Count == 0)
                 return;
@@ -276,27 +253,26 @@ namespace netDxf.Entities
                 // if the insert belongs to a layout the units to use are the ones defined in the Document
                 insUnits = this.Owner.Record.Layout == null ? this.Owner.Record.Units : this.Owner.Record.Owner.Owner.DrawingVariables.InsUnits;
 
-            Vector3 insScale = this.scale*UnitHelper.ConversionFactor(this.block.Record.Units, insUnits);
+            Vector3 insScale = this.scale * UnitHelper.ConversionFactor(this.block.Record.Units, insUnits);
             Matrix3 insTrans = this.GetTransformation(insUnits);
 
-            foreach (Attribute att in this.attributes)
-            {
+            foreach (Attribute att in this.attributes) {
                 AttributeDefinition attdef = att.Definition;
                 if (attdef == null)
                     continue;
 
-                Vector3 wcsAtt = insTrans*(attdef.Position - this.block.Origin);
+                Vector3 wcsAtt = insTrans * (attdef.Position - this.block.Origin);
                 att.Position = this.position + wcsAtt;
 
                 Vector2 txtU = new Vector2(attdef.WidthFactor, 0.0);
-                txtU = MathHelper.Transform(txtU, attdef.Rotation*MathHelper.DegToRad, CoordinateSystem.Object, CoordinateSystem.World);
+                txtU = MathHelper.Transform(txtU, attdef.Rotation * MathHelper.DegToRad, CoordinateSystem.Object, CoordinateSystem.World);
                 Vector3 ocsTxtU = MathHelper.Transform(new Vector3(txtU.X, txtU.Y, 0.0), attdef.Normal, CoordinateSystem.Object, CoordinateSystem.World);
-                Vector3 wcsTxtU = insTrans*ocsTxtU;
+                Vector3 wcsTxtU = insTrans * ocsTxtU;
 
                 Vector2 txtV = new Vector2(0.0, attdef.Height);
-                txtV = MathHelper.Transform(txtV, attdef.Rotation*MathHelper.DegToRad, CoordinateSystem.Object, CoordinateSystem.World);
+                txtV = MathHelper.Transform(txtV, attdef.Rotation * MathHelper.DegToRad, CoordinateSystem.Object, CoordinateSystem.World);
                 Vector3 ocsTxtV = MathHelper.Transform(new Vector3(txtV.X, txtV.Y, 0.0), attdef.Normal, CoordinateSystem.Object, CoordinateSystem.World);
-                Vector3 wcsTxtV = insTrans*ocsTxtV;
+                Vector3 wcsTxtV = insTrans * ocsTxtV;
 
                 Vector3 txtNormal = Vector3.CrossProduct(wcsTxtU, wcsTxtV);
                 att.Normal = txtNormal;
@@ -304,9 +280,8 @@ namespace netDxf.Entities
                 double txtHeight = MathHelper.PointLineDistance(wcsTxtV, Vector3.Zero, Vector3.Normalize(wcsTxtU));
                 att.Height = txtHeight;
 
-                double txtAng = Vector2.Angle(new Vector2(txtU.X*insScale.X, txtU.Y*insScale.Y))*MathHelper.RadToDeg;
-                if (Vector3.Equals(attdef.Normal, Vector3.UnitZ))
-                {
+                double txtAng = Vector2.Angle(new Vector2(txtU.X * insScale.X, txtU.Y * insScale.Y)) * MathHelper.RadToDeg;
+                if (Vector3.Equals(attdef.Normal, Vector3.UnitZ)) {
                     att.Rotation = this.rotation + txtAng;
 
                     //double txtWidth = MathHelper.PointLineDistance(wcsTxtU, Vector3.Zero, Vector3.Normalize(wcsTxtV));
@@ -318,9 +293,7 @@ namespace netDxf.Entities
                     //if (oblique < -85.0 || oblique > 85.0) oblique = Math.Sign(oblique) * 85;
                     //att.ObliqueAngle = oblique;
                     att.ObliqueAngle = attdef.ObliqueAngle;
-                }
-                else
-                {
+                } else {
                     att.Rotation = txtAng;
                     att.WidthFactor = attdef.WidthFactor;
                     att.ObliqueAngle = attdef.ObliqueAngle;
@@ -341,11 +314,9 @@ namespace netDxf.Entities
         /// Some objects might consume more than one, is, for example, the case of polylines that will assign
         /// automatically a handle to its vertexes. The entity number will be converted to an hexadecimal number.
         /// </remarks>
-        internal override long AsignHandle(long entityNumber)
-        {
+        internal override long AsignHandle(long entityNumber) {
             entityNumber = this.endSequence.AsignHandle(entityNumber);
-            foreach (Attribute attrib in this.attributes)
-            {
+            foreach (Attribute attrib in this.attributes) {
                 entityNumber = attrib.AsignHandle(entityNumber);
             }
             return base.AsignHandle(entityNumber);
@@ -356,34 +327,32 @@ namespace netDxf.Entities
         /// Creates a new Insert that is a copy of the current instance.
         /// </summary>
         /// <returns>A new Insert that is a copy of this instance.</returns>
-        public override object Clone()
-        {
+        public override object Clone() {
             // copy attributes
             List<Attribute> copyAttributes = new List<Attribute>();
             foreach (Attribute att in this.attributes)
                 copyAttributes.Add((Attribute)att.Clone());
 
-            Insert entity = new Insert(copyAttributes)
-            {
+            Insert entity = new Insert(copyAttributes) {
                 //EntityObject properties
-                Layer = (Layer) this.Layer.Clone(),
-                Linetype = (Linetype) this.Linetype.Clone(),
-                Color = (AciColor) this.Color.Clone(),
+                Layer = (Layer)this.Layer.Clone(),
+                Linetype = (Linetype)this.Linetype.Clone(),
+                Color = (AciColor)this.Color.Clone(),
                 Lineweight = this.Lineweight,
-                Transparency = (Transparency) this.Transparency.Clone(),
+                Transparency = (Transparency)this.Transparency.Clone(),
                 LinetypeScale = this.LinetypeScale,
                 Normal = this.Normal,
                 IsVisible = this.IsVisible,
                 //Insert properties
                 Position = this.position,
-                Block = (Block) this.block.Clone(),
+                Block = (Block)this.block.Clone(),
                 Scale = this.scale,
                 Rotation = this.rotation,
             };
 
             // copy extended data
             foreach (XData data in this.XData.Values)
-                entity.XData.Add((XData) data.Clone());
+                entity.XData.Add((XData)data.Clone());
 
             return entity;
         }

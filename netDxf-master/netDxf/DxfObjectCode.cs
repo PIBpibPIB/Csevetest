@@ -20,13 +20,11 @@
 
 #endregion
 
-namespace netDxf
-{
+namespace netDxf {
     /// <summary>
     /// Dxf string codes.
     /// </summary>
-    public static class DxfObjectCode
-    {
+    public static class DxfObjectCode {
         /// <summary>
         /// Not defined.
         /// </summary>

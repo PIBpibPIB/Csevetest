@@ -20,13 +20,11 @@
 
 #endregion
 
-namespace netDxf.Entities
-{
+namespace netDxf.Entities {
     /// <summary>
     /// MText line spacing style.
     /// </summary>
-    public enum MTextLineSpacingStyle
-    {
+    public enum MTextLineSpacingStyle {
         /// <summary>
         /// At least (taller characters will override)
         /// </summary>

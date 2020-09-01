@@ -20,28 +20,24 @@
 
 #endregion
 
+using netDxf.Tables;
 using System;
 using System.Collections.Generic;
-using netDxf.Tables;
 
-namespace netDxf.Collections
-{
+namespace netDxf.Collections {
     /// <summary>
     /// Represents a collection of views.
     /// </summary>
     public sealed class Views :
-        TableObjects<View>
-    {
+        TableObjects<View> {
         #region constructor
 
         internal Views(DxfDocument document)
-            : this(document, null)
-        {
+            : this(document, null) {
         }
 
         internal Views(DxfDocument document, string handle)
-            : base(document, DxfObjectCode.ViewTable, handle)
-        {
+            : base(document, DxfObjectCode.ViewTable, handle) {
             this.MaxCapacity = short.MaxValue;
         }
 
@@ -58,8 +54,7 @@ namespace netDxf.Collections
         /// If a view already exists with the same name as the instance that is being added the method returns the existing view,
         /// if not it will return the new view.
         /// </returns>
-        internal override View Add(View view, bool assignHandle)
-        {
+        internal override View Add(View view, bool assignHandle) {
             if (this.list.Count >= this.MaxCapacity)
                 throw new OverflowException(string.Format("Table overflow. The maximum number of elements the table {0} can have is {1}", this.CodeName, this.MaxCapacity));
             if (view == null)
@@ -90,8 +85,7 @@ namespace netDxf.Collections
         /// <param name="name"><see cref="View">View</see> name to remove from the document.</param>
         /// <returns>True if the view has been successfully removed, or false otherwise.</returns>
         /// <remarks>Reserved views or any other referenced by objects cannot be removed.</remarks>
-        public override bool Remove(string name)
-        {
+        public override bool Remove(string name) {
             return this.Remove(this[name]);
         }
 
@@ -101,8 +95,7 @@ namespace netDxf.Collections
         /// <param name="item"><see cref="View">View</see> to remove from the document.</param>
         /// <returns>True if the view has been successfully removed, or false otherwise.</returns>
         /// <remarks>Reserved views or any other referenced by objects cannot be removed.</remarks>
-        public override bool Remove(View item)
-        {
+        public override bool Remove(View item) {
             if (item == null)
                 return false;
 
@@ -131,13 +124,12 @@ namespace netDxf.Collections
 
         #region UCS events
 
-        private void Item_NameChanged(TableObject sender, TableObjectChangedEventArgs<string> e)
-        {
+        private void Item_NameChanged(TableObject sender, TableObjectChangedEventArgs<string> e) {
             if (this.Contains(e.NewValue))
                 throw new ArgumentException("There is already another View with the same name.");
 
             this.list.Remove(sender.Name);
-            this.list.Add(e.NewValue, (View) sender);
+            this.list.Add(e.NewValue, (View)sender);
 
             List<DxfObject> refs = this.references[sender.Name];
             this.references.Remove(sender.Name);

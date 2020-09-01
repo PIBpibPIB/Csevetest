@@ -20,13 +20,11 @@
 
 #endregion
 
-namespace netDxf.Header
-{
+namespace netDxf.Header {
     /// <summary>
     /// The AutoCAD drawing database version number.
     /// </summary>
-    public enum DxfVersion
-    {
+    public enum DxfVersion {
         /// <summary>
         /// Unknown AutoCAD DXF file.
         /// </summary>

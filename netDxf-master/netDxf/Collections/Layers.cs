@@ -20,28 +20,24 @@
 
 #endregion
 
+using netDxf.Tables;
 using System;
 using System.Collections.Generic;
-using netDxf.Tables;
 
-namespace netDxf.Collections
-{
+namespace netDxf.Collections {
     /// <summary>
     /// Represents a collection of layers.
     /// </summary>
     public sealed class Layers :
-        TableObjects<Layer>
-    {
+        TableObjects<Layer> {
         #region constructor
 
         internal Layers(DxfDocument document)
-            : this(document, null)
-        {
+            : this(document, null) {
         }
 
         internal Layers(DxfDocument document, string handle)
-            : base(document, DxfObjectCode.LayerTable, handle)
-        {
+            : base(document, DxfObjectCode.LayerTable, handle) {
             this.MaxCapacity = short.MaxValue;
         }
 
@@ -58,8 +54,7 @@ namespace netDxf.Collections
         /// If a layer already exists with the same name as the instance that is being added the method returns the existing layer,
         /// if not it will return the new layer.
         /// </returns>
-        internal override Layer Add(Layer layer, bool assignHandle)
-        {
+        internal override Layer Add(Layer layer, bool assignHandle) {
             if (this.list.Count >= this.MaxCapacity)
                 throw new OverflowException(string.Format("Table overflow. The maximum number of elements the table {0} can have is {1}", this.CodeName, this.MaxCapacity));
             if (layer == null)
@@ -93,8 +88,7 @@ namespace netDxf.Collections
         /// <param name="name"><see cref="Layer">Layer</see> name to remove from the document.</param>
         /// <returns>True if the layer has been successfully removed, or false otherwise.</returns>
         /// <remarks>Reserved layers or any other referenced by objects cannot be removed.</remarks>
-        public override bool Remove(string name)
-        {
+        public override bool Remove(string name) {
             return this.Remove(this[name]);
         }
 
@@ -104,8 +98,7 @@ namespace netDxf.Collections
         /// <param name="item"><see cref="Layer">Layer</see> to remove from the document.</param>
         /// <returns>True if the layer has been successfully removed, or false otherwise.</returns>
         /// <remarks>Reserved layers or any other referenced by objects cannot be removed.</remarks>
-        public override bool Remove(Layer item)
-        {
+        public override bool Remove(Layer item) {
             if (item == null)
                 return false;
 
@@ -136,21 +129,19 @@ namespace netDxf.Collections
 
         #region Layer events
 
-        private void Item_NameChanged(TableObject sender, TableObjectChangedEventArgs<string> e)
-        {
+        private void Item_NameChanged(TableObject sender, TableObjectChangedEventArgs<string> e) {
             if (this.Contains(e.NewValue))
                 throw new ArgumentException("There is already another layer with the same name.");
 
             this.list.Remove(sender.Name);
-            this.list.Add(e.NewValue, (Layer) sender);
+            this.list.Add(e.NewValue, (Layer)sender);
 
             List<DxfObject> refs = this.references[sender.Name];
             this.references.Remove(sender.Name);
             this.references.Add(e.NewValue, refs);
         }
 
-        private void LayerLinetypeChanged(TableObject sender, TableObjectChangedEventArgs<Linetype> e)
-        {
+        private void LayerLinetypeChanged(TableObject sender, TableObjectChangedEventArgs<Linetype> e) {
             this.Owner.Linetypes.References[e.OldValue.Name].Remove(sender);
 
             e.NewValue = this.Owner.Linetypes.Add(e.NewValue);

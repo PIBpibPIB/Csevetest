@@ -22,18 +22,16 @@
 
 using System;
 
-namespace netDxf.Tables
-{
+namespace netDxf.Tables {
     /// <summary>
     /// Base class for the three kinds of linetype segments simple, text, and shape.
     /// </summary>
     public abstract class LinetypeSegment :
-        ICloneable
-    {
+        ICloneable {
         #region private fields
 
         private readonly LinetypeSegmentType type;
-        private double length ;
+        private double length;
 
         #endregion
 
@@ -44,8 +42,7 @@ namespace netDxf.Tables
         /// </summary>
         /// <param name="type">Type of the linetype segment.</param>
         /// <param name="length">Dash or space length of the segment.</param>
-        protected LinetypeSegment(LinetypeSegmentType type, double length)
-        {
+        protected LinetypeSegment(LinetypeSegmentType type, double length) {
             this.type = type;
             this.length = length;
         }
@@ -57,8 +54,7 @@ namespace netDxf.Tables
         /// <summary>
         /// Gets the linetype segment simple, text, or shape.
         /// </summary>
-        public LinetypeSegmentType Type
-        {
+        public LinetypeSegmentType Type {
             get { return this.type; }
         }
 
@@ -70,8 +66,7 @@ namespace netDxf.Tables
         /// A negative decimal number denotes a pen-up (space) segment of that length. 
         /// A dash length of 0 draws a dot. 
         /// </remarks>
-        public double Length
-        {
+        public double Length {
             get { return this.length; }
             set { this.length = value; }
         }

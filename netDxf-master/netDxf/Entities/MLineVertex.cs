@@ -22,13 +22,11 @@
 
 using System.Collections.Generic;
 
-namespace netDxf.Entities
-{
+namespace netDxf.Entities {
     /// <summary>
     /// Represents a <see cref="MLine">multiline</see> vertex.
     /// </summary>
-    public class MLineVertex
-    {
+    public class MLineVertex {
         #region private fields
 
         private Vector2 location;
@@ -40,8 +38,7 @@ namespace netDxf.Entities
 
         #region constructors
 
-        internal MLineVertex(Vector2 location, Vector2 direction, Vector2 miter, List<double>[] distances)
-        {
+        internal MLineVertex(Vector2 location, Vector2 direction, Vector2 miter, List<double>[] distances) {
             this.location = location;
             this.direction = direction;
             this.miter = miter;
@@ -58,8 +55,7 @@ namespace netDxf.Entities
         /// <remarks>
         /// If this property is modified the function MLine.CalculateVertexesInfo() will need to be called manually to update the internal information.
         /// </remarks>
-        public Vector2 Location
-        {
+        public Vector2 Location {
             get { return this.location; }
             set { this.location = value; }
         }
@@ -67,16 +63,14 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets the MLine vertex direction.
         /// </summary>
-        public Vector2 Direction
-        {
+        public Vector2 Direction {
             get { return this.direction; }
         }
 
         /// <summary>
         /// Gets the MLine vertex miter.
         /// </summary>
-        public Vector2 Miter
-        {
+        public Vector2 Miter {
             get { return this.miter; }
         }
 
@@ -96,8 +90,7 @@ namespace netDxf.Entities
         /// The successive values list the start and stop points of the line element breaks or cuts in this segment of the multiline.
         /// </para>
         /// </remarks>
-        public List<double>[] Distances
-        {
+        public List<double>[] Distances {
             get { return this.distances; }
         }
 
@@ -109,8 +102,7 @@ namespace netDxf.Entities
         /// Converts the value of this instance to its equivalent string representation.
         /// </summary>
         /// <returns>The string representation.</returns>
-        public override string ToString()
-        {
+        public override string ToString() {
             return string.Format("{0}: ({1})", "MLineVertex", this.location);
         }
 
@@ -118,11 +110,9 @@ namespace netDxf.Entities
         /// Creates a new MLineVertex that is a copy of the current instance.
         /// </summary>
         /// <returns>A new MLineVertex that is a copy of this instance.</returns>
-        public object Clone()
-        {
+        public object Clone() {
             List<double>[] copyDistances = new List<double>[this.distances.Length];
-            for (int i = 0; i < this.distances.Length; i++)
-            {
+            for (int i = 0; i < this.distances.Length; i++) {
                 copyDistances[i] = new List<double>();
                 copyDistances[i].AddRange(this.distances[i]);
             }

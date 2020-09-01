@@ -20,18 +20,16 @@
 
 #endregion
 
-using System;
 using netDxf.Units;
+using System;
 
-namespace netDxf.Tables
-{
+namespace netDxf.Tables {
     /// <summary>
     /// Represents the way alternate units are formatted in dimension entities.
     /// </summary>
     /// <remarks>Alternative units are not applicable for angular dimensions.</remarks>
     public class DimensionStyleAlternateUnits :
-        ICloneable
-    {
+        ICloneable {
         #region private fields
 
         private bool dimalt;
@@ -54,8 +52,7 @@ namespace netDxf.Tables
         /// <summary>
         /// Initializes a new instance of the <c>DimensionStyleUnitsFormat</c> class.
         /// </summary>
-        public DimensionStyleAlternateUnits()
-        {
+        public DimensionStyleAlternateUnits() {
             this.dimalt = false;
             this.dimaltd = 2;
             this.dimPrefix = string.Empty;
@@ -77,8 +74,7 @@ namespace netDxf.Tables
         /// <summary>
         /// Gets or sets if the alternate measurement units are added to the dimension text.  (DIMALT)
         /// </summary>
-        public bool Enabled
-        {
+        public bool Enabled {
             get { return this.dimalt; }
             set { this.dimalt = value; }
         }
@@ -91,11 +87,9 @@ namespace netDxf.Tables
         /// It is recommended to use values in the range 0 to 8.<br/>
         /// For architectural and fractional the precision used for the minimum fraction is 1/2^LinearDecimalPlaces.
         /// </remarks>
-        public short LengthPrecision
-        {
+        public short LengthPrecision {
             get { return this.dimaltd; }
-            set
-            {
+            set {
                 if (value < 0)
                     throw new ArgumentOutOfRangeException(nameof(value), value, "The length precision must be equals or greater than zero.");
                 this.dimaltd = value;
@@ -105,8 +99,7 @@ namespace netDxf.Tables
         /// <summary>
         /// Specifies the text prefix for the dimension. (DIMAPOST)
         /// </summary>
-        public string Prefix
-        {
+        public string Prefix {
             get { return this.dimPrefix; }
             set { this.dimPrefix = value ?? string.Empty; }
         }
@@ -114,8 +107,7 @@ namespace netDxf.Tables
         /// <summary>
         /// Specifies the text suffix for the dimension. (DIMAPOST)
         /// </summary>
-        public string Suffix
-        {
+        public string Suffix {
             get { return this.dimSuffix; }
             set { this.dimSuffix = value ?? string.Empty; }
         }
@@ -127,11 +119,9 @@ namespace netDxf.Tables
         /// to convert inches to millimeters, enter 25.4.
         /// The value has no effect on angular dimensions, and it is not applied to the rounding value or the plus or minus tolerance values. 
         /// </remarks>
-        public double Multiplier
-        {
+        public double Multiplier {
             get { return this.dimaltf; }
-            set
-            {
+            set {
                 if (value <= 0.0)
                     throw new ArgumentOutOfRangeException(nameof(value), value, "The multiplier for alternate units must be greater than zero0.");
                 this.dimaltf = value;
@@ -148,8 +138,7 @@ namespace netDxf.Tables
         /// Architectural<br/>
         /// Fractional
         /// </remarks>
-        public LinearUnitType LengthUnits
-        {
+        public LinearUnitType LengthUnits {
             get { return this.dimaltu; }
             set { this.dimaltu = value; }
         }
@@ -161,8 +150,7 @@ namespace netDxf.Tables
         /// This value only is applicable if the <c>DimLengthUnits</c> property has been set to Architectural or Fractional,
         /// for any other value this parameter is not applicable.
         /// </remarks>
-        public bool StackUnits
-        {
+        public bool StackUnits {
             get { return this.stackedUnits; }
             set { this.stackedUnits = value; }
         }
@@ -171,8 +159,7 @@ namespace netDxf.Tables
         /// Suppresses leading zeros in linear decimal alternate units. (DIMALTZ)
         /// </summary>
         /// <remarks>This value is part of the DIMALTZ variable.</remarks>
-        public bool SuppressLinearLeadingZeros
-        {
+        public bool SuppressLinearLeadingZeros {
             get { return this.suppressLinearLeadingZeros; }
             set { this.suppressLinearLeadingZeros = value; }
         }
@@ -181,8 +168,7 @@ namespace netDxf.Tables
         /// Suppresses trailing zeros in linear decimal alternate units. (DIMALTZ)
         /// </summary>
         /// <remarks>This value is part of the DIMALTZ variable.</remarks>
-        public bool SuppressLinearTrailingZeros
-        {
+        public bool SuppressLinearTrailingZeros {
             get { return this.suppressLinearTrailingZeros; }
             set { this.suppressLinearTrailingZeros = value; }
         }
@@ -191,8 +177,7 @@ namespace netDxf.Tables
         /// Suppresses zero feet in architectural alternate units. (DIMALTZ)
         /// </summary>
         /// <remarks>This value is part of the DIMALTZ variable.</remarks>
-        public bool SuppressZeroFeet
-        {
+        public bool SuppressZeroFeet {
             get { return this.suppressZeroFeet; }
             set { this.suppressZeroFeet = value; }
         }
@@ -201,8 +186,7 @@ namespace netDxf.Tables
         /// Suppresses zero inches in architectural alternate units. (DIMALTZ)
         /// </summary>
         /// <remarks>This value is part of the DIMALTZ variable.</remarks>
-        public bool SuppressZeroInches
-        {
+        public bool SuppressZeroInches {
             get { return this.suppressZeroInches; }
             set { this.suppressZeroInches = value; }
         }
@@ -217,11 +201,9 @@ namespace netDxf.Tables
         /// Note that the number of digits edited after the decimal point depends on the precision set by DIMDEC.
         /// DIMRND does not apply to angular dimensions.
         /// </remarks>
-        public double Roundoff
-        {
+        public double Roundoff {
             get { return this.dimaltrnd; }
-            set
-            {
+            set {
                 if (value < 0.000001 && !MathHelper.IsZero(value, double.Epsilon)) // ToDo check range of values
                     throw new ArgumentOutOfRangeException(nameof(value), value, "The nearest value to round all distances must be equal or greater than 0.000001 or zero (no rounding off).");
                 this.dimaltrnd = value;
@@ -236,10 +218,8 @@ namespace netDxf.Tables
         /// Creates a new <c>DimensionStyle.DimensionStyleAlternateUnits</c> that is a copy of the current instance.
         /// </summary>
         /// <returns>A new <c>DimensionStyle.DimensionStyleAlternateUnits</c> that is a copy of this instance.</returns>
-        public object Clone()
-        {
-            DimensionStyleAlternateUnits copy = new DimensionStyleAlternateUnits()
-            {
+        public object Clone() {
+            DimensionStyleAlternateUnits copy = new DimensionStyleAlternateUnits() {
                 Enabled = this.dimalt,
                 LengthUnits = this.dimaltu,
                 StackUnits = this.stackedUnits,

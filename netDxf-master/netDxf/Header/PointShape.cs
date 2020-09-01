@@ -20,13 +20,11 @@
 
 #endregion
 
-namespace netDxf.Header
-{
+namespace netDxf.Header {
     /// <summary>
     /// Defines the shape of the point entities.
     /// </summary>
-    public enum PointShape
-    {
+    public enum PointShape {
         /// <summary>
         /// A dot.
         /// </summary>

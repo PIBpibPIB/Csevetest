@@ -22,14 +22,12 @@
 
 using System;
 
-namespace netDxf.Entities
-{
+namespace netDxf.Entities {
     /// <summary>
     /// Represents a polyface mesh vertex. 
     /// </summary>
     public class PolyfaceMeshVertex :
-        DxfObject, ICloneable
-    {
+        DxfObject, ICloneable {
         #region private fields
 
         private readonly VertexTypeFlags flags;
@@ -43,8 +41,7 @@ namespace netDxf.Entities
         /// Initializes a new instance of the <c>PolylineVertex</c> class.
         /// </summary>
         public PolyfaceMeshVertex()
-            : this(Vector3.Zero)
-        {
+            : this(Vector3.Zero) {
         }
 
         /// <summary>
@@ -54,8 +51,7 @@ namespace netDxf.Entities
         /// <param name="y">Y coordinate.</param>
         /// <param name="z">Z coordinate.</param>
         public PolyfaceMeshVertex(double x, double y, double z)
-            : this(new Vector3(x, y, z))
-        {
+            : this(new Vector3(x, y, z)) {
         }
 
         /// <summary>
@@ -63,8 +59,7 @@ namespace netDxf.Entities
         /// </summary>
         /// <param name="location">Polyface mesh vertex <see cref="Vector3">location</see>.</param>
         public PolyfaceMeshVertex(Vector3 location)
-            : base(DxfObjectCode.Vertex)
-        {
+            : base(DxfObjectCode.Vertex) {
             this.flags = VertexTypeFlags.PolyfaceMeshVertex | VertexTypeFlags.Polygon3dMesh;
             this.location = location;
         }
@@ -76,8 +71,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets the polyface mesh vertex <see cref="netDxf.Vector3">location</see>.
         /// </summary>
-        public Vector3 Location
-        {
+        public Vector3 Location {
             get { return this.location; }
             set { this.location = value; }
         }
@@ -85,8 +79,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets the vertex type.
         /// </summary>
-        internal VertexTypeFlags Flags
-        {
+        internal VertexTypeFlags Flags {
             get { return this.flags; }
         }
 
@@ -98,8 +91,7 @@ namespace netDxf.Entities
         /// Converts the value of this instance to its equivalent string representation.
         /// </summary>
         /// <returns>The string representation.</returns>
-        public override string ToString()
-        {
+        public override string ToString() {
             return string.Format("{0}: {1}", "PolyfaceMeshVertex", this.location);
         }
 
@@ -107,8 +99,7 @@ namespace netDxf.Entities
         /// Creates a new PolyfaceMeshVertex that is a copy of the current instance.
         /// </summary>
         /// <returns>A new PolyfaceMeshVertex that is a copy of this instance.</returns>
-        public object Clone()
-        {
+        public object Clone() {
             return new PolyfaceMeshVertex(this.location);
         }
 

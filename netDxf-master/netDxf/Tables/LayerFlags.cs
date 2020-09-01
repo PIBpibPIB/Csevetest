@@ -22,14 +22,12 @@
 
 using System;
 
-namespace netDxf.Tables
-{
+namespace netDxf.Tables {
     /// <summary>
     /// Standard layer flags (bit-coded values).
     /// </summary>
     [Flags]
-    internal enum LayerFlags
-    {
+    internal enum LayerFlags {
         /// <summary>
         /// Default.
         /// </summary>

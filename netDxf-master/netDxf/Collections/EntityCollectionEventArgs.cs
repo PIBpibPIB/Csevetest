@@ -20,17 +20,15 @@
 
 #endregion
 
-using System;
 using netDxf.Entities;
+using System;
 
-namespace netDxf.Collections
-{
+namespace netDxf.Collections {
     /// <summary>
     /// Represents the arguments thrown by the <c>EntityCollection</c> events.
     /// </summary>
     public class EntityCollectionEventArgs :
-        EventArgs
-    {
+        EventArgs {
         #region private fields
 
         private readonly EntityObject item;
@@ -44,8 +42,7 @@ namespace netDxf.Collections
         /// Initializes a new instance of <c>EntityCollectionEventArgs</c>.
         /// </summary>
         /// <param name="item">Item that is being added or removed from the collection.</param>
-        public EntityCollectionEventArgs(EntityObject item)
-        {
+        public EntityCollectionEventArgs(EntityObject item) {
             this.item = item;
             this.cancel = false;
         }
@@ -57,8 +54,7 @@ namespace netDxf.Collections
         /// <summary>
         /// Get the item that is being added or removed from the collection.
         /// </summary>
-        public EntityObject Item
-        {
+        public EntityObject Item {
             get { return this.item; }
         }
 
@@ -66,8 +62,7 @@ namespace netDxf.Collections
         /// Gets or sets if the operation must be canceled.
         /// </summary>
         /// <remarks>This property is used by the OnBeforeAdd and OnBeforeRemove events to cancel the add or remove operation.</remarks>
-        public bool Cancel
-        {
+        public bool Cancel {
             get { return this.cancel; }
             set { this.cancel = value; }
         }

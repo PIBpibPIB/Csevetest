@@ -20,16 +20,14 @@
 
 #endregion
 
-namespace netDxf
-{
+namespace netDxf {
     /// <summary>
     /// Symbols for dxf text strings.
     /// </summary>
     /// <remarks>
     /// These special strings translates to symbols in AutoCad. They are obsolete since Unicode characters are supported.
     /// </remarks>
-    public static class Symbols
-    {
+    public static class Symbols {
         /// <summary>
         /// Text string that shows as a diameter 'Ø' character.
         /// </summary>

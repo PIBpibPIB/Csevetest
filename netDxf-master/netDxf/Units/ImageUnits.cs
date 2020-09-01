@@ -20,14 +20,12 @@
 
 #endregion
 
-namespace netDxf.Units
-{
+namespace netDxf.Units {
     /// <summary>
     /// AutoCAD units for inserting images.
     /// </summary>
     /// <remarks>This is what one AutoCAD unit is equal to for the purpose of inserting and scaling images with an associated resolution.</remarks>
-    public enum ImageUnits
-    {
+    public enum ImageUnits {
         /// <summary>
         /// No units.
         /// </summary>

@@ -20,18 +20,16 @@
 
 #endregion
 
+using netDxf.Tables;
 using System;
 using System.Collections.Generic;
-using netDxf.Tables;
 
-namespace netDxf.Entities
-{
+namespace netDxf.Entities {
     /// <summary>
     /// Represents an ellipse <see cref="EntityObject">entity</see>.
     /// </summary>
     public class Ellipse :
-        EntityObject
-    {
+        EntityObject {
         #region private fields
 
         private Vector3 center;
@@ -50,8 +48,7 @@ namespace netDxf.Entities
         /// Initializes a new instance of the <c>Ellipse</c> class.
         /// </summary>
         public Ellipse()
-            : this(Vector3.Zero, 1.0, 0.5)
-        {
+            : this(Vector3.Zero, 1.0, 0.5) {
         }
 
         /// <summary>
@@ -62,8 +59,7 @@ namespace netDxf.Entities
         /// <param name="minorAxis">Ellipse minor axis.</param>
         /// <remarks>The center Z coordinate represents the elevation of the arc along the normal.</remarks>
         public Ellipse(Vector2 center, double majorAxis, double minorAxis)
-            : this(new Vector3(center.X, center.Y, 0.0), majorAxis, minorAxis)
-        {
+            : this(new Vector3(center.X, center.Y, 0.0), majorAxis, minorAxis) {
         }
 
         /// <summary>
@@ -74,8 +70,7 @@ namespace netDxf.Entities
         /// <param name="minorAxis">Ellipse minor axis.</param>
         /// <remarks>The center Z coordinate represents the elevation of the arc along the normal.</remarks>
         public Ellipse(Vector3 center, double majorAxis, double minorAxis)
-            : base(EntityType.Ellipse, DxfObjectCode.Ellipse)
-        {
+            : base(EntityType.Ellipse, DxfObjectCode.Ellipse) {
             this.center = center;
             if (majorAxis <= 0)
                 throw new ArgumentOutOfRangeException(nameof(majorAxis), majorAxis, "The major axis value must be greater than zero.");
@@ -97,8 +92,7 @@ namespace netDxf.Entities
         /// Gets or sets the ellipse <see cref="Vector3">center</see>.
         /// </summary>
         /// <remarks>The center Z coordinate represents the elevation of the arc along the normal.</remarks>
-        public Vector3 Center
-        {
+        public Vector3 Center {
             get { return this.center; }
             set { this.center = value; }
         }
@@ -106,11 +100,9 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets the ellipse mayor axis.
         /// </summary>
-        public double MajorAxis
-        {
+        public double MajorAxis {
             get { return this.majorAxis; }
-            set
-            {
+            set {
                 if (value <= 0)
                     throw new ArgumentOutOfRangeException(nameof(value), value, "The major axis value must be greater than zero.");
                 this.majorAxis = value;
@@ -120,11 +112,9 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets the ellipse minor axis.
         /// </summary>
-        public double MinorAxis
-        {
+        public double MinorAxis {
             get { return this.minorAxis; }
-            set
-            {
+            set {
                 if (value <= 0)
                     throw new ArgumentOutOfRangeException(nameof(value), value, "The minor axis value must be greater than zero.");
                 this.minorAxis = value;
@@ -134,8 +124,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets the ellipse local rotation in degrees along its normal.
         /// </summary>
-        public double Rotation
-        {
+        public double Rotation {
             get { return this.rotation; }
             set { this.rotation = MathHelper.NormalizeAngle(value); }
         }
@@ -144,8 +133,7 @@ namespace netDxf.Entities
         /// Gets or sets the ellipse start angle in degrees.
         /// </summary>
         /// <remarks>To get a full ellipse set the start angle equal to the end angle.</remarks>
-        public double StartAngle
-        {
+        public double StartAngle {
             get { return this.startAngle; }
             set { this.startAngle = MathHelper.NormalizeAngle(value); }
         }
@@ -154,8 +142,7 @@ namespace netDxf.Entities
         /// Gets or sets the ellipse end angle in degrees.
         /// </summary>
         /// <remarks>To get a full ellipse set the end angle equal to the start angle.</remarks>
-        public double EndAngle
-        {
+        public double EndAngle {
             get { return this.endAngle; }
             set { this.endAngle = MathHelper.NormalizeAngle(value); }
         }
@@ -163,8 +150,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets the ellipse thickness.
         /// </summary>
-        public double Thickness
-        {
+        public double Thickness {
             get { return this.thickness; }
             set { this.thickness = value; }
         }
@@ -173,8 +159,7 @@ namespace netDxf.Entities
         /// Checks if the actual instance is a full ellipse.
         /// </summary>
         /// <remarks>An ellipse is considered full when its start and end angles are equal.</remarks>
-        public bool IsFullEllipse
-        {
+        public bool IsFullEllipse {
             get { return MathHelper.IsEqual(this.startAngle, this.endAngle); }
         }
 
@@ -187,19 +172,18 @@ namespace netDxf.Entities
         /// </summary>
         /// <param name="angle">Angle in degrees.</param>
         /// <returns>A local point on the ellipse for the given angle relative to the center.</returns>
-        public Vector2 PolarCoordinateRelativeToCenter(double angle)
-        {
-            double a = this.MajorAxis*0.5;
-            double b = this.MinorAxis*0.5;
-            double radians = angle*MathHelper.DegToRad;
+        public Vector2 PolarCoordinateRelativeToCenter(double angle) {
+            double a = this.MajorAxis * 0.5;
+            double b = this.MinorAxis * 0.5;
+            double radians = angle * MathHelper.DegToRad;
 
-            double a1 = a*Math.Sin(radians);
-            double b1 = b*Math.Cos(radians);
+            double a1 = a * Math.Sin(radians);
+            double b1 = b * Math.Cos(radians);
 
-            double radius = (a*b)/Math.Sqrt(b1*b1 + a1*a1);
+            double radius = (a * b) / Math.Sqrt(b1 * b1 + a1 * a1);
 
             // convert the radius back to cartesian coordinates
-            return new Vector2(radius*Math.Cos(radians), radius*Math.Sin(radians));
+            return new Vector2(radius * Math.Cos(radians), radius * Math.Sin(radians));
         }
 
         /// <summary>
@@ -207,37 +191,31 @@ namespace netDxf.Entities
         /// </summary>
         /// <param name="precision">Number of divisions.</param>
         /// <returns>A list vertexes that represents the ellipse expressed in object coordinate system.</returns>
-        public List<Vector2> PolygonalVertexes(int precision)
-        {
+        public List<Vector2> PolygonalVertexes(int precision) {
             List<Vector2> points = new List<Vector2>();
             double beta = this.rotation * MathHelper.DegToRad;
             double sinbeta = Math.Sin(beta);
             double cosbeta = Math.Cos(beta);
 
-            if (this.IsFullEllipse)
-            {
-                double delta = MathHelper.TwoPI/precision;
-                for (int i = 0; i < precision; i++)
-                {
-                    double angle = delta*i;
+            if (this.IsFullEllipse) {
+                double delta = MathHelper.TwoPI / precision;
+                for (int i = 0; i < precision; i++) {
+                    double angle = delta * i;
                     double sinalpha = Math.Sin(angle);
                     double cosalpha = Math.Cos(angle);
 
-                    double pointX = 0.5*(this.majorAxis*cosalpha*cosbeta - this.minorAxis*sinalpha*sinbeta);
-                    double pointY = 0.5*(this.majorAxis*cosalpha*sinbeta + this.minorAxis*sinalpha*cosbeta);
+                    double pointX = 0.5 * (this.majorAxis * cosalpha * cosbeta - this.minorAxis * sinalpha * sinbeta);
+                    double pointY = 0.5 * (this.majorAxis * cosalpha * sinbeta + this.minorAxis * sinalpha * cosbeta);
 
                     points.Add(new Vector2(pointX, pointY));
                 }
-            }
-            else
-            {
+            } else {
                 double start = this.startAngle;
                 double end = this.endAngle;
                 if (end < start) end += 360.0;
                 double delta = (end - start) / precision;
-                for (int i = 0; i <= precision; i++)
-                {
-                    Vector2 point = this.PolarCoordinateRelativeToCenter(start + delta*i);
+                for (int i = 0; i <= precision; i++) {
+                    Vector2 point = this.PolarCoordinateRelativeToCenter(start + delta * i);
                     // we need to apply the ellipse rotation to the local point
                     double pointX = point.X * cosbeta - point.Y * sinbeta;
                     double pointY = point.X * sinbeta + point.Y * cosbeta;
@@ -252,17 +230,15 @@ namespace netDxf.Entities
         /// </summary>
         /// <param name="precision">Number of divisions.</param>
         /// <returns>A new instance of <see cref="LwPolyline">LightWeightPolyline</see> that represents the ellipse.</returns>
-        public LwPolyline ToPolyline(int precision)
-        {
+        public LwPolyline ToPolyline(int precision) {
             IEnumerable<Vector2> vertexes = this.PolygonalVertexes(precision);
             Vector3 ocsCenter = MathHelper.Transform(this.center, this.Normal, CoordinateSystem.World, CoordinateSystem.Object);
-            LwPolyline poly = new LwPolyline
-            {
-                Layer = (Layer) this.Layer.Clone(),
-                Linetype = (Linetype) this.Linetype.Clone(),
-                Color = (AciColor) this.Color.Clone(),
+            LwPolyline poly = new LwPolyline {
+                Layer = (Layer)this.Layer.Clone(),
+                Linetype = (Linetype)this.Linetype.Clone(),
+                Color = (AciColor)this.Color.Clone(),
                 Lineweight = this.Lineweight,
-                Transparency = (Transparency) this.Transparency.Clone(),
+                Transparency = (Transparency)this.Transparency.Clone(),
                 LinetypeScale = this.LinetypeScale,
                 Normal = this.Normal,
                 Elevation = ocsCenter.Z,
@@ -270,8 +246,7 @@ namespace netDxf.Entities
                 IsClosed = this.IsFullEllipse
             };
 
-            foreach (Vector2 v in vertexes)
-            {
+            foreach (Vector2 v in vertexes) {
                 poly.Vertexes.Add(new LwPolylineVertex(v.X + ocsCenter.X, v.Y + ocsCenter.Y));
             }
             return poly;
@@ -285,16 +260,14 @@ namespace netDxf.Entities
         /// Creates a new Ellipse that is a copy of the current instance.
         /// </summary>
         /// <returns>A new Ellipse that is a copy of this instance.</returns>
-        public override object Clone()
-        {
-            Ellipse entity = new Ellipse
-            {
+        public override object Clone() {
+            Ellipse entity = new Ellipse {
                 //EntityObject properties
-                Layer = (Layer) this.Layer.Clone(),
-                Linetype = (Linetype) this.Linetype.Clone(),
-                Color = (AciColor) this.Color.Clone(),
+                Layer = (Layer)this.Layer.Clone(),
+                Linetype = (Linetype)this.Linetype.Clone(),
+                Color = (AciColor)this.Color.Clone(),
                 Lineweight = this.Lineweight,
-                Transparency = (Transparency) this.Transparency.Clone(),
+                Transparency = (Transparency)this.Transparency.Clone(),
                 LinetypeScale = this.LinetypeScale,
                 Normal = this.Normal,
                 IsVisible = this.IsVisible,
@@ -309,7 +282,7 @@ namespace netDxf.Entities
             };
 
             foreach (XData data in this.XData.Values)
-                entity.XData.Add((XData) data.Clone());
+                entity.XData.Add((XData)data.Clone());
 
             return entity;
         }

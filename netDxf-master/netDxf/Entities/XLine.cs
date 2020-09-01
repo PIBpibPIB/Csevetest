@@ -20,18 +20,16 @@
 
 #endregion
 
-using System;
 using netDxf.Tables;
+using System;
 
-namespace netDxf.Entities
-{
+namespace netDxf.Entities {
     /// <summary>
     /// Represents an extension line <see cref="EntityObject">entity</see> (aka construction line).
     /// </summary>
     /// <remarks>An extension line is a line in three-dimensional space that starts in the specified origin and extends to infinity in both directions.</remarks>
     public class XLine :
-        EntityObject
-    {
+        EntityObject {
         #region private fields
 
         private Vector3 origin;
@@ -45,8 +43,7 @@ namespace netDxf.Entities
         /// Initializes a new instance of the <c>XLine</c> class.
         /// </summary>
         public XLine()
-            : this(Vector3.Zero, Vector3.UnitX)
-        {
+            : this(Vector3.Zero, Vector3.UnitX) {
         }
 
         /// <summary>
@@ -55,8 +52,7 @@ namespace netDxf.Entities
         /// <param name="origin">XLine <see cref="Vector2">origin.</see></param>
         /// <param name="direction">XLine <see cref="Vector2">direction.</see></param>
         public XLine(Vector2 origin, Vector2 direction)
-            : this(new Vector3(origin.X, origin.Y, 0.0), new Vector3(direction.X, direction.Y, 0.0))
-        {
+            : this(new Vector3(origin.X, origin.Y, 0.0), new Vector3(direction.X, direction.Y, 0.0)) {
         }
 
         /// <summary>
@@ -65,8 +61,7 @@ namespace netDxf.Entities
         /// <param name="origin">XLine <see cref="Vector3">origin.</see></param>
         /// <param name="direction">XLine <see cref="Vector3">direction.</see></param>
         public XLine(Vector3 origin, Vector3 direction)
-            : base(EntityType.XLine, DxfObjectCode.XLine)
-        {
+            : base(EntityType.XLine, DxfObjectCode.XLine) {
             this.origin = origin;
             this.direction = Vector3.Normalize(direction);
             if (Vector3.IsNaN(this.direction))
@@ -80,8 +75,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets the extension line <see cref="netDxf.Vector3">origin</see>.
         /// </summary>
-        public Vector3 Origin
-        {
+        public Vector3 Origin {
             get { return this.origin; }
             set { this.origin = value; }
         }
@@ -89,11 +83,9 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets the extension line <see cref="netDxf.Vector3">direction</see>.
         /// </summary>
-        public Vector3 Direction
-        {
+        public Vector3 Direction {
             get { return this.direction; }
-            set
-            {
+            set {
                 this.direction = Vector3.Normalize(value);
                 if (Vector3.IsNaN(this.direction))
                     throw new ArgumentException("The direction can not be the zero vector.", nameof(value));
@@ -108,16 +100,14 @@ namespace netDxf.Entities
         /// Creates a new XLine that is a copy of the current instance.
         /// </summary>
         /// <returns>A new XLine that is a copy of this instance.</returns>
-        public override object Clone()
-        {
-            XLine entity = new XLine
-            {
+        public override object Clone() {
+            XLine entity = new XLine {
                 //EntityObject properties
-                Layer = (Layer) this.Layer.Clone(),
-                Linetype = (Linetype) this.Linetype.Clone(),
-                Color = (AciColor) this.Color.Clone(),
+                Layer = (Layer)this.Layer.Clone(),
+                Linetype = (Linetype)this.Linetype.Clone(),
+                Color = (AciColor)this.Color.Clone(),
                 Lineweight = this.Lineweight,
-                Transparency = (Transparency) this.Transparency.Clone(),
+                Transparency = (Transparency)this.Transparency.Clone(),
                 LinetypeScale = this.LinetypeScale,
                 Normal = this.Normal,
                 IsVisible = this.IsVisible,
@@ -127,7 +117,7 @@ namespace netDxf.Entities
             };
 
             foreach (XData data in this.XData.Values)
-                entity.XData.Add((XData) data.Clone());
+                entity.XData.Add((XData)data.Clone());
 
             return entity;
         }

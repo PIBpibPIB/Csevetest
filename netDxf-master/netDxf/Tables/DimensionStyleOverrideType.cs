@@ -20,8 +20,7 @@
 
 #endregion
 
-namespace netDxf.Tables
-{
+namespace netDxf.Tables {
     /// <summary>
     /// Dimension style override types.
     /// </summary>
@@ -30,8 +29,7 @@ namespace netDxf.Tables
     /// The dimension style properties DIMBLK and DIMSAH are not available.
     /// The overrides always make use of the DIMBLK1 and DIMBLK2 setting the DIMSAH to true even when both arrow ends are the same.
     /// </remarks>
-    public enum DimensionStyleOverrideType
-    {
+    public enum DimensionStyleOverrideType {
         /// <summary>
         /// Assigns colors to dimension lines, arrowheads, and dimension leader lines.
         /// </summary>
@@ -309,7 +307,7 @@ namespace netDxf.Tables
         /// <summary>
         /// Controls the display of the alternate units.
         /// </summary>
-        AltUnitsEnabled ,
+        AltUnitsEnabled,
 
         /// <summary>
         /// Alternate units for all dimension types except angular.
@@ -410,7 +408,7 @@ namespace netDxf.Tables
         /// Suppresses zero inches in architectural tolerance units.
         /// </summary>
         TolerancesSuppressZeroInches,
-    
+
         /// <summary>
         /// Number of decimal places of the tolerance alternate units.
         /// </summary>

@@ -22,14 +22,12 @@
 
 using System;
 
-namespace netDxf.Tables
-{
+namespace netDxf.Tables {
     /// <summary>
     /// Represent the font character formatting, such as italic, bold, or regular.
     /// </summary>
     [Flags]
-    public enum FontStyle
-    {
+    public enum FontStyle {
         /// <summary>
         /// Regular.
         /// </summary>

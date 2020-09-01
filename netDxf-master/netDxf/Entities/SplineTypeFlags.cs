@@ -22,15 +22,13 @@
 
 using System;
 
-namespace netDxf.Entities
-{
+namespace netDxf.Entities {
     /// <summary>
     /// Defines the spline type.
     /// </summary>
     /// <remarks>Bit flag.</remarks>
     [Flags]
-    internal enum SplinetypeFlags
-    {
+    internal enum SplinetypeFlags {
         /// <summary>
         /// Default (open 3d spline).
         /// </summary>

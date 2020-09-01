@@ -22,11 +22,9 @@
 
 using System;
 
-namespace netDxf.Tables
-{
+namespace netDxf.Tables {
     public class DimensionStyleOverrideChangeEventArgs :
-        EventArgs
-    {
+        EventArgs {
         #region private fields
 
         private readonly DimensionStyleOverride item;
@@ -39,8 +37,7 @@ namespace netDxf.Tables
         /// Initializes a new instance of <c>DimensionStyleOverrideChangeEventArgs</c>.
         /// </summary>
         /// <param name="item">The DimensionStyleOverride that is being added or removed from the insert.</param>
-        public DimensionStyleOverrideChangeEventArgs(DimensionStyleOverride item)
-        {
+        public DimensionStyleOverrideChangeEventArgs(DimensionStyleOverride item) {
             this.item = item;
         }
 
@@ -51,8 +48,7 @@ namespace netDxf.Tables
         /// <summary>
         /// Gets the DimensionStyleOverride that is being added or removed.
         /// </summary>
-        public DimensionStyleOverride Item
-        {
+        public DimensionStyleOverride Item {
             get { return this.item; }
         }
 

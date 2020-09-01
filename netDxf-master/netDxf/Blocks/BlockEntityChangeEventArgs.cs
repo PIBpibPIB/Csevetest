@@ -20,17 +20,15 @@
 
 #endregion
 
-using System;
 using netDxf.Entities;
+using System;
 
-namespace netDxf.Blocks
-{
+namespace netDxf.Blocks {
     /// <summary>
     /// Represents the arguments thrown when an entity is added ore removed from a <see cref="Block">Block</see>.
     /// </summary>
     public class BlockEntityChangeEventArgs :
-        EventArgs
-    {
+        EventArgs {
         #region private fields
 
         private readonly EntityObject item;
@@ -43,8 +41,7 @@ namespace netDxf.Blocks
         /// Initializes a new instance of <c>BlockEntityChangeEventArgs</c>.
         /// </summary>
         /// <param name="item">The entity that is being added or removed from the block.</param>
-        public BlockEntityChangeEventArgs(EntityObject item)
-        {
+        public BlockEntityChangeEventArgs(EntityObject item) {
             this.item = item;
         }
 
@@ -55,8 +52,7 @@ namespace netDxf.Blocks
         /// <summary>
         /// Gets the entity that is being added or removed.
         /// </summary>
-        public EntityObject Item
-        {
+        public EntityObject Item {
             get { return this.item; }
         }
 

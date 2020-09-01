@@ -20,18 +20,16 @@
 
 #endregion
 
-using System.IO;
 using netDxf.Collections;
 using netDxf.Tables;
+using System.IO;
 
-namespace netDxf.Objects
-{
+namespace netDxf.Objects {
     /// <summary>
     /// Represents a DGN underlay definition.
     /// </summary>
     public class UnderlayDgnDefinition :
-        UnderlayDefinition
-    {
+        UnderlayDefinition {
         #region private fields
 
         private string layout;
@@ -45,8 +43,7 @@ namespace netDxf.Objects
         /// </summary>
         /// <param name="file">Underlay file name with full or relative path.</param>
         public UnderlayDgnDefinition(string file)
-            : this(Path.GetFileNameWithoutExtension(file), file)
-        {
+            : this(Path.GetFileNameWithoutExtension(file), file) {
         }
 
         /// <summary>
@@ -55,8 +52,7 @@ namespace netDxf.Objects
         /// <param name="name">Underlay definition name.</param>
         /// <param name="file">Underlay file name with full or relative path.</param>
         public UnderlayDgnDefinition(string name, string file)
-            : base(name, file, UnderlayType.DGN)
-        {
+            : base(name, file, UnderlayType.DGN) {
             this.layout = "Model";
         }
 
@@ -67,8 +63,7 @@ namespace netDxf.Objects
         /// <summary>
         /// Gets or sets the layout name to show.
         /// </summary>
-        public string Layout
-        {
+        public string Layout {
             get { return this.layout; }
             set { this.layout = value; }
         }
@@ -76,8 +71,7 @@ namespace netDxf.Objects
         /// <summary>
         /// Gets the owner of the actual underlay DGN definition.
         /// </summary>
-        public new UnderlayDgnDefinitions Owner
-        {
+        public new UnderlayDgnDefinitions Owner {
             get { return (UnderlayDgnDefinitions)base.Owner; }
             internal set { base.Owner = value; }
         }
@@ -91,10 +85,8 @@ namespace netDxf.Objects
         /// </summary>
         /// <param name="newName">UnderlayDgnDefinition name of the copy.</param>
         /// <returns>A new UnderlayDgnDefinition that is a copy of this instance.</returns>
-        public override TableObject Clone(string newName)
-        {
-            UnderlayDgnDefinition copy = new UnderlayDgnDefinition(newName, this.File)
-            {
+        public override TableObject Clone(string newName) {
+            UnderlayDgnDefinition copy = new UnderlayDgnDefinition(newName, this.File) {
                 Layout = this.layout
             };
 
@@ -108,8 +100,7 @@ namespace netDxf.Objects
         /// Creates a new UnderlayDgnDefinition that is a copy of the current instance.
         /// </summary>
         /// <returns>A new UnderlayDgnDefinition that is a copy of this instance.</returns>
-        public override object Clone()
-        {
+        public override object Clone() {
             return this.Clone(this.Name);
         }
 

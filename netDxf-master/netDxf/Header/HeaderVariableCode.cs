@@ -20,13 +20,11 @@
 
 #endregion
 
-namespace netDxf.Header
-{
+namespace netDxf.Header {
     /// <summary>
     /// Strings system variables
     /// </summary>
-    internal static class HeaderVariableCode
-    {
+    internal static class HeaderVariableCode {
         /// <summary>
         /// The AutoCAD drawing database version number.
         /// </summary>

@@ -20,11 +20,10 @@
 
 #endregion
 
-using System;
 using netDxf.Collections;
+using System;
 
-namespace netDxf.Tables
-{
+namespace netDxf.Tables {
     /// <summary>
     /// Represents a registered application name to which the <see cref="XData">extended data</see> is associated.
     /// </summary>
@@ -33,8 +32,7 @@ namespace netDxf.Tables
     /// Instead, create your own application registry name and store your extended data there.
     /// </remarks>
     public class ApplicationRegistry :
-        TableObject
-    {
+        TableObject {
         #region constants
 
         /// <summary>
@@ -45,8 +43,7 @@ namespace netDxf.Tables
         /// <summary>
         /// Gets the default application registry.
         /// </summary>
-        public static ApplicationRegistry Default
-        {
+        public static ApplicationRegistry Default {
             get { return new ApplicationRegistry(DefaultName); }
         }
 
@@ -59,13 +56,11 @@ namespace netDxf.Tables
         /// </summary>
         /// <param name="name">Layer name.</param>
         public ApplicationRegistry(string name)
-            : this(name, true)
-        {
+            : this(name, true) {
         }
 
         internal ApplicationRegistry(string name, bool checkName)
-            : base(name, DxfObjectCode.AppId, checkName)
-        {
+            : base(name, DxfObjectCode.AppId, checkName) {
             if (string.IsNullOrEmpty(name))
                 throw new ArgumentNullException(nameof(name), "The application registry name should be at least one character long.");
 
@@ -79,9 +74,8 @@ namespace netDxf.Tables
         /// <summary>
         /// Gets the owner of the actual dxf object.
         /// </summary>
-        public new ApplicationRegistries Owner
-        {
-            get { return (ApplicationRegistries) base.Owner; }
+        public new ApplicationRegistries Owner {
+            get { return (ApplicationRegistries)base.Owner; }
             internal set { base.Owner = value; }
         }
 
@@ -94,22 +88,20 @@ namespace netDxf.Tables
         /// </summary>
         /// <param name="newName">ApplicationRegistry name of the copy.</param>
         /// <returns>A new ApplicationRegistry that is a copy of this instance.</returns>
-        public override TableObject Clone(string newName)
-        {
+        public override TableObject Clone(string newName) {
             ApplicationRegistry copy = new ApplicationRegistry(newName);
 
             foreach (XData data in this.XData.Values)
                 copy.XData.Add((XData)data.Clone());
 
-            return copy ;
+            return copy;
         }
 
         /// <summary>
         /// Creates a new ApplicationRegistry that is a copy of the current instance.
         /// </summary>
         /// <returns>A new ApplicationRegistry that is a copy of this instance.</returns>
-        public override object Clone()
-        {
+        public override object Clone() {
             return this.Clone(this.Name);
         }
 

@@ -23,13 +23,11 @@
 using System;
 using System.Globalization;
 
-namespace netDxf.Units
-{
+namespace netDxf.Units {
     /// <summary>
     /// Utility methods to format a decimal angle in degrees to its different string representations.
     /// </summary>
-    public static class AngleUnitFormat
-    {
+    public static class AngleUnitFormat {
         #region public methods
 
         /// <summary>
@@ -38,13 +36,11 @@ namespace netDxf.Units
         /// <param name="angle">The angle value in degrees.</param>
         /// <param name="format">The unit style format.</param>
         /// <returns>A string that represents the angle in decimal units.</returns>
-        public static string ToDecimal(double angle, UnitStyleFormat format)
-        {
+        public static string ToDecimal(double angle, UnitStyleFormat format) {
             if (format == null)
                 throw new ArgumentNullException(nameof(format));
 
-            NumberFormatInfo numberFormat = new NumberFormatInfo
-            {
+            NumberFormatInfo numberFormat = new NumberFormatInfo {
                 NumberDecimalSeparator = format.DecimalSeparator
             };
 
@@ -57,29 +53,27 @@ namespace netDxf.Units
         /// <param name="angle">The angle value in degrees.</param>
         /// <param name="format">The unit style format.</param>
         /// <returns>A string that represents the angle in degrees, minutes and seconds.</returns>
-        public static string ToDegreesMinutesSeconds(double angle, UnitStyleFormat format)
-        {
+        public static string ToDegreesMinutesSeconds(double angle, UnitStyleFormat format) {
             if (format == null)
                 throw new ArgumentNullException(nameof(format));
 
             double degrees = angle;
-            double minutes = (degrees - (int) degrees)*60;
-            double seconds = (minutes - (int) minutes)*60;
+            double minutes = (degrees - (int)degrees) * 60;
+            double seconds = (minutes - (int)minutes) * 60;
 
-            NumberFormatInfo numberFormat = new NumberFormatInfo
-            {
+            NumberFormatInfo numberFormat = new NumberFormatInfo {
                 NumberDecimalSeparator = format.DecimalSeparator
             };
 
             if (format.AngularDecimalPlaces == 0)
-                return string.Format(numberFormat, "{0}" + format.DegreesSymbol, (int) Math.Round(degrees, 0));
+                return string.Format(numberFormat, "{0}" + format.DegreesSymbol, (int)Math.Round(degrees, 0));
             if (format.AngularDecimalPlaces == 1 || format.AngularDecimalPlaces == 2)
-                return string.Format(numberFormat, "{0}" + format.DegreesSymbol + "{1}" + format.MinutesSymbol, (int) degrees, (int) Math.Round(minutes, 0));
+                return string.Format(numberFormat, "{0}" + format.DegreesSymbol + "{1}" + format.MinutesSymbol, (int)degrees, (int)Math.Round(minutes, 0));
             if (format.AngularDecimalPlaces == 3 || format.AngularDecimalPlaces == 4)
-                return string.Format(numberFormat, "{0}" + format.DegreesSymbol + "{1}" + format.MinutesSymbol + "{2}" + format.SecondsSymbol, (int) degrees, (int) minutes, (int) Math.Round(seconds, 0));
+                return string.Format(numberFormat, "{0}" + format.DegreesSymbol + "{1}" + format.MinutesSymbol + "{2}" + format.SecondsSymbol, (int)degrees, (int)minutes, (int)Math.Round(seconds, 0));
             // the suppression of leading or trailing zeros is not applicable to DegreesMinutesSeconds angles format
             string f = "0." + new string('0', format.AngularDecimalPlaces - 4);
-            return string.Format(numberFormat, "{0}" + format.DegreesSymbol + "{1}" + format.MinutesSymbol + "{2}" + format.SecondsSymbol, (int) degrees, (int) minutes, seconds.ToString(f, numberFormat));
+            return string.Format(numberFormat, "{0}" + format.DegreesSymbol + "{1}" + format.MinutesSymbol + "{2}" + format.SecondsSymbol, (int)degrees, (int)minutes, seconds.ToString(f, numberFormat));
         }
 
         /// <summary>
@@ -88,17 +82,15 @@ namespace netDxf.Units
         /// <param name="angle">The angle value in degrees.</param>
         /// <param name="format">The unit style format.</param>
         /// <returns>A string that represents the angle in gradians.</returns>
-        public static string ToGradians(double angle, UnitStyleFormat format)
-        {
+        public static string ToGradians(double angle, UnitStyleFormat format) {
             if (format == null)
                 throw new ArgumentNullException(nameof(format));
 
-            NumberFormatInfo numberFormat = new NumberFormatInfo
-            {
+            NumberFormatInfo numberFormat = new NumberFormatInfo {
                 NumberDecimalSeparator = format.DecimalSeparator
             };
 
-            return (angle*MathHelper.DegToGrad).ToString(DecimalNumberFormat(format), numberFormat) + format.GradiansSymbol;
+            return (angle * MathHelper.DegToGrad).ToString(DecimalNumberFormat(format), numberFormat) + format.GradiansSymbol;
         }
 
         /// <summary>
@@ -107,24 +99,21 @@ namespace netDxf.Units
         /// <param name="angle">The angle value in degrees.</param>
         /// <param name="format">The unit style format.</param>
         /// <returns>A string that represents the angle in radians.</returns>
-        public static string ToRadians(double angle, UnitStyleFormat format)
-        {
+        public static string ToRadians(double angle, UnitStyleFormat format) {
             if (format == null)
                 throw new ArgumentNullException(nameof(format));
 
-            NumberFormatInfo numberFormat = new NumberFormatInfo
-            {
+            NumberFormatInfo numberFormat = new NumberFormatInfo {
                 NumberDecimalSeparator = format.DecimalSeparator
             };
-            return (angle*MathHelper.DegToRad).ToString(DecimalNumberFormat(format), numberFormat) + format.RadiansSymbol;
+            return (angle * MathHelper.DegToRad).ToString(DecimalNumberFormat(format), numberFormat) + format.RadiansSymbol;
         }
 
         #endregion
 
         #region private methods
 
-        private static string DecimalNumberFormat(UnitStyleFormat format)
-        {
+        private static string DecimalNumberFormat(UnitStyleFormat format) {
             char[] zeroes = new char[format.AngularDecimalPlaces + 2];
             if (format.SupressAngularLeadingZeros)
                 zeroes[0] = '#';
@@ -133,8 +122,7 @@ namespace netDxf.Units
 
             zeroes[1] = '.';
 
-            for (int i = 2; i < zeroes.Length; i++)
-            {
+            for (int i = 2; i < zeroes.Length; i++) {
                 if (format.SupressAngularTrailingZeros)
                     zeroes[i] = '#';
                 else

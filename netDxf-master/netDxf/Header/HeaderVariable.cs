@@ -20,13 +20,11 @@
 
 #endregion
 
-namespace netDxf.Header
-{
+namespace netDxf.Header {
     /// <summary>
     /// Defines a header variable.
     /// </summary>
-    internal class HeaderVariable
-    {
+    internal class HeaderVariable {
         #region private fields
 
         private readonly string name;
@@ -36,8 +34,7 @@ namespace netDxf.Header
 
         #region constructors
 
-        public HeaderVariable(string name, object value)
-        {
+        public HeaderVariable(string name, object value) {
             this.name = name;
             this.variable = value;
         }
@@ -49,16 +46,14 @@ namespace netDxf.Header
         /// <summary>
         /// Gets the header variable name.
         /// </summary>
-        public string Name
-        {
+        public string Name {
             get { return this.name; }
         }
 
         /// <summary>
         /// Gets the header variable stored value.
         /// </summary>
-        public object Value
-        {
+        public object Value {
             get { return this.variable; }
             set { this.variable = value; }
         }
@@ -67,8 +62,7 @@ namespace netDxf.Header
 
         #region overrides
 
-        public override string ToString()
-        {
+        public override string ToString() {
             return string.Format("{0}:{1}", this.name, this.variable);
         }
 

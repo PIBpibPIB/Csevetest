@@ -20,13 +20,11 @@
 
 #endregion
 
-namespace netDxf.Entities
-{
+namespace netDxf.Entities {
     /// <summary>
     /// Defines the geometric characteristic symbols for location, orientation, form, profile, and runout.
     /// </summary>
-    public enum ToleranceGeometricSymbol
-    {
+    public enum ToleranceGeometricSymbol {
         /// <summary>
         /// No geometric symbol.
         /// </summary>

@@ -22,8 +22,7 @@
 
 using netDxf.Tables;
 
-namespace netDxf.Entities
-{
+namespace netDxf.Entities {
     /// <summary>
     /// Represents a trace <see cref="EntityObject">entity</see>.
     /// </summary>
@@ -32,8 +31,7 @@ namespace netDxf.Entities
     /// It is recommended to use the more common Solid entity instead.
     /// </remarks>
     public class Trace :
-        EntityObject
-    {
+        EntityObject {
         #region private fields
 
         private Vector2 firstVertex;
@@ -51,8 +49,7 @@ namespace netDxf.Entities
         /// Initializes a new instance of the <c>Trace</c> class.
         /// </summary>
         public Trace()
-            : this(Vector2.Zero, Vector2.Zero, Vector2.Zero, Vector2.Zero)
-        {
+            : this(Vector2.Zero, Vector2.Zero, Vector2.Zero, Vector2.Zero) {
         }
 
         /// <summary>
@@ -65,8 +62,7 @@ namespace netDxf.Entities
             : this(new Vector2(firstVertex.X, firstVertex.Y),
                 new Vector2(secondVertex.X, secondVertex.Y),
                 new Vector2(thirdVertex.X, thirdVertex.Y),
-                new Vector2(thirdVertex.X, thirdVertex.Y))
-        {
+                new Vector2(thirdVertex.X, thirdVertex.Y)) {
         }
 
         /// <summary>
@@ -77,8 +73,7 @@ namespace netDxf.Entities
         /// <param name="thirdVertex">Trace <see cref="Vector2">third vertex</see> in OCS (object coordinate system).</param>
         /// <param name="fourthVertex">Trace <see cref="Vector2">fourth vertex</see> in OCS (object coordinate system).</param>
         public Trace(Vector2 firstVertex, Vector2 secondVertex, Vector2 thirdVertex, Vector2 fourthVertex)
-            : base(EntityType.Trace, DxfObjectCode.Trace)
-        {
+            : base(EntityType.Trace, DxfObjectCode.Trace) {
             this.firstVertex = firstVertex;
             this.secondVertex = secondVertex;
             this.thirdVertex = thirdVertex;
@@ -94,8 +89,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets the first trace <see cref="Vector3">vertex in OCS (object coordinate system).</see>.
         /// </summary>
-        public Vector2 FirstVertex
-        {
+        public Vector2 FirstVertex {
             get { return this.firstVertex; }
             set { this.firstVertex = value; }
         }
@@ -103,8 +97,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets the second trace <see cref="Vector3">vertex in OCS (object coordinate system).</see>.
         /// </summary>
-        public Vector2 SecondVertex
-        {
+        public Vector2 SecondVertex {
             get { return this.secondVertex; }
             set { this.secondVertex = value; }
         }
@@ -112,8 +105,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets the third trace <see cref="Vector3">vertex in OCS (object coordinate system).</see>.
         /// </summary>
-        public Vector2 ThirdVertex
-        {
+        public Vector2 ThirdVertex {
             get { return this.thirdVertex; }
             set { this.thirdVertex = value; }
         }
@@ -121,8 +113,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets the fourth trace <see cref="Vector3">vertex in OCS (object coordinate system).</see>.
         /// </summary>
-        public Vector2 FourthVertex
-        {
+        public Vector2 FourthVertex {
             get { return this.fourthVertex; }
             set { this.fourthVertex = value; }
         }
@@ -131,8 +122,7 @@ namespace netDxf.Entities
         /// Gets or sets the trace elevation.
         /// </summary>
         /// <remarks>This is the distance from the origin to the plane of the trace.</remarks>
-        public double Elevation
-        {
+        public double Elevation {
             get { return this.elevation; }
             set { this.elevation = value; }
         }
@@ -140,8 +130,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets the thickness of the trace.
         /// </summary>
-        public double Thickness
-        {
+        public double Thickness {
             get { return this.thickness; }
             set { this.thickness = value; }
         }
@@ -154,16 +143,14 @@ namespace netDxf.Entities
         /// Creates a new Trace that is a copy of the current instance.
         /// </summary>
         /// <returns>A new Trace that is a copy of this instance.</returns>
-        public override object Clone()
-        {
-            Trace entity = new Trace
-            {
+        public override object Clone() {
+            Trace entity = new Trace {
                 //EntityObject properties
-                Layer = (Layer) this.Layer.Clone(),
-                Linetype = (Linetype) this.Linetype.Clone(),
-                Color = (AciColor) this.Color.Clone(),
+                Layer = (Layer)this.Layer.Clone(),
+                Linetype = (Linetype)this.Linetype.Clone(),
+                Color = (AciColor)this.Color.Clone(),
                 Lineweight = this.Lineweight,
-                Transparency = (Transparency) this.Transparency.Clone(),
+                Transparency = (Transparency)this.Transparency.Clone(),
                 LinetypeScale = this.LinetypeScale,
                 Normal = this.Normal,
                 IsVisible = this.IsVisible,
@@ -176,7 +163,7 @@ namespace netDxf.Entities
             };
 
             foreach (XData data in this.XData.Values)
-                entity.XData.Add((XData) data.Clone());
+                entity.XData.Add((XData)data.Clone());
 
             return entity;
         }

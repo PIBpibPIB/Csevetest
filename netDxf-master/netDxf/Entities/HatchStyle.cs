@@ -20,13 +20,11 @@
 
 #endregion
 
-namespace netDxf.Entities
-{
+namespace netDxf.Entities {
     /// <summary>
     /// Hatch pattern style.
     /// </summary>
-    public enum HatchStyle
-    {
+    public enum HatchStyle {
         /// <summary>
         /// Hatch "odd parity" area.
         /// </summary>

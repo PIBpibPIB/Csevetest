@@ -20,12 +20,11 @@
 
 #endregion
 
-using System.Collections.Generic;
 using netDxf.Blocks;
 using netDxf.Tables;
+using System.Collections.Generic;
 
-namespace netDxf.Entities
-{
+namespace netDxf.Entities {
     /// <summary>
     /// Predefined shapes for dimension style arrowheads.
     /// </summary>
@@ -52,17 +51,14 @@ namespace netDxf.Entities
     /// "_INTEGRAL" = integral<br/>
     /// "_ARCHTICK" = architectural tick<br/>
     /// </remarks>
-    public static class DimensionArrowhead
-    {
+    public static class DimensionArrowhead {
         #region predefined dimensions arrowheads
 
         /// <summary>
         /// Dot arrowhead.
         /// </summary>
-        public static Block Dot
-        {
-            get
-            {
+        public static Block Dot {
+            get {
                 Block arrowhead = new Block("_DOT");
 
                 List<LwPolylineVertex> vertexes = new List<LwPolylineVertex>
@@ -70,8 +66,7 @@ namespace netDxf.Entities
                     new LwPolylineVertex(-0.25, 0.0, 1.0),
                     new LwPolylineVertex(0.25, 0.0, 1.0)
                 };
-                LwPolyline pol = new LwPolyline(vertexes, true)
-                {
+                LwPolyline pol = new LwPolyline(vertexes, true) {
                     Layer = Layer.Default,
                     Linetype = Linetype.ByBlock,
                     Color = AciColor.ByBlock
@@ -79,8 +74,7 @@ namespace netDxf.Entities
                 pol.SetConstantWidth(0.5);
                 arrowhead.Entities.Add(pol);
 
-                Line line = new Line(new Vector3(-0.5, 0.0, 0.0), new Vector3(-1.0, 0.0, 0.0))
-                {
+                Line line = new Line(new Vector3(-0.5, 0.0, 0.0), new Vector3(-1.0, 0.0, 0.0)) {
                     Layer = Layer.Default,
                     Linetype = Linetype.ByBlock,
                     Color = AciColor.ByBlock,
@@ -95,10 +89,8 @@ namespace netDxf.Entities
         /// <summary>
         /// Small dot arrowhead.
         /// </summary>
-        public static Block DotSmall
-        {
-            get
-            {
+        public static Block DotSmall {
+            get {
                 Block arrowhead = new Block("_DOTSMALL");
 
                 List<LwPolylineVertex> vertexes = new List<LwPolylineVertex>
@@ -106,8 +98,7 @@ namespace netDxf.Entities
                     new LwPolylineVertex(-0.0625, 0.0, 1.0),
                     new LwPolylineVertex(0.0625, 0.0, 1.0)
                 };
-                LwPolyline pol = new LwPolyline(vertexes, true)
-                {
+                LwPolyline pol = new LwPolyline(vertexes, true) {
                     Layer = Layer.Default,
                     Linetype = Linetype.ByBlock,
                     Color = AciColor.ByBlock
@@ -122,14 +113,11 @@ namespace netDxf.Entities
         /// <summary>
         /// Blank dot arrowhead.
         /// </summary>
-        public static Block DotBlank
-        {
-            get
-            {
+        public static Block DotBlank {
+            get {
                 Block arrowhead = new Block("_DOTBLANK");
 
-                Circle circle = new Circle(new Vector3(0.0, 0.0, 0.0), 0.5)
-                {
+                Circle circle = new Circle(new Vector3(0.0, 0.0, 0.0), 0.5) {
                     Layer = Layer.Default,
                     Linetype = Linetype.ByBlock,
                     Color = AciColor.ByBlock,
@@ -137,8 +125,7 @@ namespace netDxf.Entities
                 };
                 arrowhead.Entities.Add(circle);
 
-                Line line = new Line(new Vector3(-0.5, 0.0, 0.0), new Vector3(-1.0, 0.0, 0.0))
-                {
+                Line line = new Line(new Vector3(-0.5, 0.0, 0.0), new Vector3(-1.0, 0.0, 0.0)) {
                     Layer = Layer.Default,
                     Linetype = Linetype.ByBlock,
                     Color = AciColor.ByBlock,
@@ -153,14 +140,11 @@ namespace netDxf.Entities
         /// <summary>
         /// Origin indicator arrowhead.
         /// </summary>
-        public static Block OriginIndicator
-        {
-            get
-            {
+        public static Block OriginIndicator {
+            get {
                 Block arrowhead = new Block("_ORIGIN");
 
-                Circle circle = new Circle(new Vector3(0.0, 0.0, 0.0), 0.5)
-                {
+                Circle circle = new Circle(new Vector3(0.0, 0.0, 0.0), 0.5) {
                     Layer = Layer.Default,
                     Linetype = Linetype.ByBlock,
                     Color = AciColor.ByBlock,
@@ -168,8 +152,7 @@ namespace netDxf.Entities
                 };
                 arrowhead.Entities.Add(circle);
 
-                Line line = new Line(new Vector3(0.0, 0.0, 0.0), new Vector3(-1.0, 0.0, 0.0))
-                {
+                Line line = new Line(new Vector3(0.0, 0.0, 0.0), new Vector3(-1.0, 0.0, 0.0)) {
                     Layer = Layer.Default,
                     Linetype = Linetype.ByBlock,
                     Color = AciColor.ByBlock,
@@ -184,14 +167,11 @@ namespace netDxf.Entities
         /// <summary>
         /// Origin indicator 2 arrowhead.
         /// </summary>
-        public static Block OriginIndicator2
-        {
-            get
-            {
+        public static Block OriginIndicator2 {
+            get {
                 Block arrowhead = new Block("_ORIGIN2");
 
-                Circle circle1 = new Circle(new Vector3(0.0, 0.0, 0.0), 0.5)
-                {
+                Circle circle1 = new Circle(new Vector3(0.0, 0.0, 0.0), 0.5) {
                     Layer = Layer.Default,
                     Linetype = Linetype.ByBlock,
                     Color = AciColor.ByBlock,
@@ -199,8 +179,7 @@ namespace netDxf.Entities
                 };
                 arrowhead.Entities.Add(circle1);
 
-                Circle circle2 = new Circle(new Vector3(0.0, 0.0, 0.0), 0.25)
-                {
+                Circle circle2 = new Circle(new Vector3(0.0, 0.0, 0.0), 0.25) {
                     Layer = Layer.Default,
                     Linetype = Linetype.ByBlock,
                     Color = AciColor.ByBlock,
@@ -208,8 +187,7 @@ namespace netDxf.Entities
                 };
                 arrowhead.Entities.Add(circle2);
 
-                Line line = new Line(new Vector3(-0.5, 0.0, 0.0), new Vector3(-1.0, 0.0, 0.0))
-                {
+                Line line = new Line(new Vector3(-0.5, 0.0, 0.0), new Vector3(-1.0, 0.0, 0.0)) {
                     Layer = Layer.Default,
                     Linetype = Linetype.ByBlock,
                     Color = AciColor.ByBlock,
@@ -224,14 +202,11 @@ namespace netDxf.Entities
         /// <summary>
         /// Open arrowhead.
         /// </summary>
-        public static Block Open
-        {
-            get
-            {
+        public static Block Open {
+            get {
                 Block arrowhead = new Block("_OPEN");
 
-                Line line1 = new Line(new Vector3(-1.0, 0.1666666666666666, 0.0), new Vector3(0.0, 0.0, 0.0))
-                {
+                Line line1 = new Line(new Vector3(-1.0, 0.1666666666666666, 0.0), new Vector3(0.0, 0.0, 0.0)) {
                     Layer = Layer.Default,
                     Linetype = Linetype.ByBlock,
                     Color = AciColor.ByBlock,
@@ -239,8 +214,7 @@ namespace netDxf.Entities
                 };
                 arrowhead.Entities.Add(line1);
 
-                Line line2 = new Line(new Vector3(0.0, 0.0, 0.0), new Vector3(-1.0, -0.1666666666666666, 0.0))
-                {
+                Line line2 = new Line(new Vector3(0.0, 0.0, 0.0), new Vector3(-1.0, -0.1666666666666666, 0.0)) {
                     Layer = Layer.Default,
                     Linetype = Linetype.ByBlock,
                     Color = AciColor.ByBlock,
@@ -248,8 +222,7 @@ namespace netDxf.Entities
                 };
                 arrowhead.Entities.Add(line2);
 
-                Line line3 = new Line(new Vector3(0.0, 0.0, 0.0), new Vector3(-1.0, 0.0, 0.0))
-                {
+                Line line3 = new Line(new Vector3(0.0, 0.0, 0.0), new Vector3(-1.0, 0.0, 0.0)) {
                     Layer = Layer.Default,
                     Linetype = Linetype.ByBlock,
                     Color = AciColor.ByBlock,
@@ -264,14 +237,11 @@ namespace netDxf.Entities
         /// <summary>
         /// Open 90 degree arrowhead (right angle arrowhead).
         /// </summary>
-        public static Block Open90
-        {
-            get
-            {
+        public static Block Open90 {
+            get {
                 Block arrowhead = new Block("_OPEN90");
 
-                Line line1 = new Line(new Vector3(-0.5, 0.5, 0.0), new Vector3(0.0, 0.0, 0.0))
-                {
+                Line line1 = new Line(new Vector3(-0.5, 0.5, 0.0), new Vector3(0.0, 0.0, 0.0)) {
                     Layer = Layer.Default,
                     Linetype = Linetype.ByBlock,
                     Color = AciColor.ByBlock,
@@ -279,8 +249,7 @@ namespace netDxf.Entities
                 };
                 arrowhead.Entities.Add(line1);
 
-                Line line2 = new Line(new Vector3(0.0, 0.0, 0.0), new Vector3(-0.5, -0.5, 0.0))
-                {
+                Line line2 = new Line(new Vector3(0.0, 0.0, 0.0), new Vector3(-0.5, -0.5, 0.0)) {
                     Layer = Layer.Default,
                     Linetype = Linetype.ByBlock,
                     Color = AciColor.ByBlock,
@@ -288,8 +257,7 @@ namespace netDxf.Entities
                 };
                 arrowhead.Entities.Add(line2);
 
-                Line line3 = new Line(new Vector3(0.0, 0.0, 0.0), new Vector3(-1.0, 0.0, 0.0))
-                {
+                Line line3 = new Line(new Vector3(0.0, 0.0, 0.0), new Vector3(-1.0, 0.0, 0.0)) {
                     Layer = Layer.Default,
                     Linetype = Linetype.ByBlock,
                     Color = AciColor.ByBlock,
@@ -304,14 +272,11 @@ namespace netDxf.Entities
         /// <summary>
         /// Open 30 degree angle arrowhead.
         /// </summary>
-        public static Block Open30
-        {
-            get
-            {
+        public static Block Open30 {
+            get {
                 Block arrowhead = new Block("_OPEN30");
 
-                Line line1 = new Line(new Vector3(-1.0, 0.26794919, 0.0), new Vector3(0.0, 0.0, 0.0))
-                {
+                Line line1 = new Line(new Vector3(-1.0, 0.26794919, 0.0), new Vector3(0.0, 0.0, 0.0)) {
                     Layer = Layer.Default,
                     Linetype = Linetype.ByBlock,
                     Color = AciColor.ByBlock,
@@ -319,8 +284,7 @@ namespace netDxf.Entities
                 };
                 arrowhead.Entities.Add(line1);
 
-                Line line2 = new Line(new Vector3(0.0, 0.0, 0.0), new Vector3(-1.0, -0.26794919, 0.0))
-                {
+                Line line2 = new Line(new Vector3(0.0, 0.0, 0.0), new Vector3(-1.0, -0.26794919, 0.0)) {
                     Layer = Layer.Default,
                     Linetype = Linetype.ByBlock,
                     Color = AciColor.ByBlock,
@@ -328,8 +292,7 @@ namespace netDxf.Entities
                 };
                 arrowhead.Entities.Add(line2);
 
-                Line line3 = new Line(new Vector3(0.0, 0.0, 0.0), new Vector3(-1.0, 0.0, 0.0))
-                {
+                Line line3 = new Line(new Vector3(0.0, 0.0, 0.0), new Vector3(-1.0, 0.0, 0.0)) {
                     Layer = Layer.Default,
                     Linetype = Linetype.ByBlock,
                     Color = AciColor.ByBlock,
@@ -344,14 +307,11 @@ namespace netDxf.Entities
         /// <summary>
         /// Closed arrowhead.
         /// </summary>
-        public static Block Closed
-        {
-            get
-            {
+        public static Block Closed {
+            get {
                 Block arrowhead = new Block("_CLOSED");
 
-                Line line1 = new Line(new Vector3(-1.0, 0.1666666666666666, 0.0), new Vector3(0.0, 0.0, 0.0))
-                {
+                Line line1 = new Line(new Vector3(-1.0, 0.1666666666666666, 0.0), new Vector3(0.0, 0.0, 0.0)) {
                     Layer = Layer.Default,
                     Linetype = Linetype.ByBlock,
                     Color = AciColor.ByBlock,
@@ -359,8 +319,7 @@ namespace netDxf.Entities
                 };
                 arrowhead.Entities.Add(line1);
 
-                Line line2 = new Line(new Vector3(0.0, 0.0, 0.0), new Vector3(-1.0, -0.1666666666666666, 0.0))
-                {
+                Line line2 = new Line(new Vector3(0.0, 0.0, 0.0), new Vector3(-1.0, -0.1666666666666666, 0.0)) {
                     Layer = Layer.Default,
                     Linetype = Linetype.ByBlock,
                     Color = AciColor.ByBlock,
@@ -368,8 +327,7 @@ namespace netDxf.Entities
                 };
                 arrowhead.Entities.Add(line2);
 
-                Line line3 = new Line(new Vector3(-1.0, 0.1666666666666666, 0.0), new Vector3(-1.0, -0.1666666666666666, 0.0))
-                {
+                Line line3 = new Line(new Vector3(-1.0, 0.1666666666666666, 0.0), new Vector3(-1.0, -0.1666666666666666, 0.0)) {
                     Layer = Layer.Default,
                     Linetype = Linetype.ByBlock,
                     Color = AciColor.ByBlock,
@@ -377,8 +335,7 @@ namespace netDxf.Entities
                 };
                 arrowhead.Entities.Add(line3);
 
-                Line line4 = new Line(new Vector3(0.0, 0.0, 0.0), new Vector3(-1.0, 0.0, 0.0))
-                {
+                Line line4 = new Line(new Vector3(0.0, 0.0, 0.0), new Vector3(-1.0, 0.0, 0.0)) {
                     Layer = Layer.Default,
                     Linetype = Linetype.ByBlock,
                     Color = AciColor.ByBlock,
@@ -393,14 +350,11 @@ namespace netDxf.Entities
         /// <summary>
         /// Small blank dot arrowhead.
         /// </summary>
-        public static Block DotSmallBlank
-        {
-            get
-            {
+        public static Block DotSmallBlank {
+            get {
                 Block arrowhead = new Block("_SMALL");
 
-                Circle circle = new Circle(new Vector3(0.0, 0.0, 0.0), 0.25)
-                {
+                Circle circle = new Circle(new Vector3(0.0, 0.0, 0.0), 0.25) {
                     Layer = Layer.Default,
                     Linetype = Linetype.ByBlock,
                     Color = AciColor.ByBlock,
@@ -415,10 +369,8 @@ namespace netDxf.Entities
         /// <summary>
         /// Empty arrowhead.
         /// </summary>
-        public static Block None
-        {
-            get
-            {
+        public static Block None {
+            get {
                 Block arrowhead = new Block("_NONE");
                 return arrowhead;
             }
@@ -427,14 +379,11 @@ namespace netDxf.Entities
         /// <summary>
         /// Oblique arrowhead.
         /// </summary>
-        public static Block Oblique
-        {
-            get
-            {
+        public static Block Oblique {
+            get {
                 Block arrowhead = new Block("_OBLIQUE");
 
-                Line line = new Line(new Vector3(-0.5, -0.5, 0.0), new Vector3(0.5, 0.5, 0.0))
-                {
+                Line line = new Line(new Vector3(-0.5, -0.5, 0.0), new Vector3(0.5, 0.5, 0.0)) {
                     Layer = Layer.Default,
                     Linetype = Linetype.ByBlock,
                     Color = AciColor.ByBlock,
@@ -449,22 +398,18 @@ namespace netDxf.Entities
         /// <summary>
         /// Filled box arrowhead.
         /// </summary>
-        public static Block BoxFilled
-        {
-            get
-            {
+        public static Block BoxFilled {
+            get {
                 Block arrowhead = new Block("_BOXFILLED");
 
-                Solid solid = new Solid(new Vector2(-0.5, 0.5), new Vector2(0.5, 0.5), new Vector2(-0.5, -0.5), new Vector2(0.5, -0.5))
-                {
+                Solid solid = new Solid(new Vector2(-0.5, 0.5), new Vector2(0.5, 0.5), new Vector2(-0.5, -0.5), new Vector2(0.5, -0.5)) {
                     Layer = Layer.Default,
                     Linetype = Linetype.ByBlock,
                     Color = AciColor.ByBlock
                 };
                 arrowhead.Entities.Add(solid);
 
-                Line line = new Line(new Vector3(-0.5, 0.0, 0.0), new Vector3(-1.0, 0.0, 0.0))
-                {
+                Line line = new Line(new Vector3(-0.5, 0.0, 0.0), new Vector3(-1.0, 0.0, 0.0)) {
                     Layer = Layer.Default,
                     Linetype = Linetype.ByBlock,
                     Color = AciColor.ByBlock,
@@ -479,14 +424,11 @@ namespace netDxf.Entities
         /// <summary>
         /// Box arrowhead.
         /// </summary>
-        public static Block Box
-        {
-            get
-            {
+        public static Block Box {
+            get {
                 Block arrowhead = new Block("_BOXBLANK");
 
-                Line line1 = new Line(new Vector3(-0.5, -0.5, 0.0), new Vector3(0.5, -0.5, 0.0))
-                {
+                Line line1 = new Line(new Vector3(-0.5, -0.5, 0.0), new Vector3(0.5, -0.5, 0.0)) {
                     Layer = Layer.Default,
                     Linetype = Linetype.ByBlock,
                     Color = AciColor.ByBlock,
@@ -494,8 +436,7 @@ namespace netDxf.Entities
                 };
                 arrowhead.Entities.Add(line1);
 
-                Line line2 = new Line(new Vector3(0.5, -0.5, 0.0), new Vector3(0.5, 0.5, 0.0))
-                {
+                Line line2 = new Line(new Vector3(0.5, -0.5, 0.0), new Vector3(0.5, 0.5, 0.0)) {
                     Layer = Layer.Default,
                     Linetype = Linetype.ByBlock,
                     Color = AciColor.ByBlock,
@@ -503,8 +444,7 @@ namespace netDxf.Entities
                 };
                 arrowhead.Entities.Add(line2);
 
-                Line line3 = new Line(new Vector3(0.5, 0.5, 0.0), new Vector3(-0.5, 0.5, 0.0))
-                {
+                Line line3 = new Line(new Vector3(0.5, 0.5, 0.0), new Vector3(-0.5, 0.5, 0.0)) {
                     Layer = Layer.Default,
                     Linetype = Linetype.ByBlock,
                     Color = AciColor.ByBlock,
@@ -512,8 +452,7 @@ namespace netDxf.Entities
                 };
                 arrowhead.Entities.Add(line3);
 
-                Line line4 = new Line(new Vector3(-0.5, 0.5, 0.0), new Vector3(-0.5, -0.5, 0.0))
-                {
+                Line line4 = new Line(new Vector3(-0.5, 0.5, 0.0), new Vector3(-0.5, -0.5, 0.0)) {
                     Layer = Layer.Default,
                     Linetype = Linetype.ByBlock,
                     Color = AciColor.ByBlock,
@@ -521,8 +460,7 @@ namespace netDxf.Entities
                 };
                 arrowhead.Entities.Add(line4);
 
-                Line line5 = new Line(new Vector3(-0.5, 0.0, 0.0), new Vector3(-1.0, 0.0, 0.0))
-                {
+                Line line5 = new Line(new Vector3(-0.5, 0.0, 0.0), new Vector3(-1.0, 0.0, 0.0)) {
                     Layer = Layer.Default,
                     Linetype = Linetype.ByBlock,
                     Color = AciColor.ByBlock,
@@ -537,14 +475,11 @@ namespace netDxf.Entities
         /// <summary>
         /// Blank closed arrowhead.
         /// </summary>
-        public static Block ClosedBlank
-        {
-            get
-            {
+        public static Block ClosedBlank {
+            get {
                 Block arrowhead = new Block("_CLOSEDBLANK");
 
-                Line line1 = new Line(new Vector3(-1.0, 0.1666666666666666, 0.0), new Vector3(0.0, 0.0, 0.0))
-                {
+                Line line1 = new Line(new Vector3(-1.0, 0.1666666666666666, 0.0), new Vector3(0.0, 0.0, 0.0)) {
                     Layer = Layer.Default,
                     Linetype = Linetype.ByBlock,
                     Color = AciColor.ByBlock,
@@ -552,8 +487,7 @@ namespace netDxf.Entities
                 };
                 arrowhead.Entities.Add(line1);
 
-                Line line2 = new Line(new Vector3(0.0, 0.0, 0.0), new Vector3(-1.0, -0.1666666666666666, 0.0))
-                {
+                Line line2 = new Line(new Vector3(0.0, 0.0, 0.0), new Vector3(-1.0, -0.1666666666666666, 0.0)) {
                     Layer = Layer.Default,
                     Linetype = Linetype.ByBlock,
                     Color = AciColor.ByBlock,
@@ -561,8 +495,7 @@ namespace netDxf.Entities
                 };
                 arrowhead.Entities.Add(line2);
 
-                Line line3 = new Line(new Vector3(-1.0, 0.1666666666666666, 0.0), new Vector3(-1.0, -0.1666666666666666, 0.0))
-                {
+                Line line3 = new Line(new Vector3(-1.0, 0.1666666666666666, 0.0), new Vector3(-1.0, -0.1666666666666666, 0.0)) {
                     Layer = Layer.Default,
                     Linetype = Linetype.ByBlock,
                     Color = AciColor.ByBlock,
@@ -577,14 +510,11 @@ namespace netDxf.Entities
         /// <summary>
         /// Filled datum triangle arrowhead.
         /// </summary>
-        public static Block DatumTriangleFilled
-        {
-            get
-            {
+        public static Block DatumTriangleFilled {
+            get {
                 Block arrowhead = new Block("_DATUMFILLED");
 
-                Solid solid = new Solid(new Vector2(0.0, 0.57735027), new Vector2(-1.0, 0.0), new Vector2(0.0, -0.57735027))
-                {
+                Solid solid = new Solid(new Vector2(0.0, 0.57735027), new Vector2(-1.0, 0.0), new Vector2(0.0, -0.57735027)) {
                     Layer = Layer.Default,
                     Linetype = Linetype.ByBlock,
                     Color = AciColor.ByBlock
@@ -598,14 +528,11 @@ namespace netDxf.Entities
         /// <summary>
         /// Datum triangle arrowhead.
         /// </summary>
-        public static Block DatumTriangle
-        {
-            get
-            {
+        public static Block DatumTriangle {
+            get {
                 Block arrowhead = new Block("_DATUMBLANK");
 
-                Line line1 = new Line(new Vector3(0.0, 0.5773502700000001, 0.0), new Vector3(-1.0, 0.0, 0.0))
-                {
+                Line line1 = new Line(new Vector3(0.0, 0.5773502700000001, 0.0), new Vector3(-1.0, 0.0, 0.0)) {
                     Layer = Layer.Default,
                     Linetype = Linetype.ByBlock,
                     Color = AciColor.ByBlock,
@@ -613,8 +540,7 @@ namespace netDxf.Entities
                 };
                 arrowhead.Entities.Add(line1);
 
-                Line line2 = new Line(new Vector3(-1.0, 0.0, 0.0), new Vector3(0.0, -0.5773502700000001, 0.0))
-                {
+                Line line2 = new Line(new Vector3(-1.0, 0.0, 0.0), new Vector3(0.0, -0.5773502700000001, 0.0)) {
                     Layer = Layer.Default,
                     Linetype = Linetype.ByBlock,
                     Color = AciColor.ByBlock,
@@ -622,8 +548,7 @@ namespace netDxf.Entities
                 };
                 arrowhead.Entities.Add(line2);
 
-                Line line3 = new Line(new Vector3(0.0, -0.5773502700000001, 0.0), new Vector3(0.0, 0.5773502700000001, 0.0))
-                {
+                Line line3 = new Line(new Vector3(0.0, -0.5773502700000001, 0.0), new Vector3(0.0, 0.5773502700000001, 0.0)) {
                     Layer = Layer.Default,
                     Linetype = Linetype.ByBlock,
                     Color = AciColor.ByBlock,
@@ -638,14 +563,11 @@ namespace netDxf.Entities
         /// <summary>
         /// Integral symbol arrowhead.
         /// </summary>
-        public static Block Integral
-        {
-            get
-            {
+        public static Block Integral {
+            get {
                 Block arrowhead = new Block("_INTEGRAL");
 
-                Arc arc1 = new Arc(new Vector3(0.44488802, -0.09133463, 0.0), 0.4541666700000001, 101.9999999980395, 167.9999999799193)
-                {
+                Arc arc1 = new Arc(new Vector3(0.44488802, -0.09133463, 0.0), 0.4541666700000001, 101.9999999980395, 167.9999999799193) {
                     Layer = Layer.Default,
                     Linetype = Linetype.ByBlock,
                     Color = AciColor.ByBlock,
@@ -653,8 +575,7 @@ namespace netDxf.Entities
                 };
                 arrowhead.Entities.Add(arc1);
 
-                Arc arc2 = new Arc(new Vector3(-0.44488802, 0.09133463, 0.0), 0.4541666700000001, 282.0000000215427, 348.0000000034225)
-                {
+                Arc arc2 = new Arc(new Vector3(-0.44488802, 0.09133463, 0.0), 0.4541666700000001, 282.0000000215427, 348.0000000034225) {
                     Layer = Layer.Default,
                     Linetype = Linetype.ByBlock,
                     Color = AciColor.ByBlock,
@@ -669,10 +590,8 @@ namespace netDxf.Entities
         /// <summary>
         /// Architectural tick arrowhead.
         /// </summary>
-        public static Block ArchitecturalTick
-        {
-            get
-            {
+        public static Block ArchitecturalTick {
+            get {
                 Block arrowhead = new Block("_ARCHTICK");
 
                 List<LwPolylineVertex> vertexes = new List<LwPolylineVertex>
@@ -680,8 +599,7 @@ namespace netDxf.Entities
                     new LwPolylineVertex(-0.5, -0.5),
                     new LwPolylineVertex(0.5, 0.5)
                 };
-                LwPolyline pol = new LwPolyline(vertexes, false)
-                {
+                LwPolyline pol = new LwPolyline(vertexes, false) {
                     Layer = Layer.Default,
                     Linetype = Linetype.ByBlock,
                     Color = AciColor.ByBlock

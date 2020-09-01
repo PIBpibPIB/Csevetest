@@ -20,14 +20,12 @@
 
 #endregion
 
-namespace netDxf.Tables
-{
+namespace netDxf.Tables {
     /// <summary>
     /// Represents a simple linetype segment.
     /// </summary>
     public class LinetypeSimpleSegment :
-        LinetypeSegment
-    {
+        LinetypeSegment {
         #region private fields
 
         #endregion
@@ -37,16 +35,14 @@ namespace netDxf.Tables
         /// <summary>
         /// Initializes a new instance of the <c>LinetypeSìmpleSegment</c> class.
         /// </summary>
-        public LinetypeSimpleSegment() : this(0.0)
-        {
+        public LinetypeSimpleSegment() : this(0.0) {
         }
 
         /// <summary>
         /// Initializes a new instance of the <c>LinetypeSìmpleSegment</c> class.
         /// </summary>
         /// <param name="length">Dash or space length of the segment.</param>
-        public LinetypeSimpleSegment(double length) : base (LinetypeSegmentType.Simple, length)
-        {
+        public LinetypeSimpleSegment(double length) : base(LinetypeSegmentType.Simple, length) {
         }
 
         #endregion
@@ -61,8 +57,7 @@ namespace netDxf.Tables
         /// Creates a new <c>LinetypeSìmpleSegment</c> that is a copy of the current instance.
         /// </summary>
         /// <returns>A new <c>LinetypeSìmpleSegment</c> that is a copy of this instance.</returns>
-        public override object Clone()
-        {
+        public override object Clone() {
             return new LinetypeSimpleSegment(this.Length);
         }
 

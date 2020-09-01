@@ -20,12 +20,11 @@
 
 #endregion
 
+using netDxf.Tables;
 using System;
 using System.Collections.Generic;
-using netDxf.Tables;
 
-namespace netDxf.Entities
-{
+namespace netDxf.Entities {
     /// <summary>
     /// Represents a view in paper space of the model.
     /// </summary>
@@ -33,8 +32,7 @@ namespace netDxf.Entities
     /// The viewport with id equals 1 is the view of the paper space layout itself and it does not show the model.
     /// </remarks>
     public class Viewport :
-        EntityObject
-    {
+        EntityObject {
         #region private fields
 
         private Vector3 center;
@@ -71,14 +69,12 @@ namespace netDxf.Entities
         /// Initializes a new viewport object.
         /// </summary>
         public Viewport()
-            : this(2)
-        {
+            : this(2) {
             this.status |= ViewportStatusFlags.GridMode;
         }
 
         internal Viewport(short id)
-            : base(EntityType.Viewport, DxfObjectCode.Viewport)
-        {
+            : base(EntityType.Viewport, DxfObjectCode.Viewport) {
             this.center = Vector3.Zero;
             this.width = 297;
             this.height = 210;
@@ -113,8 +109,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets the center point in paper space units.
         /// </summary>
-        public Vector3 Center
-        {
+        public Vector3 Center {
             get { return this.center; }
             set { this.center = value; }
         }
@@ -122,8 +117,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets the width in paper space units.
         /// </summary>
-        public double Width
-        {
+        public double Width {
             get { return this.width; }
             set { this.width = value; }
         }
@@ -131,8 +125,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets the height in paper space units.
         /// </summary>
-        public double Height
-        {
+        public double Height {
             get { return this.height; }
             set { this.height = value; }
         }
@@ -144,11 +137,9 @@ namespace netDxf.Entities
         /// 1 = Stacking value reserved for the layout view.
         /// positive value = On and active. The value indicates the order of stacking for the viewports, where 1 is the active viewport, 2 is the next, and so forth.
         /// </summary>
-        public short Stacking
-        {
+        public short Stacking {
             get { return this.stacking; }
-            set
-            {
+            set {
                 if (value < -1)
                     throw new ArgumentOutOfRangeException(nameof(value), "The stacking value must be greater than -1.");
                 this.stacking = value;
@@ -158,8 +149,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets the viewport ID.
         /// </summary>
-        internal short Id
-        {
+        internal short Id {
             get { return this.id; }
             set { this.id = value; }
         }
@@ -167,8 +157,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets the view center point (in DCS).
         /// </summary>
-        public Vector2 ViewCenter
-        {
+        public Vector2 ViewCenter {
             get { return this.viewCenter; }
             set { this.viewCenter = value; }
         }
@@ -176,8 +165,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets the snap base point.
         /// </summary>
-        public Vector2 SnapBase
-        {
+        public Vector2 SnapBase {
             get { return this.snapBase; }
             set { this.snapBase = value; }
         }
@@ -185,8 +173,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets the snap spacing.
         /// </summary>
-        public Vector2 SnapSpacing
-        {
+        public Vector2 SnapSpacing {
             get { return this.snapSpacing; }
             set { this.snapSpacing = value; }
         }
@@ -194,8 +181,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets the grid spacing.
         /// </summary>
-        public Vector2 GridSpacing
-        {
+        public Vector2 GridSpacing {
             get { return this.gridSpacing; }
             set { this.gridSpacing = value; }
         }
@@ -203,8 +189,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets the view direction vector (in WCS).
         /// </summary>
-        public Vector3 ViewDirection
-        {
+        public Vector3 ViewDirection {
             get { return this.viewDirection; }
             set { this.viewDirection = value; }
         }
@@ -212,8 +197,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets the view target point (in WCS).
         /// </summary>
-        public Vector3 ViewTarget
-        {
+        public Vector3 ViewTarget {
             get { return this.viewTarget; }
             set { this.viewTarget = value; }
         }
@@ -221,8 +205,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets the perspective lens length.
         /// </summary>
-        public double LensLength
-        {
+        public double LensLength {
             get { return this.lensLength; }
             set { this.lensLength = value; }
         }
@@ -230,8 +213,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets the front clip plane Z value.
         /// </summary>
-        public double FrontClipPlane
-        {
+        public double FrontClipPlane {
             get { return this.frontClipPlane; }
             set { this.frontClipPlane = value; }
         }
@@ -239,8 +221,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets the back clip plane Z value.
         /// </summary>
-        public double BackClipPlane
-        {
+        public double BackClipPlane {
             get { return this.backClipPlane; }
             set { this.backClipPlane = value; }
         }
@@ -248,8 +229,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets the view height (in model space units).
         /// </summary>
-        public double ViewHeight
-        {
+        public double ViewHeight {
             get { return this.viewHeight; }
             set { this.viewHeight = value; }
         }
@@ -257,8 +237,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets the snap angle.
         /// </summary>
-        public double SnapAngle
-        {
+        public double SnapAngle {
             get { return this.snapAngle; }
             set { this.snapAngle = value; }
         }
@@ -266,8 +245,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets the view twist angle.
         /// </summary>
-        public double TwistAngle
-        {
+        public double TwistAngle {
             get { return this.twistAngle; }
             set { this.twistAngle = value; }
         }
@@ -275,8 +253,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets the circle zoom percent.
         /// </summary>
-        public short CircleZoomPercent
-        {
+        public short CircleZoomPercent {
             get { return this.circleZoomPercent; }
             set { this.circleZoomPercent = value; }
         }
@@ -284,16 +261,14 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets the list of layers that are frozen in this viewport.
         /// </summary>
-        public List<Layer> FrozenLayers
-        {
+        public List<Layer> FrozenLayers {
             get { return this.frozenLayers; }
         }
 
         /// <summary>
         /// Gets or sets the <see cref="ViewportStatusFlags">viewport status flags</see>:
         /// </summary>
-        public ViewportStatusFlags Status
-        {
+        public ViewportStatusFlags Status {
             get { return this.status; }
             set { this.status = value; }
         }
@@ -301,8 +276,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets the UCS origin.
         /// </summary>
-        public Vector3 UcsOrigin
-        {
+        public Vector3 UcsOrigin {
             get { return this.ucsOrigin; }
             set { this.ucsOrigin = value; }
         }
@@ -310,8 +284,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets the UCS X axis.
         /// </summary>
-        public Vector3 UcsXAxis
-        {
+        public Vector3 UcsXAxis {
             get { return this.ucsXAxis; }
             set { this.ucsXAxis = value; }
         }
@@ -319,8 +292,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets the UCS Y axis.
         /// </summary>
-        public Vector3 UcsYAxis
-        {
+        public Vector3 UcsYAxis {
             get { return this.ucsYAxis; }
             set { this.ucsYAxis = value; }
         }
@@ -328,8 +300,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets the elevation.
         /// </summary>
-        public double Elevation
-        {
+        public double Elevation {
             get { return this.elevation; }
             set { this.elevation = value; }
         }
@@ -345,50 +316,44 @@ namespace netDxf.Entities
         /// Only X and Y coordinates will be used the entity normal will be considered as UnitZ.<br />
         /// When the viewport is added to the document this entity will be added too.
         /// </remarks>
-        public EntityObject ClippingBoundary
-        {
+        public EntityObject ClippingBoundary {
             get { return this.boundary; }
-            set
-            {
+            set {
                 if (this.boundary != null)
                     this.boundary.RemoveReactor(this);
 
-                if (value == null)
-                {
+                if (value == null) {
                     this.status &= ~ViewportStatusFlags.NonRectangularClipping;
                     this.boundary = null;
                     return;
                 }
 
                 BoundingRectangle abbr;
-                switch (value.Type)
-                {
+                switch (value.Type) {
                     case EntityType.Circle:
-                        Circle circle = (Circle) value;
+                        Circle circle = (Circle)value;
                         abbr = new BoundingRectangle(new Vector2(circle.Center.X, circle.Center.Y), circle.Radius);
                         break;
                     case EntityType.Ellipse:
-                        Ellipse ellipse = (Ellipse) value;
+                        Ellipse ellipse = (Ellipse)value;
                         abbr = new BoundingRectangle(new Vector2(ellipse.Center.X, ellipse.Center.Y), ellipse.MajorAxis, ellipse.MinorAxis, ellipse.Rotation);
                         break;
                     case EntityType.LightWeightPolyline:
-                        LwPolyline lwPol = (LwPolyline) value;
+                        LwPolyline lwPol = (LwPolyline)value;
                         abbr = new BoundingRectangle(lwPol.PolygonalVertexes(6, MathHelper.Epsilon, MathHelper.Epsilon));
                         break;
                     case EntityType.Polyline:
-                        Polyline pol = (Polyline) value;
+                        Polyline pol = (Polyline)value;
                         List<Vector2> pPoints = new List<Vector2>();
-                        foreach (PolylineVertex point in pol.Vertexes)
-                        {
+                        foreach (PolylineVertex point in pol.Vertexes) {
                             pPoints.Add(new Vector2(point.Position.X, point.Position.Y));
                         }
                         abbr = new BoundingRectangle(pPoints);
                         break;
                     case EntityType.Spline:
-                        Spline spline = (Spline) value;
+                        Spline spline = (Spline)value;
                         List<Vector2> sPoints = new List<Vector2>();
-                        foreach (SplineVertex point in spline.ControlPoints)
-                        {
+                        foreach (SplineVertex point in spline.ControlPoints) {
                             sPoints.Add(new Vector2(point.Position.X, point.Position.Y));
                         }
                         abbr = new BoundingRectangle(sPoints);
@@ -418,8 +383,7 @@ namespace netDxf.Entities
         /// Some objects might consume more than one, is, for example, the case of polylines that will assign
         /// automatically a handle to its vertexes. The entity number will be converted to an hexadecimal number.
         /// </remarks>
-        internal override long AsignHandle(long entityNumber)
-        {
+        internal override long AsignHandle(long entityNumber) {
             if (this.boundary != null)
                 entityNumber = this.boundary.AsignHandle(entityNumber);
             return base.AsignHandle(entityNumber);
@@ -430,16 +394,14 @@ namespace netDxf.Entities
         /// Creates a new viewport that is a copy of the current instance.
         /// </summary>
         /// <returns>A new viewport that is a copy of this instance.</returns>
-        public override object Clone()
-        {
-            Viewport viewport = new Viewport
-            {
+        public override object Clone() {
+            Viewport viewport = new Viewport {
                 //EntityObject properties
-                Layer = (Layer) this.Layer.Clone(),
-                Linetype = (Linetype) this.Linetype.Clone(),
-                Color = (AciColor) this.Color.Clone(),
+                Layer = (Layer)this.Layer.Clone(),
+                Linetype = (Linetype)this.Linetype.Clone(),
+                Color = (AciColor)this.Color.Clone(),
                 Lineweight = this.Lineweight,
-                Transparency = (Transparency) this.Transparency.Clone(),
+                Transparency = (Transparency)this.Transparency.Clone(),
                 LinetypeScale = this.LinetypeScale,
                 Normal = this.Normal,
                 IsVisible = this.IsVisible,
@@ -470,11 +432,11 @@ namespace netDxf.Entities
             };
 
             foreach (XData data in this.XData.Values)
-                viewport.XData.Add((XData) data.Clone());
+                viewport.XData.Add((XData)data.Clone());
 
 
             if (this.boundary != null)
-                viewport.ClippingBoundary = (EntityObject) this.boundary.Clone();
+                viewport.ClippingBoundary = (EntityObject)this.boundary.Clone();
 
             viewport.FrozenLayers.AddRange(this.frozenLayers.ToArray());
             return viewport;

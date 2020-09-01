@@ -20,13 +20,11 @@
 
 #endregion
 
-namespace netDxf
-{
+namespace netDxf {
     /// <summary>
     /// Defines the coordinate system reference.
     /// </summary>
-    public enum CoordinateSystem
-    {
+    public enum CoordinateSystem {
         /// <summary>
         /// World coordinates.
         /// </summary>

@@ -20,13 +20,11 @@
 
 #endregion
 
-namespace netDxf.Objects
-{
+namespace netDxf.Objects {
     /// <summary>
     /// Defines the different underlay documents available.
     /// </summary>
-    public enum UnderlayType
-    {
+    public enum UnderlayType {
         /// <summary>
         /// DGN
         /// </summary>

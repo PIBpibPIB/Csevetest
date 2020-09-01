@@ -20,13 +20,11 @@
 
 #endregion
 
-namespace netDxf.Header
-{
+namespace netDxf.Header {
     /// <summary>
     /// Defines the attribute visibility.
     /// </summary>
-    public enum AttMode
-    {
+    public enum AttMode {
         /// <summary>
         /// None.
         /// </summary>

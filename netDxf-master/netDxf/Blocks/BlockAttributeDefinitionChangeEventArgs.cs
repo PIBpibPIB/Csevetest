@@ -20,17 +20,15 @@
 
 #endregion
 
-using System;
 using netDxf.Entities;
+using System;
 
-namespace netDxf.Blocks
-{
+namespace netDxf.Blocks {
     /// <summary>
     /// Represents the arguments thrown when an attribute definition is added ore removed from a <see cref="Block">Block</see>.
     /// </summary>
     public class BlockAttributeDefinitionChangeEventArgs :
-        EventArgs
-    {
+        EventArgs {
         #region private fields
 
         private readonly AttributeDefinition item;
@@ -43,8 +41,7 @@ namespace netDxf.Blocks
         /// Initializes a new instance of <c>BlockAttributeDefinitionChangeEventArgs</c>.
         /// </summary>
         /// <param name="item">The attribute definition that is being added or removed from the block.</param>
-        public BlockAttributeDefinitionChangeEventArgs(AttributeDefinition item)
-        {
+        public BlockAttributeDefinitionChangeEventArgs(AttributeDefinition item) {
             this.item = item;
         }
 
@@ -55,8 +52,7 @@ namespace netDxf.Blocks
         /// <summary>
         /// Gets the attribute definition that is being added or removed.
         /// </summary>
-        public AttributeDefinition Item
-        {
+        public AttributeDefinition Item {
             get { return this.item; }
         }
 

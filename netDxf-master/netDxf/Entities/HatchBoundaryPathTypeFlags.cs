@@ -22,15 +22,13 @@
 
 using System;
 
-namespace netDxf.Entities
-{
+namespace netDxf.Entities {
     /// <summary>
     /// Defines the boundary path type of the hatch.
     /// </summary>
     /// <remarks>Bit flag.</remarks>
     [Flags]
-    public enum HatchBoundaryPathTypeFlags
-    {
+    public enum HatchBoundaryPathTypeFlags {
         /// <summary>
         /// Default.
         /// </summary>

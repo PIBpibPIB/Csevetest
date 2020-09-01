@@ -20,18 +20,16 @@
 
 #endregion
 
-using System;
 using netDxf.Tables;
+using System;
 
-namespace netDxf.Entities
-{
+namespace netDxf.Entities {
     /// <summary>
     /// Represents a ray <see cref="EntityObject">entity</see>.
     /// </summary>
     /// <remarks>A ray is a line in three-dimensional space that starts in the specified origin and extends to infinity.</remarks>
     public class Ray :
-        EntityObject
-    {
+        EntityObject {
         #region private fields
 
         private Vector3 origin;
@@ -45,8 +43,7 @@ namespace netDxf.Entities
         /// Initializes a new instance of the <c>Ray</c> class.
         /// </summary>
         public Ray()
-            : this(Vector3.Zero, Vector3.UnitX)
-        {
+            : this(Vector3.Zero, Vector3.UnitX) {
         }
 
         /// <summary>
@@ -55,8 +52,7 @@ namespace netDxf.Entities
         /// <param name="origin">Ray <see cref="Vector2">start point.</see></param>
         /// <param name="direction">Ray <see cref="Vector2">end point.</see></param>
         public Ray(Vector2 origin, Vector2 direction)
-            : this(new Vector3(origin.X, origin.Y, 0.0), new Vector3(direction.X, direction.Y, 0.0))
-        {
+            : this(new Vector3(origin.X, origin.Y, 0.0), new Vector3(direction.X, direction.Y, 0.0)) {
         }
 
         /// <summary>
@@ -65,8 +61,7 @@ namespace netDxf.Entities
         /// <param name="origin">Ray start <see cref="Vector3">point.</see></param>
         /// <param name="direction">Ray end <see cref="Vector3">point.</see></param>
         public Ray(Vector3 origin, Vector3 direction)
-            : base(EntityType.Ray, DxfObjectCode.Ray)
-        {
+            : base(EntityType.Ray, DxfObjectCode.Ray) {
             this.origin = origin;
             this.direction = Vector3.Normalize(direction);
             if (Vector3.IsNaN(this.direction))
@@ -81,8 +76,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets the ray <see cref="netDxf.Vector3">origin</see>.
         /// </summary>
-        public Vector3 Origin
-        {
+        public Vector3 Origin {
             get { return this.origin; }
             set { this.origin = value; }
         }
@@ -90,11 +84,9 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets the ray <see cref="netDxf.Vector3">direction</see>.
         /// </summary>
-        public Vector3 Direction
-        {
+        public Vector3 Direction {
             get { return this.direction; }
-            set
-            {
+            set {
                 this.direction = Vector3.Normalize(value);
                 if (Vector3.IsNaN(this.direction))
                     throw new ArgumentException("The direction can not be the zero vector.", nameof(value));
@@ -109,16 +101,14 @@ namespace netDxf.Entities
         /// Creates a new Ray that is a copy of the current instance.
         /// </summary>
         /// <returns>A new Ray that is a copy of this instance.</returns>
-        public override object Clone()
-        {
-            Ray entity = new Ray
-            {
+        public override object Clone() {
+            Ray entity = new Ray {
                 //EntityObject properties
-                Layer = (Layer) this.Layer.Clone(),
-                Linetype = (Linetype) this.Linetype.Clone(),
-                Color = (AciColor) this.Color.Clone(),
+                Layer = (Layer)this.Layer.Clone(),
+                Linetype = (Linetype)this.Linetype.Clone(),
+                Color = (AciColor)this.Color.Clone(),
                 Lineweight = this.Lineweight,
-                Transparency = (Transparency) this.Transparency.Clone(),
+                Transparency = (Transparency)this.Transparency.Clone(),
                 LinetypeScale = this.LinetypeScale,
                 Normal = this.Normal,
                 IsVisible = this.IsVisible,
@@ -128,7 +118,7 @@ namespace netDxf.Entities
             };
 
             foreach (XData data in this.XData.Values)
-                entity.XData.Add((XData) data.Clone());
+                entity.XData.Add((XData)data.Clone());
 
             return entity;
         }

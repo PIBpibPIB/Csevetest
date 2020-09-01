@@ -20,18 +20,16 @@
 
 #endregion
 
-using System;
 using netDxf.Blocks;
 using netDxf.Tables;
+using System;
 
-namespace netDxf.Entities
-{
+namespace netDxf.Entities {
     /// <summary>
     /// Represents an ordinate dimension <see cref="EntityObject">entity</see>.
     /// </summary>
     public class OrdinateDimension :
-        Dimension
-    {
+        Dimension {
         #region private fields
 
         private double rotation;
@@ -47,8 +45,7 @@ namespace netDxf.Entities
         /// Initializes a new instance of the <c>OrdinateDimension</c> class.
         /// </summary>
         public OrdinateDimension()
-            : this(Vector2.Zero, new Vector2(0.5, 0), new Vector2(1.0, 0), OrdinateDimensionAxis.Y, DimensionStyle.Default)
-        {
+            : this(Vector2.Zero, new Vector2(0.5, 0), new Vector2(1.0, 0), OrdinateDimensionAxis.Y, DimensionStyle.Default) {
         }
 
         /// <summary>
@@ -62,8 +59,7 @@ namespace netDxf.Entities
         /// If the difference in the Y ordinate is greater, the dimension measures the X ordinate. Otherwise, it measures the Y ordinate.
         /// </remarks>
         public OrdinateDimension(Vector2 origin, Vector2 featurePoint, Vector2 leaderEndPoint)
-            : this(origin, featurePoint, leaderEndPoint, DimensionStyle.Default)
-        {           
+            : this(origin, featurePoint, leaderEndPoint, DimensionStyle.Default) {
         }
 
         /// <summary>
@@ -78,8 +74,7 @@ namespace netDxf.Entities
         /// If the difference in the Y ordinate is greater, the dimension measures the X ordinate. Otherwise, it measures the Y ordinate.
         /// </remarks>
         public OrdinateDimension(Vector2 origin, Vector2 featurePoint, Vector2 leaderEndPoint, DimensionStyle style)
-            : base(DimensionType.Ordinate)
-        {
+            : base(DimensionType.Ordinate) {
             this.defPoint = origin;
             this.firstPoint = featurePoint;
             this.secondPoint = leaderEndPoint;
@@ -101,8 +96,7 @@ namespace netDxf.Entities
         /// <param name="axis">Length of the dimension line.</param>
         /// <param name="style">The <see cref="DimensionStyle">style</see> to use with the dimension.</param>
         public OrdinateDimension(Vector2 origin, Vector2 featurePoint, Vector2 leaderEndPoint, OrdinateDimensionAxis axis, DimensionStyle style)
-            : base(DimensionType.Ordinate)
-        {
+            : base(DimensionType.Ordinate) {
             this.defPoint = origin;
             this.firstPoint = featurePoint;
             this.secondPoint = leaderEndPoint;
@@ -123,8 +117,7 @@ namespace netDxf.Entities
         /// <param name="axis">Length of the dimension line.</param>
         /// <remarks>The local coordinate system of the dimension is defined by the dimension normal and the rotation value.</remarks>
         public OrdinateDimension(Vector2 origin, Vector2 featurePoint, double length, OrdinateDimensionAxis axis)
-            : this(origin, featurePoint, length, axis, 0.0, DimensionStyle.Default)
-        {
+            : this(origin, featurePoint, length, axis, 0.0, DimensionStyle.Default) {
         }
 
         /// <summary>
@@ -137,8 +130,7 @@ namespace netDxf.Entities
         /// <param name="style">The <see cref="DimensionStyle">style</see> to use with the dimension.</param>
         /// <remarks>The local coordinate system of the dimension is defined by the dimension normal and the rotation value.</remarks>
         public OrdinateDimension(Vector2 origin, Vector2 featurePoint, double length, OrdinateDimensionAxis axis, DimensionStyle style)
-            : this(origin, featurePoint, length, axis, 0.0, style)
-        {
+            : this(origin, featurePoint, length, axis, 0.0, style) {
         }
 
         /// <summary>
@@ -151,8 +143,7 @@ namespace netDxf.Entities
         /// <param name="rotation">Angle of rotation in degrees of the dimension lines.</param>
         /// <remarks>The local coordinate system of the dimension is defined by the dimension normal and the rotation value.</remarks>
         public OrdinateDimension(Vector2 origin, Vector2 featurePoint, double length, OrdinateDimensionAxis axis, double rotation)
-            : this(origin, featurePoint, length, axis, rotation, DimensionStyle.Default)
-        {
+            : this(origin, featurePoint, length, axis, rotation, DimensionStyle.Default) {
         }
 
         /// <summary>
@@ -166,8 +157,7 @@ namespace netDxf.Entities
         /// <param name="style">The <see cref="DimensionStyle">style</see> to use with the dimension.</param>
         /// <remarks>The local coordinate system of the dimension is defined by the dimension normal and the rotation value.</remarks>
         public OrdinateDimension(Vector2 origin, Vector2 featurePoint, double length, OrdinateDimensionAxis axis, double rotation, DimensionStyle style)
-            : base(DimensionType.Ordinate)
-        {
+            : base(DimensionType.Ordinate) {
             this.defPoint = origin;
             this.rotation = MathHelper.NormalizeAngle(rotation);
             this.firstPoint = featurePoint;
@@ -191,8 +181,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets the origin <see cref="Vector2">point</see> in local coordinates.
         /// </summary>
-        public Vector2 Origin
-        {
+        public Vector2 Origin {
             get { return this.defPoint; }
             set { this.defPoint = value; }
         }
@@ -200,8 +189,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or set the base <see cref="Vector2">point</see> in local coordinates, a point on a feature such as an endpoint, intersection, or center of an object.
         /// </summary>
-        public Vector2 FeaturePoint
-        {
+        public Vector2 FeaturePoint {
             get { return this.firstPoint; }
             set { this.firstPoint = value; }
         }
@@ -209,8 +197,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets the leader end <see cref="Vector2">point</see> in local coordinates
         /// </summary>
-        public Vector2 LeaderEndPoint
-        {
+        public Vector2 LeaderEndPoint {
             get { return this.secondPoint; }
             set { this.secondPoint = value; }
         }
@@ -218,8 +205,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets the angle of rotation in degrees of the ordinate dimension local coordinate system.
         /// </summary>
-        public double Rotation
-        {
+        public double Rotation {
             get { return this.rotation; }
             set { MathHelper.NormalizeAngle(this.rotation = value); }
         }
@@ -227,8 +213,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets the local axis that measures the ordinate dimension.
         /// </summary>
-        public OrdinateDimensionAxis Axis
-        {
+        public OrdinateDimensionAxis Axis {
             get { return this.axis; }
             set { this.axis = value; }
         }
@@ -236,11 +221,9 @@ namespace netDxf.Entities
         /// <summary>
         /// Actual measurement.
         /// </summary>
-        public override double Measurement
-        {
-            get
-            {
-                Vector2 dirRef = Vector2.Rotate(this.axis == OrdinateDimensionAxis.X ? Vector2.UnitY : Vector2.UnitX, this.rotation*MathHelper.DegToRad);
+        public override double Measurement {
+            get {
+                Vector2 dirRef = Vector2.Rotate(this.axis == OrdinateDimensionAxis.X ? Vector2.UnitY : Vector2.UnitX, this.rotation * MathHelper.DegToRad);
                 return MathHelper.PointLineDistance(this.firstPoint, this.defPoint, dirRef);
             }
         }
@@ -252,24 +235,18 @@ namespace netDxf.Entities
         /// <summary>
         /// Calculate the dimension reference points.
         /// </summary>
-        protected override void CalculteReferencePoints()
-        {
-            if (this.TextPositionManuallySet)
-            {
+        protected override void CalculteReferencePoints() {
+            if (this.TextPositionManuallySet) {
                 DimensionStyleFitTextMove moveText = this.Style.FitTextMove;
                 DimensionStyleOverride styleOverride;
-                if (this.StyleOverrides.TryGetValue(DimensionStyleOverrideType.FitTextMove, out styleOverride))
-                {
+                if (this.StyleOverrides.TryGetValue(DimensionStyleOverrideType.FitTextMove, out styleOverride)) {
                     moveText = (DimensionStyleFitTextMove)styleOverride.Value;
                 }
 
-                if (moveText != DimensionStyleFitTextMove.OverDimLineWithoutLeader)
-                {
+                if (moveText != DimensionStyleFitTextMove.OverDimLineWithoutLeader) {
                     this.secondPoint = this.textRefPoint;
                 }
-            }
-            else
-            {
+            } else {
                 this.textRefPoint = this.secondPoint;
             }
         }
@@ -279,8 +256,7 @@ namespace netDxf.Entities
         /// </summary>
         /// <param name="name">Name to be assigned to the generated block.</param>
         /// <returns>The block that represents the actual dimension.</returns>
-        protected override Block BuildBlock(string name)
-        {
+        protected override Block BuildBlock(string name) {
             return DimensionBlock.Build(this, name);
         }
 
@@ -288,21 +264,19 @@ namespace netDxf.Entities
         /// Creates a new OrdinateDimension that is a copy of the current instance.
         /// </summary>
         /// <returns>A new OrdinateDimension that is a copy of this instance.</returns>
-        public override object Clone()
-        {
-            OrdinateDimension entity = new OrdinateDimension
-            {
+        public override object Clone() {
+            OrdinateDimension entity = new OrdinateDimension {
                 //EntityObject properties
-                Layer = (Layer) this.Layer.Clone(),
-                Linetype = (Linetype) this.Linetype.Clone(),
-                Color = (AciColor) this.Color.Clone(),
+                Layer = (Layer)this.Layer.Clone(),
+                Linetype = (Linetype)this.Linetype.Clone(),
+                Color = (AciColor)this.Color.Clone(),
                 Lineweight = this.Lineweight,
-                Transparency = (Transparency) this.Transparency.Clone(),
+                Transparency = (Transparency)this.Transparency.Clone(),
                 LinetypeScale = this.LinetypeScale,
                 Normal = this.Normal,
                 IsVisible = this.IsVisible,
                 //Dimension properties
-                Style = (DimensionStyle) this.Style.Clone(),
+                Style = (DimensionStyle)this.Style.Clone(),
                 DefinitionPoint = this.defPoint,
                 TextReferencePoint = this.TextReferencePoint,
                 TextPositionManuallySet = this.TextPositionManuallySet,
@@ -319,8 +293,7 @@ namespace netDxf.Entities
                 Axis = this.axis
             };
 
-            foreach (DimensionStyleOverride styleOverride in this.StyleOverrides.Values)
-            {
+            foreach (DimensionStyleOverride styleOverride in this.StyleOverrides.Values) {
                 object copy;
                 ICloneable value = styleOverride.Value as ICloneable;
                 copy = value != null ? value.Clone() : styleOverride.Value;
@@ -329,7 +302,7 @@ namespace netDxf.Entities
             }
 
             foreach (XData data in this.XData.Values)
-                entity.XData.Add((XData) data.Clone());
+                entity.XData.Add((XData)data.Clone());
 
             return entity;
         }

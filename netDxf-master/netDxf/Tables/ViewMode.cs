@@ -22,11 +22,9 @@
 
 using System;
 
-namespace netDxf.Tables
-{
+namespace netDxf.Tables {
     [Flags]
-    public enum ViewModeFlags
-    {
+    public enum ViewModeFlags {
         /// <summary>
         /// Turned off.
         /// </summary>

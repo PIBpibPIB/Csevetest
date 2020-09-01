@@ -20,13 +20,11 @@
 
 #endregion
 
-namespace netDxf.Objects
-{
+namespace netDxf.Objects {
     /// <summary>
     /// Plot paper units.
     /// </summary>
-    public enum PlotPaperUnits
-    {
+    public enum PlotPaperUnits {
         /// <summary>
         /// Inches.
         /// </summary>

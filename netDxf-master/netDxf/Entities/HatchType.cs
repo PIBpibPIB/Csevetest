@@ -20,13 +20,11 @@
 
 #endregion
 
-namespace netDxf.Entities
-{
+namespace netDxf.Entities {
     /// <summary>
     /// Hatch pattern type.
     /// </summary>
-    public enum HatchType
-    {
+    public enum HatchType {
         /// <summary>
         /// User defined.
         /// </summary>

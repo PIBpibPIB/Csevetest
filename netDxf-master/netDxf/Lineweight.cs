@@ -20,14 +20,12 @@
 
 #endregion
 
-namespace netDxf
-{
+namespace netDxf {
     /// <summary>
     /// Represents the line weight of a layer or an entity.
     /// </summary>
     /// <remarks>The enum numeric value correspond to 1/100 mm.</remarks>
-    public enum Lineweight
-    {
+    public enum Lineweight {
         /// <summary>
         /// Default lineweight.
         /// </summary>

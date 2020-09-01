@@ -20,18 +20,16 @@
 
 #endregion
 
+using netDxf.Tables;
 using System;
 using System.Collections.Generic;
-using netDxf.Tables;
 
-namespace netDxf.Entities
-{
+namespace netDxf.Entities {
     /// <summary>
     /// Defines a single line thats is part of a <see cref="HatchPattern">hatch pattern</see>.
     /// </summary>
     public class HatchPatternLineDefinition :
-        ICloneable
-    {
+        ICloneable {
         #region private fields
 
         private double angle;
@@ -46,8 +44,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Initializes a new instance of the <c>HatchPatternLineDefinition</c> class.
         /// </summary>
-        public HatchPatternLineDefinition()
-        {
+        public HatchPatternLineDefinition() {
             this.angle = 0.0;
             this.origin = Vector2.Zero;
             this.delta = Vector2.Zero;
@@ -61,8 +58,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets the angle of the line.
         /// </summary>
-        public double Angle
-        {
+        public double Angle {
             get { return this.angle; }
             set { this.angle = MathHelper.NormalizeAngle(value); }
         }
@@ -70,8 +66,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets the origin of the line.
         /// </summary>
-        public Vector2 Origin
-        {
+        public Vector2 Origin {
             get { return this.origin; }
             set { this.origin = value; }
         }
@@ -83,8 +78,7 @@ namespace netDxf.Entities
         /// The Delta.X value indicates the displacement between members of the family in the direction of the line. It is used only for dashed lines.
         /// The Delta.Y value indicates the spacing between members of the family; that is, it is measured perpendicular to the lines. 
         /// </remarks>
-        public Vector2 Delta
-        {
+        public Vector2 Delta {
             get { return this.delta; }
             set { this.delta = value; }
         }
@@ -95,8 +89,7 @@ namespace netDxf.Entities
         /// <remarks>
         /// Positive values means solid segments and negative values means spaces (one entry per element).
         /// </remarks>
-        public List<double> DashPattern
-        {
+        public List<double> DashPattern {
             get { return this.dashPattern; }
         }
 
@@ -108,10 +101,8 @@ namespace netDxf.Entities
         /// Creates a new HatchPatternLineDefinition that is a copy of the current instance.
         /// </summary>
         /// <returns>A new HatchPatternLineDefinition that is a copy of this instance.</returns>
-        public object Clone()
-        {
-            HatchPatternLineDefinition copy = new HatchPatternLineDefinition
-            {
+        public object Clone() {
+            HatchPatternLineDefinition copy = new HatchPatternLineDefinition {
                 Angle = this.angle,
                 Origin = this.origin,
                 Delta = this.delta,

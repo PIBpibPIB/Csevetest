@@ -20,19 +20,17 @@
 
 #endregion
 
-using System;
-using System.Collections.Generic;
 using netDxf.Blocks;
 using netDxf.Tables;
+using System;
+using System.Collections.Generic;
 
-namespace netDxf.Entities
-{
+namespace netDxf.Entities {
     /// <summary>
     /// Represents a dimension <see cref="EntityObject">entity</see> that is aligned the reference line.
     /// </summary>
     public class AlignedDimension :
-        Dimension
-    {
+        Dimension {
         #region private fields
 
         private Vector2 firstRefPoint;
@@ -47,8 +45,7 @@ namespace netDxf.Entities
         /// Initializes a new instance of the <c>AlignedDimension</c> class.
         /// </summary>
         public AlignedDimension()
-            : this(Vector2.Zero, Vector2.UnitX, 0.1)
-        {
+            : this(Vector2.Zero, Vector2.UnitX, 0.1) {
         }
 
         /// <summary>
@@ -58,8 +55,7 @@ namespace netDxf.Entities
         /// <param name="offset">Distance between the reference line and the dimension line.</param>
         /// <remarks>The reference points define the distance to be measure.</remarks>
         public AlignedDimension(Line referenceLine, double offset)
-            : this(referenceLine, offset, Vector3.UnitZ, DimensionStyle.Default)
-        {
+            : this(referenceLine, offset, Vector3.UnitZ, DimensionStyle.Default) {
         }
 
         /// <summary>
@@ -70,8 +66,7 @@ namespace netDxf.Entities
         /// <param name="style">The <see cref="DimensionStyle">style</see> to use with the dimension.</param>
         /// <remarks>The reference points define the distance to be measure.</remarks>
         public AlignedDimension(Line referenceLine, double offset, DimensionStyle style)
-            : this(referenceLine, offset, Vector3.UnitZ, style)
-        {
+            : this(referenceLine, offset, Vector3.UnitZ, style) {
         }
 
         /// <summary>
@@ -82,8 +77,7 @@ namespace netDxf.Entities
         /// <param name="normal">Normal vector of the plane where the dimension is defined.</param>
         /// <remarks>The reference points define the distance to be measure.</remarks>
         public AlignedDimension(Line referenceLine, double offset, Vector3 normal)
-            : this(referenceLine, offset, normal, DimensionStyle.Default)
-        {
+            : this(referenceLine, offset, normal, DimensionStyle.Default) {
         }
 
         /// <summary>
@@ -95,8 +89,7 @@ namespace netDxf.Entities
         /// <param name="style">The <see cref="DimensionStyle">style</see> to use with the dimension.</param>
         /// <remarks>The reference line define the distance to be measure.</remarks>
         public AlignedDimension(Line referenceLine, double offset, Vector3 normal, DimensionStyle style)
-            : base(DimensionType.Aligned)
-        {
+            : base(DimensionType.Aligned) {
             if (referenceLine == null)
                 throw new ArgumentNullException(nameof(referenceLine));
 
@@ -124,8 +117,7 @@ namespace netDxf.Entities
         /// <param name="offset">Distance between the reference line and the dimension line.</param>
         /// <remarks>The reference points define the distance to be measure.</remarks>
         public AlignedDimension(Vector2 firstPoint, Vector2 secondPoint, double offset)
-            : this(firstPoint, secondPoint, offset, DimensionStyle.Default)
-        {
+            : this(firstPoint, secondPoint, offset, DimensionStyle.Default) {
         }
 
         /// <summary>
@@ -137,8 +129,7 @@ namespace netDxf.Entities
         /// <param name="style">The <see cref="DimensionStyle">style</see> to use with the dimension.</param>
         /// <remarks>The reference points define the distance to be measure.</remarks>
         public AlignedDimension(Vector2 firstPoint, Vector2 secondPoint, double offset, DimensionStyle style)
-            : base(DimensionType.Aligned)
-        {
+            : base(DimensionType.Aligned) {
             this.firstRefPoint = firstPoint;
             this.secondRefPoint = secondPoint;
             if (offset < 0)
@@ -157,8 +148,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets the first definition point of the dimension in OCS (object coordinate system).
         /// </summary>
-        public Vector2 FirstReferencePoint
-        {
+        public Vector2 FirstReferencePoint {
             get { return this.firstRefPoint; }
             set { this.firstRefPoint = value; }
         }
@@ -166,8 +156,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets the second definition point of the dimension in OCS (object coordinate system).
         /// </summary>
-        public Vector2 SecondReferencePoint
-        {
+        public Vector2 SecondReferencePoint {
             get { return this.secondRefPoint; }
             set { this.secondRefPoint = value; }
         }
@@ -175,8 +164,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets the location of the dimension line.
         /// </summary>
-        public Vector2 DimLinePosition
-        {
+        public Vector2 DimLinePosition {
             get { return this.defPoint; }
         }
 
@@ -187,11 +175,9 @@ namespace netDxf.Entities
         /// The offset value must be equal or greater than zero.<br />
         /// The side at which the dimension line is drawn depends of the direction of its reference line.
         /// </remarks>
-        public double Offset
-        {
+        public double Offset {
             get { return this.offset; }
-            set
-            {
+            set {
                 if (value < 0)
                     throw new ArgumentOutOfRangeException(nameof(value), "The offset value must be equal or greater than zero.");
                 this.offset = value;
@@ -202,8 +188,7 @@ namespace netDxf.Entities
         /// Actual measurement.
         /// </summary>
         /// <remarks>The dimension is always measured in the plane defined by the normal.</remarks>
-        public override double Measurement
-        {
+        public override double Measurement {
             get { return Vector2.Distance(this.firstRefPoint, this.secondRefPoint); }
         }
 
@@ -215,14 +200,12 @@ namespace netDxf.Entities
         /// Calculates the dimension offset from a point along the dimension line.
         /// </summary>
         /// <param name="point">Point along the dimension line.</param>
-        public void SetDimensionLinePosition(Vector2 point)
-        {
+        public void SetDimensionLinePosition(Vector2 point) {
             Vector2 refDir = Vector2.Normalize(this.secondRefPoint - this.firstRefPoint);
             Vector2 offsetDir = point - this.firstRefPoint;
 
             double cross = Vector2.CrossProduct(refDir, offsetDir);
-            if (cross < 0)
-            {
+            if (cross < 0) {
                 Vector2 tmp = this.firstRefPoint;
                 this.firstRefPoint = this.secondRefPoint;
                 this.secondRefPoint = tmp;
@@ -233,17 +216,14 @@ namespace netDxf.Entities
             this.offset = MathHelper.PointLineDistance(point, this.firstRefPoint, refDir);
             this.defPoint = this.secondRefPoint + this.offset * vec;
 
-            if (!this.TextPositionManuallySet)
-            {
+            if (!this.TextPositionManuallySet) {
                 DimensionStyleOverride styleOverride;
                 double textGap = this.Style.TextOffset;
-                if (this.StyleOverrides.TryGetValue(DimensionStyleOverrideType.TextOffset, out styleOverride))
-                {
+                if (this.StyleOverrides.TryGetValue(DimensionStyleOverrideType.TextOffset, out styleOverride)) {
                     textGap = (double)styleOverride.Value;
                 }
                 double scale = this.Style.DimScaleOverall;
-                if (this.StyleOverrides.TryGetValue(DimensionStyleOverrideType.DimScaleOverall, out styleOverride))
-                {
+                if (this.StyleOverrides.TryGetValue(DimensionStyleOverrideType.DimScaleOverall, out styleOverride)) {
                     scale = (double)styleOverride.Value;
                 }
 
@@ -259,48 +239,40 @@ namespace netDxf.Entities
         /// <summary>
         /// Calculate the dimension reference points.
         /// </summary>
-        protected override void CalculteReferencePoints()
-        {
+        protected override void CalculteReferencePoints() {
             DimensionStyleOverride styleOverride;
 
             Vector2 ref1 = this.FirstReferencePoint;
             Vector2 ref2 = this.SecondReferencePoint;
             Vector2 dirRef = ref2 - ref1;
             Vector2 dirDesp = Vector2.Normalize(Vector2.Perpendicular(dirRef));
-            Vector2 vec = this.offset* dirDesp;
+            Vector2 vec = this.offset * dirDesp;
             Vector2 dimRef1 = ref1 + vec;
             Vector2 dimRef2 = ref2 + vec;
 
             this.defPoint = dimRef2;
 
-            if (this.TextPositionManuallySet)
-            {
+            if (this.TextPositionManuallySet) {
                 DimensionStyleFitTextMove moveText = this.Style.FitTextMove;
-                if (this.StyleOverrides.TryGetValue(DimensionStyleOverrideType.FitTextMove, out styleOverride))
-                {
-                    moveText = (DimensionStyleFitTextMove) styleOverride.Value;
+                if (this.StyleOverrides.TryGetValue(DimensionStyleOverrideType.FitTextMove, out styleOverride)) {
+                    moveText = (DimensionStyleFitTextMove)styleOverride.Value;
                 }
 
-                if (moveText == DimensionStyleFitTextMove.BesideDimLine)
-                {
+                if (moveText == DimensionStyleFitTextMove.BesideDimLine) {
                     this.SetDimensionLinePosition(this.textRefPoint);
                 }
-            }
-            else
-            {
+            } else {
                 double textGap = this.Style.TextOffset;
-                if (this.StyleOverrides.TryGetValue(DimensionStyleOverrideType.TextOffset, out styleOverride))
-                {
-                    textGap = (double) styleOverride.Value;
+                if (this.StyleOverrides.TryGetValue(DimensionStyleOverrideType.TextOffset, out styleOverride)) {
+                    textGap = (double)styleOverride.Value;
                 }
                 double scale = this.Style.DimScaleOverall;
-                if (this.StyleOverrides.TryGetValue(DimensionStyleOverrideType.DimScaleOverall, out styleOverride))
-                {
-                    scale = (double) styleOverride.Value;
+                if (this.StyleOverrides.TryGetValue(DimensionStyleOverrideType.DimScaleOverall, out styleOverride)) {
+                    scale = (double)styleOverride.Value;
                 }
 
-                double gap = textGap*scale;
-                this.textRefPoint = Vector2.MidPoint(dimRef1, dimRef2) + gap*dirDesp;
+                double gap = textGap * scale;
+                this.textRefPoint = Vector2.MidPoint(dimRef1, dimRef2) + gap * dirDesp;
             }
         }
 
@@ -309,8 +281,7 @@ namespace netDxf.Entities
         /// </summary>
         /// <param name="name">Name to be assigned to the generated block.</param>
         /// <returns>The block that represents the actual dimension.</returns>
-        protected override Block BuildBlock(string name)
-        {
+        protected override Block BuildBlock(string name) {
             return DimensionBlock.Build(this, name);
         }
 
@@ -318,21 +289,19 @@ namespace netDxf.Entities
         /// Creates a new AlignedDimension that is a copy of the current instance.
         /// </summary>
         /// <returns>A new AlignedDimension that is a copy of this instance.</returns>
-        public override object Clone()
-        {
-            AlignedDimension entity = new AlignedDimension
-            {
+        public override object Clone() {
+            AlignedDimension entity = new AlignedDimension {
                 //EntityObject properties
-                Layer = (Layer) this.Layer.Clone(),
-                Linetype = (Linetype) this.Linetype.Clone(),
-                Color = (AciColor) this.Color.Clone(),
+                Layer = (Layer)this.Layer.Clone(),
+                Linetype = (Linetype)this.Linetype.Clone(),
+                Color = (AciColor)this.Color.Clone(),
                 Lineweight = this.Lineweight,
-                Transparency = (Transparency) this.Transparency.Clone(),
+                Transparency = (Transparency)this.Transparency.Clone(),
                 LinetypeScale = this.LinetypeScale,
                 Normal = this.Normal,
                 IsVisible = this.IsVisible,
                 //Dimension properties
-                Style = (DimensionStyle) this.Style.Clone(),
+                Style = (DimensionStyle)this.Style.Clone(),
                 DefinitionPoint = this.DefinitionPoint,
                 TextReferencePoint = this.TextReferencePoint,
                 TextPositionManuallySet = this.TextPositionManuallySet,
@@ -348,8 +317,7 @@ namespace netDxf.Entities
                 Offset = this.offset
             };
 
-            foreach (DimensionStyleOverride styleOverride in this.StyleOverrides.Values)
-            {
+            foreach (DimensionStyleOverride styleOverride in this.StyleOverrides.Values) {
                 object copy;
                 ICloneable value = styleOverride.Value as ICloneable;
                 copy = value != null ? value.Clone() : styleOverride.Value;
@@ -358,7 +326,7 @@ namespace netDxf.Entities
             }
 
             foreach (XData data in this.XData.Values)
-                entity.XData.Add((XData) data.Clone());
+                entity.XData.Add((XData)data.Clone());
 
             return entity;
         }

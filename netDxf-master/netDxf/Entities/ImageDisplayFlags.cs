@@ -22,14 +22,12 @@
 
 using System;
 
-namespace netDxf.Entities
-{
+namespace netDxf.Entities {
     /// <summary>
     /// Image display options.
     /// </summary>
     [Flags]
-    public enum ImageDisplayFlags
-    {
+    public enum ImageDisplayFlags {
         /// <summary>
         /// Show image.
         /// </summary>

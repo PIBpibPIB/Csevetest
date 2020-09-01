@@ -20,13 +20,11 @@
 
 #endregion
 
-namespace netDxf.Objects
-{
+namespace netDxf.Objects {
     /// <summary>
     /// Defines the shade plot mode
     /// </summary>
-    public enum ShadePlotMode
-    {
+    public enum ShadePlotMode {
         /// <summary>
         /// As displayed.
         /// </summary>

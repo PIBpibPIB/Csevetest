@@ -20,13 +20,11 @@
 
 #endregion
 
-namespace netDxf.Entities
-{
+namespace netDxf.Entities {
     /// <summary>
     /// Defines the text alignment.
     /// </summary>
-    public enum TextAlignment
-    {
+    public enum TextAlignment {
         /// <summary>
         /// Top left.
         /// </summary>

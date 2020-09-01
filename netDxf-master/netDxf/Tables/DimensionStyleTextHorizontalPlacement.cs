@@ -20,13 +20,11 @@
 
 #endregion
 
-namespace netDxf.Tables
-{
+namespace netDxf.Tables {
     /// <summary>
     /// Controls the vertical placement of dimension text in relation to the dimension line.
     /// </summary>
-    public enum DimensionStyleTextHorizontalPlacement
-    {
+    public enum DimensionStyleTextHorizontalPlacement {
         /// <summary>
         /// Centers the dimension text along the dimension line between the extension lines.
         /// </summary>

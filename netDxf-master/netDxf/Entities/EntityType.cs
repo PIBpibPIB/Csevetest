@@ -20,13 +20,11 @@
 
 #endregion
 
-namespace netDxf.Entities
-{
+namespace netDxf.Entities {
     /// <summary>
     /// Defines the entity type.
     /// </summary>
-    public enum EntityType
-    {
+    public enum EntityType {
         /// <summary>
         /// Arc entity.
         /// </summary>

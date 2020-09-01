@@ -20,22 +20,20 @@
 
 #endregion
 
+using netDxf.Collections;
+using netDxf.Tables;
+using netDxf.Units;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
-using netDxf.Collections;
-using netDxf.Tables;
-using netDxf.Units;
 
-namespace netDxf.Objects
-{
+namespace netDxf.Objects {
     /// <summary>
     /// Represents an image definition.
     /// </summary>
     public class ImageDefinition :
-        TableObject
-    {
+        TableObject {
         #region private fields
 
         private readonly string file;
@@ -77,8 +75,7 @@ namespace netDxf.Objects
         /// </para>
         /// </remarks>
         public ImageDefinition(string file, int width, double horizontalResolution, int height, double verticalResolution, ImageResolutionUnits units)
-            : this(Path.GetFileNameWithoutExtension(file), file, width, horizontalResolution, height, verticalResolution, units)
-        {
+            : this(Path.GetFileNameWithoutExtension(file), file, width, horizontalResolution, height, verticalResolution, units) {
         }
 
         /// <summary>
@@ -106,8 +103,7 @@ namespace netDxf.Objects
         /// </para>
         /// </remarks>
         public ImageDefinition(string name, string file, int width, double horizontalResolution, int height, double verticalResolution, ImageResolutionUnits units)
-            : base(name, DxfObjectCode.ImageDef, false)
-        {
+            : base(name, DxfObjectCode.ImageDef, false) {
             if (string.IsNullOrEmpty(file))
                 throw new ArgumentNullException(nameof(file));
             this.file = file;
@@ -154,8 +150,7 @@ namespace netDxf.Objects
         ///  </para>
         /// </remarks>
         public ImageDefinition(string file)
-            : this(Path.GetFileNameWithoutExtension(file), file)
-        {
+            : this(Path.GetFileNameWithoutExtension(file), file) {
         }
 
         ///  <summary>
@@ -180,8 +175,7 @@ namespace netDxf.Objects
         ///  </para>
         /// </remarks>
         public ImageDefinition(string name, string file)
-            : base(name, DxfObjectCode.ImageDef, false)
-        {
+            : base(name, DxfObjectCode.ImageDef, false) {
             if (string.IsNullOrEmpty(file))
                 throw new ArgumentNullException(nameof(file), "The image file name should be at least one character long.");
 
@@ -191,10 +185,8 @@ namespace netDxf.Objects
 
             this.file = file;
 
-            try
-            {
-                using (Image bitmap = Image.FromFile(file))
-                {
+            try {
+                using (Image bitmap = Image.FromFile(file)) {
                     this.width = bitmap.Width;
                     this.height = bitmap.Height;
                     this.horizontalResolution = bitmap.HorizontalResolution;
@@ -202,9 +194,7 @@ namespace netDxf.Objects
                     // the System.Drawing.Image stores the image resolution in inches
                     this.resolutionUnits = ImageResolutionUnits.Inches;
                 }
-            }
-            catch (Exception)
-            {
+            } catch (Exception) {
                 throw new ArgumentException("Image file not supported.", file);
             }
 
@@ -218,39 +208,32 @@ namespace netDxf.Objects
         /// <summary>
         /// Gets the image file.
         /// </summary>
-        public string File
-        {
+        public string File {
             get { return this.file; }
         }
 
         /// <summary>
         /// Gets the image width in pixels.
         /// </summary>
-        public int Width
-        {
+        public int Width {
             get { return this.width; }
         }
 
         /// <summary>
         /// Gets the image height in pixels.
         /// </summary>
-        public int Height
-        {
+        public int Height {
             get { return this.height; }
         }
 
         /// <summary>
         /// Gets or sets the image resolution units.
         /// </summary>
-        public ImageResolutionUnits ResolutionUnits
-        {
+        public ImageResolutionUnits ResolutionUnits {
             get { return this.resolutionUnits; }
-            set
-            {
-                if (this.resolutionUnits != value)
-                {
-                    switch (value)
-                    {
+            set {
+                if (this.resolutionUnits != value) {
+                    switch (value) {
                         case ImageResolutionUnits.Centimeters:
                             this.horizontalResolution /= 2.54;
                             this.verticalResolution /= 2.54;
@@ -270,25 +253,22 @@ namespace netDxf.Objects
         /// <summary>
         /// Gets the image horizontal resolution in pixels per unit.
         /// </summary>
-        public double HorizontalResolution
-        {
+        public double HorizontalResolution {
             get { return this.horizontalResolution; }
         }
 
         /// <summary>
         /// Gets the image vertical resolution in pixels per unit.
         /// </summary>
-        public double VerticalResolution
-        {
+        public double VerticalResolution {
             get { return this.verticalResolution; }
         }
 
         /// <summary>
         /// Gets the owner of the actual image definition.
         /// </summary>
-        public new ImageDefinitions Owner
-        {
-            get { return (ImageDefinitions) base.Owner; }
+        public new ImageDefinitions Owner {
+            get { return (ImageDefinitions)base.Owner; }
             internal set { base.Owner = value; }
         }
 
@@ -296,8 +276,7 @@ namespace netDxf.Objects
 
         #region internal properties
 
-        internal Dictionary<string, ImageDefinitionReactor> Reactors
-        {
+        internal Dictionary<string, ImageDefinitionReactor> Reactors {
             get { return this.reactors; }
         }
 
@@ -310,8 +289,7 @@ namespace netDxf.Objects
         /// </summary>
         /// <param name="newName">ImageDefinition name of the copy.</param>
         /// <returns>A new ImageDefinition that is a copy of this instance.</returns>
-        public override TableObject Clone(string newName)
-        {
+        public override TableObject Clone(string newName) {
             ImageDefinition copy = new ImageDefinition(newName, this.file, this.width, this.horizontalResolution, this.height, this.verticalResolution, this.resolutionUnits);
 
             foreach (XData data in this.XData.Values)
@@ -324,8 +302,7 @@ namespace netDxf.Objects
         /// Creates a new ImageDefinition that is a copy of the current instance.
         /// </summary>
         /// <returns>A new ImageDefinition that is a copy of this instance.</returns>
-        public override object Clone()
-        {
+        public override object Clone() {
             return this.Clone(this.Name);
         }
 

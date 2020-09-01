@@ -22,14 +22,12 @@
 
 using System;
 
-namespace netDxf.Entities
-{
+namespace netDxf.Entities {
     /// <summary>
     /// Dimension type.
     /// </summary>
     [Flags]
-    internal enum DimensionTypeFlags
-    {
+    internal enum DimensionTypeFlags {
         /// <summary>
         /// Rotated, horizontal, or vertical.
         /// </summary>

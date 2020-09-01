@@ -20,28 +20,24 @@
 
 #endregion
 
+using netDxf.Tables;
 using System;
 using System.Collections.Generic;
-using netDxf.Tables;
 
-namespace netDxf.Collections
-{
+namespace netDxf.Collections {
     /// <summary>
     /// Represents a collection of text styles.
     /// </summary>
     public sealed class TextStyles :
-        TableObjects<TextStyle>
-    {
+        TableObjects<TextStyle> {
         #region constructor
 
         internal TextStyles(DxfDocument document)
-            : this(document, null)
-        {
+            : this(document, null) {
         }
 
         internal TextStyles(DxfDocument document, string handle)
-            : base(document, DxfObjectCode.TextStyleTable, handle)
-        {
+            : base(document, DxfObjectCode.TextStyleTable, handle) {
             this.MaxCapacity = short.MaxValue;
         }
 
@@ -58,8 +54,7 @@ namespace netDxf.Collections
         /// If a text style already exists with the same name as the instance that is being added the method returns the existing text style,
         /// if not it will return the new text style.
         /// </returns>
-        internal override TextStyle Add(TextStyle style, bool assignHandle)
-        {
+        internal override TextStyle Add(TextStyle style, bool assignHandle) {
             if (this.list.Count >= this.MaxCapacity)
                 throw new OverflowException(string.Format("Table overflow. The maximum number of elements the table {0} can have is {1}", this.CodeName, this.MaxCapacity));
             if (style == null)
@@ -90,8 +85,7 @@ namespace netDxf.Collections
         /// <param name="name"><see cref="TextStyle">TextStyle</see> name to remove from the document.</param>
         /// <returns>True if the text style has been successfully removed, or false otherwise.</returns>
         /// <remarks>Reserved text styles or any other referenced by objects cannot be removed.</remarks>
-        public override bool Remove(string name)
-        {
+        public override bool Remove(string name) {
             return this.Remove(this[name]);
         }
 
@@ -101,8 +95,7 @@ namespace netDxf.Collections
         /// <param name="item"><see cref="TextStyle">TextStyle</see> to remove from the document.</param>
         /// <returns>True if the text style has been successfully removed, or false otherwise.</returns>
         /// <remarks>Reserved text styles or any other referenced by objects cannot be removed.</remarks>
-        public override bool Remove(TextStyle item)
-        {
+        public override bool Remove(TextStyle item) {
             if (item == null)
                 return false;
 
@@ -131,13 +124,12 @@ namespace netDxf.Collections
 
         #region TextStyle events
 
-        private void Item_NameChanged(TableObject sender, TableObjectChangedEventArgs<string> e)
-        {
+        private void Item_NameChanged(TableObject sender, TableObjectChangedEventArgs<string> e) {
             if (this.Contains(e.NewValue))
                 throw new ArgumentException("There is already another text style with the same name.");
 
             this.list.Remove(sender.Name);
-            this.list.Add(e.NewValue, (TextStyle) sender);
+            this.list.Add(e.NewValue, (TextStyle)sender);
 
             List<DxfObject> refs = this.references[sender.Name];
             this.references.Remove(sender.Name);

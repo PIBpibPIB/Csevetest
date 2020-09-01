@@ -20,13 +20,11 @@
 
 #endregion
 
-namespace netDxf.Units
-{
+namespace netDxf.Units {
     /// <summary>
     /// Default drawing units for AutoCAD DesignCenter blocks.
     /// </summary>
-    public enum DrawingUnits
-    {
+    public enum DrawingUnits {
         /// <summary>
         /// Unitless.
         /// </summary>

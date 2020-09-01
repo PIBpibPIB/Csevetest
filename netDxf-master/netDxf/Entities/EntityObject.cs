@@ -20,31 +20,27 @@
 
 #endregion
 
-using System;
-using System.Collections.Generic;
 using netDxf.Blocks;
 using netDxf.Collections;
 using netDxf.Tables;
+using System;
+using System.Collections.Generic;
 
-namespace netDxf.Entities
-{
+namespace netDxf.Entities {
     /// <summary>
     /// Represents a generic entity.
     /// </summary>
     public abstract class EntityObject :
         DxfObject,
         IHasXData,
-        ICloneable
-    {
+        ICloneable {
         #region delegates and events
 
         public delegate void LayerChangedEventHandler(EntityObject sender, TableObjectChangedEventArgs<Layer> e);
         public event LayerChangedEventHandler LayerChanged;
-        protected virtual Layer OnLayerChangedEvent(Layer oldLayer, Layer newLayer)
-        {
+        protected virtual Layer OnLayerChangedEvent(Layer oldLayer, Layer newLayer) {
             LayerChangedEventHandler ae = this.LayerChanged;
-            if (ae != null)
-            {
+            if (ae != null) {
                 TableObjectChangedEventArgs<Layer> eventArgs = new TableObjectChangedEventArgs<Layer>(oldLayer, newLayer);
                 ae(this, eventArgs);
                 return eventArgs.NewValue;
@@ -54,11 +50,9 @@ namespace netDxf.Entities
 
         public delegate void LinetypeChangedEventHandler(EntityObject sender, TableObjectChangedEventArgs<Linetype> e);
         public event LinetypeChangedEventHandler LinetypeChanged;
-        protected virtual Linetype OnLinetypeChangedEvent(Linetype oldLinetype, Linetype newLinetype)
-        {
+        protected virtual Linetype OnLinetypeChangedEvent(Linetype oldLinetype, Linetype newLinetype) {
             LinetypeChangedEventHandler ae = this.LinetypeChanged;
-            if (ae != null)
-            {
+            if (ae != null) {
                 TableObjectChangedEventArgs<Linetype> eventArgs = new TableObjectChangedEventArgs<Linetype>(oldLinetype, newLinetype);
                 ae(this, eventArgs);
                 return eventArgs.NewValue;
@@ -67,16 +61,14 @@ namespace netDxf.Entities
         }
 
         public event XDataAddAppRegEventHandler XDataAddAppReg;
-        protected virtual void OnXDataAddAppRegEvent(ApplicationRegistry item)
-        {
+        protected virtual void OnXDataAddAppRegEvent(ApplicationRegistry item) {
             XDataAddAppRegEventHandler ae = this.XDataAddAppReg;
             if (ae != null)
                 ae(this, new ObservableCollectionEventArgs<ApplicationRegistry>(item));
         }
 
         public event XDataRemoveAppRegEventHandler XDataRemoveAppReg;
-        protected virtual void OnXDataRemoveAppRegEvent(ApplicationRegistry item)
-        {
+        protected virtual void OnXDataRemoveAppRegEvent(ApplicationRegistry item) {
             XDataRemoveAppRegEventHandler ae = this.XDataRemoveAppReg;
             if (ae != null)
                 ae(this, new ObservableCollectionEventArgs<ApplicationRegistry>(item));
@@ -103,8 +95,7 @@ namespace netDxf.Entities
         #region constructors
 
         protected EntityObject(EntityType type, string dxfCode)
-            : base(dxfCode)
-        {
+            : base(dxfCode) {
             this.type = type;
             this.color = AciColor.ByLayer;
             this.layer = Layer.Default;
@@ -127,27 +118,23 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets the list of dxf objects that has been attached to this entity.
         /// </summary>
-        public IReadOnlyList<DxfObject> Reactors
-        {
+        public IReadOnlyList<DxfObject> Reactors {
             get { return this.reactors; }
         }
 
         /// <summary>
         /// Gets the entity <see cref="EntityType">type</see>.
         /// </summary>
-        public EntityType Type
-        {
+        public EntityType Type {
             get { return this.type; }
         }
 
         /// <summary>
         /// Gets or sets the entity <see cref="AciColor">color</see>.
         /// </summary>
-        public AciColor Color
-        {
+        public AciColor Color {
             get { return this.color; }
-            set
-            {
+            set {
                 if (value == null)
                     throw new ArgumentNullException(nameof(value));
                 this.color = value;
@@ -157,11 +144,9 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets the entity <see cref="Layer">layer</see>.
         /// </summary>
-        public Layer Layer
-        {
+        public Layer Layer {
             get { return this.layer; }
-            set
-            {
+            set {
                 if (value == null)
                     throw new ArgumentNullException(nameof(value));
                 this.layer = this.OnLayerChangedEvent(this.layer, value);
@@ -171,11 +156,9 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets the entity <see cref="Linetype">line type</see>.
         /// </summary>
-        public Linetype Linetype
-        {
+        public Linetype Linetype {
             get { return this.linetype; }
-            set
-            {
+            set {
                 if (value == null)
                     throw new ArgumentNullException(nameof(value));
                 this.linetype = this.OnLinetypeChangedEvent(this.linetype, value);
@@ -185,8 +168,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets the entity <see cref="Lineweight">line weight</see>, one unit is always 1/100 mm (default = ByLayer).
         /// </summary>
-        public Lineweight Lineweight
-        {
+        public Lineweight Lineweight {
             get { return this.lineweight; }
             set { this.lineweight = value; }
         }
@@ -194,11 +176,9 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets layer <see cref="Transparency">transparency</see> (default: ByLayer).
         /// </summary>
-        public Transparency Transparency
-        {
+        public Transparency Transparency {
             get { return this.transparency; }
-            set
-            {
+            set {
                 if (value == null)
                     throw new ArgumentNullException(nameof(value));
                 this.transparency = value;
@@ -208,11 +188,9 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets the entity line type scale.
         /// </summary>
-        public double LinetypeScale
-        {
+        public double LinetypeScale {
             get { return this.linetypeScale; }
-            set
-            {
+            set {
                 if (value <= 0)
                     throw new ArgumentOutOfRangeException(nameof(value), value, "The line type scale must be greater than zero.");
                 this.linetypeScale = value;
@@ -222,8 +200,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or set the entity visibility.
         /// </summary>
-        public bool IsVisible
-        {
+        public bool IsVisible {
             get { return this.isVisible; }
             set { this.isVisible = value; }
         }
@@ -231,11 +208,9 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets the entity <see cref="Vector3">normal</see>.
         /// </summary>
-        public Vector3 Normal
-        {
+        public Vector3 Normal {
             get { return this.normal; }
-            set
-            {
+            set {
                 this.normal = Vector3.Normalize(value);
                 if (Vector3.IsNaN(this.normal))
                     throw new ArgumentException("The normal can not be the zero vector.", nameof(value));
@@ -245,17 +220,15 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets the owner of the actual dxf object.
         /// </summary>
-        public new Block Owner
-        {
-            get { return (Block) base.Owner; }
+        public new Block Owner {
+            get { return (Block)base.Owner; }
             internal set { base.Owner = value; }
         }
 
         /// <summary>
         /// Gets the entity <see cref="XDataDictionary">extended data</see>.
         /// </summary>
-        public XDataDictionary XData
-        {
+        public XDataDictionary XData {
             get { return this.xData; }
         }
 
@@ -263,13 +236,11 @@ namespace netDxf.Entities
 
         #region internal methods
 
-        internal void AddReactor(DxfObject o)
-        {
+        internal void AddReactor(DxfObject o) {
             this.reactors.Add(o);
         }
 
-        internal bool RemoveReactor(DxfObject o)
-        {
+        internal bool RemoveReactor(DxfObject o) {
             return this.reactors.Remove(o);
         }
 
@@ -281,8 +252,7 @@ namespace netDxf.Entities
         /// Converts the value of this instance to its equivalent string representation.
         /// </summary>
         /// <returns>The string representation.</returns>
-        public override string ToString()
-        {
+        public override string ToString() {
             return this.type.ToString();
         }
 
@@ -300,13 +270,11 @@ namespace netDxf.Entities
 
         #region XData events
 
-        private void XData_AddAppReg(XDataDictionary sender, ObservableCollectionEventArgs<ApplicationRegistry> e)
-        {
+        private void XData_AddAppReg(XDataDictionary sender, ObservableCollectionEventArgs<ApplicationRegistry> e) {
             this.OnXDataAddAppRegEvent(e.Item);
         }
 
-        private void XData_RemoveAppReg(XDataDictionary sender, ObservableCollectionEventArgs<ApplicationRegistry> e)
-        {
+        private void XData_RemoveAppReg(XDataDictionary sender, ObservableCollectionEventArgs<ApplicationRegistry> e) {
             this.OnXDataRemoveAppRegEvent(e.Item);
         }
 

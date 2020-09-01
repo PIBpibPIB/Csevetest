@@ -22,14 +22,12 @@
 
 using netDxf.Tables;
 
-namespace netDxf.Entities
-{
+namespace netDxf.Entities {
     /// <summary>
     /// Represents a solid <see cref="EntityObject">entity</see>.
     /// </summary>
     public class Solid :
-        EntityObject
-    {
+        EntityObject {
         #region private fields
 
         private Vector2 firstVertex;
@@ -47,8 +45,7 @@ namespace netDxf.Entities
         /// Initializes a new instance of the <c>Solid</c> class.
         /// </summary>
         public Solid()
-            : this(Vector2.Zero, Vector2.Zero, Vector2.Zero, Vector2.Zero)
-        {
+            : this(Vector2.Zero, Vector2.Zero, Vector2.Zero, Vector2.Zero) {
         }
 
         /// <summary>
@@ -61,8 +58,7 @@ namespace netDxf.Entities
             : this(new Vector2(firstVertex.X, firstVertex.Y),
                 new Vector2(secondVertex.X, secondVertex.Y),
                 new Vector2(thirdVertex.X, thirdVertex.Y),
-                new Vector2(thirdVertex.X, thirdVertex.Y))
-        {
+                new Vector2(thirdVertex.X, thirdVertex.Y)) {
         }
 
         /// <summary>
@@ -73,8 +69,7 @@ namespace netDxf.Entities
         /// <param name="thirdVertex">Solid <see cref="Vector2">third vertex</see> in OCS (object coordinate system).</param>
         /// <param name="fourthVertex">Solid <see cref="Vector2">fourth vertex</see> in OCS (object coordinate system).</param>
         public Solid(Vector2 firstVertex, Vector2 secondVertex, Vector2 thirdVertex, Vector2 fourthVertex)
-            : base(EntityType.Solid, DxfObjectCode.Solid)
-        {
+            : base(EntityType.Solid, DxfObjectCode.Solid) {
             this.firstVertex = firstVertex;
             this.secondVertex = secondVertex;
             this.thirdVertex = thirdVertex;
@@ -90,8 +85,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets the first solid <see cref="Vector2">vertex in OCS (object coordinate system).</see>.
         /// </summary>
-        public Vector2 FirstVertex
-        {
+        public Vector2 FirstVertex {
             get { return this.firstVertex; }
             set { this.firstVertex = value; }
         }
@@ -99,8 +93,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets the second solid <see cref="Vector2">vertex in OCS (object coordinate system).</see>.
         /// </summary>
-        public Vector2 SecondVertex
-        {
+        public Vector2 SecondVertex {
             get { return this.secondVertex; }
             set { this.secondVertex = value; }
         }
@@ -108,8 +101,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets the third solid <see cref="Vector2">vertex in OCS (object coordinate system).</see>.
         /// </summary>
-        public Vector2 ThirdVertex
-        {
+        public Vector2 ThirdVertex {
             get { return this.thirdVertex; }
             set { this.thirdVertex = value; }
         }
@@ -117,8 +109,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets the fourth solid <see cref="Vector2">vertex in OCS (object coordinate system).</see>.
         /// </summary>
-        public Vector2 FourthVertex
-        {
+        public Vector2 FourthVertex {
             get { return this.fourthVertex; }
             set { this.fourthVertex = value; }
         }
@@ -127,8 +118,7 @@ namespace netDxf.Entities
         /// Gets or sets the solid elevation.
         /// </summary>
         /// <remarks>This is the distance from the origin to the plane of the solid.</remarks>
-        public double Elevation
-        {
+        public double Elevation {
             get { return this.elevation; }
             set { this.elevation = value; }
         }
@@ -136,8 +126,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets the thickness of the solid.
         /// </summary>
-        public double Thickness
-        {
+        public double Thickness {
             get { return this.thickness; }
             set { this.thickness = value; }
         }
@@ -150,16 +139,14 @@ namespace netDxf.Entities
         /// Creates a new Solid that is a copy of the current instance.
         /// </summary>
         /// <returns>A new Solid that is a copy of this instance.</returns>
-        public override object Clone()
-        {
-            Solid entity = new Solid
-            {
+        public override object Clone() {
+            Solid entity = new Solid {
                 //EntityObject properties
-                Layer = (Layer) this.Layer.Clone(),
-                Linetype = (Linetype) this.Linetype.Clone(),
-                Color = (AciColor) this.Color.Clone(),
+                Layer = (Layer)this.Layer.Clone(),
+                Linetype = (Linetype)this.Linetype.Clone(),
+                Color = (AciColor)this.Color.Clone(),
                 Lineweight = this.Lineweight,
-                Transparency = (Transparency) this.Transparency.Clone(),
+                Transparency = (Transparency)this.Transparency.Clone(),
                 LinetypeScale = this.LinetypeScale,
                 Normal = this.Normal,
                 IsVisible = this.IsVisible,
@@ -172,7 +159,7 @@ namespace netDxf.Entities
             };
 
             foreach (XData data in this.XData.Values)
-                entity.XData.Add((XData) data.Clone());
+                entity.XData.Add((XData)data.Clone());
 
             return entity;
         }

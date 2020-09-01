@@ -22,11 +22,9 @@
 
 using System.Collections.Generic;
 
-namespace netDxf.Objects
-{
+namespace netDxf.Objects {
     internal class DictionaryObject :
-        DxfObject
-    {
+        DxfObject {
         #region private fields
 
         private readonly Dictionary<string, string> entries;
@@ -38,8 +36,7 @@ namespace netDxf.Objects
         #region private fields
 
         internal DictionaryObject(DxfObject owner)
-            : base(DxfObjectCode.Dictionary)
-        {
+            : base(DxfObjectCode.Dictionary) {
             this.isHardOwner = false;
             this.cloning = DictionaryCloningFlags.KeepExisting;
             this.entries = new Dictionary<string, string>();
@@ -53,16 +50,14 @@ namespace netDxf.Objects
         /// <summary>
         /// Gets the entries dictionary (key: owner entry handle, value: name)
         /// </summary>
-        public Dictionary<string, string> Entries
-        {
+        public Dictionary<string, string> Entries {
             get { return this.entries; }
         }
 
         /// <summary>
         /// Gets or sets if the dictionary object is hard owner.
         /// </summary>
-        public bool IsHardOwner
-        {
+        public bool IsHardOwner {
             get { return this.isHardOwner; }
             set { this.isHardOwner = value; }
         }
@@ -70,8 +65,7 @@ namespace netDxf.Objects
         /// <summary>
         /// Gets or sets the dictionary object cloning flags.
         /// </summary>
-        public DictionaryCloningFlags Cloning
-        {
+        public DictionaryCloningFlags Cloning {
             get { return this.cloning; }
             set { this.cloning = value; }
         }

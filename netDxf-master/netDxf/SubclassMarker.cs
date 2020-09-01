@@ -20,13 +20,11 @@
 
 #endregion
 
-namespace netDxf
-{
+namespace netDxf {
     /// <summary>
     /// Dxf object subclass string markers (code 100).
     /// </summary>
-    internal static class SubclassMarker
-    {
+    internal static class SubclassMarker {
         public const string ApplicationId = "AcDbRegAppTableRecord";
         public const string Table = "AcDbSymbolTable";
         public const string TableRecord = "AcDbSymbolTableRecord";

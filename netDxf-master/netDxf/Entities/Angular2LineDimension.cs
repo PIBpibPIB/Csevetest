@@ -20,19 +20,17 @@
 
 #endregion
 
-using System;
-using System.Collections.Generic;
 using netDxf.Blocks;
 using netDxf.Tables;
+using System;
+using System.Collections.Generic;
 
-namespace netDxf.Entities
-{
+namespace netDxf.Entities {
     /// <summary>
     /// Represents a 3 point angular dimension <see cref="EntityObject">entity</see>.
     /// </summary>
     public class Angular2LineDimension :
-        Dimension
-    {
+        Dimension {
         #region private fields
 
         private double offset;
@@ -50,8 +48,7 @@ namespace netDxf.Entities
         /// Initializes a new instance of the <c>Angular2LineDimension</c> class.
         /// </summary>
         public Angular2LineDimension()
-            : this(Vector2.Zero, Vector2.UnitX, Vector2.Zero, Vector2.UnitY, 0.1)
-        {
+            : this(Vector2.Zero, Vector2.UnitX, Vector2.Zero, Vector2.UnitY, 0.1) {
         }
 
         /// <summary>
@@ -61,8 +58,7 @@ namespace netDxf.Entities
         /// <param name="secondLine">Second <see cref="Line">line</see> that defines the angle to measure.</param>
         /// <param name="offset">Distance between the center point and the dimension line.</param>
         public Angular2LineDimension(Line firstLine, Line secondLine, double offset)
-            : this(firstLine, secondLine, offset, Vector3.UnitZ, DimensionStyle.Default)
-        {
+            : this(firstLine, secondLine, offset, Vector3.UnitZ, DimensionStyle.Default) {
         }
 
         /// <summary>
@@ -73,8 +69,7 @@ namespace netDxf.Entities
         /// <param name="offset">Distance between the center point and the dimension line.</param>
         /// <param name="normal">Normal vector of the plane where the dimension is defined.</param>
         public Angular2LineDimension(Line firstLine, Line secondLine, double offset, Vector3 normal)
-            : this(firstLine, secondLine, offset, normal, DimensionStyle.Default)
-        {
+            : this(firstLine, secondLine, offset, normal, DimensionStyle.Default) {
         }
 
         /// <summary>
@@ -85,8 +80,7 @@ namespace netDxf.Entities
         /// <param name="offset">Distance between the center point and the dimension line.</param>
         /// <param name="style">The <see cref="DimensionStyle">style</see> to use with the dimension.</param>
         public Angular2LineDimension(Line firstLine, Line secondLine, double offset, DimensionStyle style)
-            : this(firstLine, secondLine, offset, Vector3.UnitZ, style)
-        {
+            : this(firstLine, secondLine, offset, Vector3.UnitZ, style) {
         }
 
         /// <summary>
@@ -97,8 +91,7 @@ namespace netDxf.Entities
         /// <param name="offset">Distance between the center point and the dimension line.</param>
         /// <param name="style">The <see cref="DimensionStyle">style</see> to use with the dimension.</param>
         public Angular2LineDimension(Line firstLine, Line secondLine, double offset, Vector3 normal, DimensionStyle style)
-            : base(DimensionType.Angular)
-        {
+            : base(DimensionType.Angular) {
             if (firstLine == null)
                 throw new ArgumentNullException(nameof(firstLine));
             if (secondLine == null)
@@ -143,8 +136,7 @@ namespace netDxf.Entities
         /// <param name="endSecondLine">End <see cref="Vector2">point</see> of the second line that defines the angle to measure.</param>
         /// <param name="offset">Distance between the center point and the dimension line.</param>
         public Angular2LineDimension(Vector2 startFirstLine, Vector2 endFirstLine, Vector2 startSecondLine, Vector2 endSecondLine, double offset)
-            : this(startFirstLine, endFirstLine, startSecondLine, endSecondLine, offset, DimensionStyle.Default)
-        {
+            : this(startFirstLine, endFirstLine, startSecondLine, endSecondLine, offset, DimensionStyle.Default) {
         }
 
         /// <summary>
@@ -157,8 +149,7 @@ namespace netDxf.Entities
         /// <param name="offset">Distance between the center point and the dimension line.</param>
         /// <param name="style">The <see cref="DimensionStyle">style</see> to use with the dimension.</param>
         public Angular2LineDimension(Vector2 startFirstLine, Vector2 endFirstLine, Vector2 startSecondLine, Vector2 endSecondLine, double offset, DimensionStyle style)
-            : base(DimensionType.Angular)
-        {
+            : base(DimensionType.Angular) {
             Vector2 dir1 = endFirstLine - startFirstLine;
             Vector2 dir2 = endSecondLine - startSecondLine;
             if (Vector2.AreParallel(dir1, dir2))
@@ -186,10 +177,8 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets the center <see cref="Vector2">point</see> of the measured arc in local coordinates.
         /// </summary>
-        public Vector2 CenterPoint
-        {
-            get
-            {
+        public Vector2 CenterPoint {
+            get {
                 return MathHelper.FindIntersection(
                     this.startFirstLine, this.endFirstLine - this.startFirstLine,
                     this.startSecondLine, this.endSecondLine - this.startSecondLine);
@@ -199,8 +188,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Start <see cref="Vector2">point</see> of the first line that defines the angle to measure in local coordinates.
         /// </summary>
-        public Vector2 StartFirstLine
-        {
+        public Vector2 StartFirstLine {
             get { return this.startFirstLine; }
             set { this.startFirstLine = value; }
         }
@@ -208,8 +196,7 @@ namespace netDxf.Entities
         /// <summary>
         /// End <see cref="Vector2">point</see> of the first line that defines the angle to measure in local coordinates.
         /// </summary>
-        public Vector2 EndFirstLine
-        {
+        public Vector2 EndFirstLine {
             get { return this.endFirstLine; }
             set { this.endFirstLine = value; }
         }
@@ -217,8 +204,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Start <see cref="Vector2">point</see> of the second line that defines the angle to measure in OCS (object coordinate system).
         /// </summary>
-        public Vector2 StartSecondLine
-        {
+        public Vector2 StartSecondLine {
             get { return this.startSecondLine; }
             set { this.startSecondLine = value; }
         }
@@ -226,8 +212,7 @@ namespace netDxf.Entities
         /// <summary>
         /// End <see cref="Vector2">point</see> of the second line that defines the angle to measure in OCS (object coordinate system).
         /// </summary>
-        public Vector2 EndSecondLine
-        {
+        public Vector2 EndSecondLine {
             get { return this.endSecondLine; }
             set { this.endSecondLine = value; }
         }
@@ -235,8 +220,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets the location of the dimension line arc.
         /// </summary>
-        public Vector2 ArcDefinitionPoint
-        {
+        public Vector2 ArcDefinitionPoint {
             get { return this.arcDefinitionPoint; }
             internal set { this.arcDefinitionPoint = value; }
         }
@@ -247,11 +231,9 @@ namespace netDxf.Entities
         /// <remarks>
         /// Offset values cannot be negative and, even thought, zero values are allowed, they are not recommended.
         /// </remarks>
-        public double Offset
-        {
+        public double Offset {
             get { return this.offset; }
-            set
-            {
+            set {
                 if (value < 0)
                     throw new ArgumentOutOfRangeException(nameof(value), "The offset value must be equal or greater than zero.");
                 this.offset = value;
@@ -262,13 +244,11 @@ namespace netDxf.Entities
         /// Actual measurement.
         /// </summary>
         /// <remarks>The dimension is always measured in the plane defined by the normal.</remarks>
-        public override double Measurement
-        {
-            get
-            {
+        public override double Measurement {
+            get {
                 Vector2 dirRef1 = this.endFirstLine - this.startFirstLine;
                 Vector2 dirRef2 = this.endSecondLine - this.startSecondLine;
-                return Vector2.AngleBetween(dirRef1, dirRef2)*MathHelper.RadToDeg;
+                return Vector2.AngleBetween(dirRef1, dirRef2) * MathHelper.RadToDeg;
             }
         }
 
@@ -284,8 +264,7 @@ namespace netDxf.Entities
         /// The start and end points of the reference lines will be modified,
         /// the angle measurement is always made from the direction of the first line to the direction of the second line.
         /// </remarks>
-        public void SetDimensionLinePosition(Vector2 point)
-        {
+        public void SetDimensionLinePosition(Vector2 point) {
             this.SetDimensionLinePosition(point, true);
         }
 
@@ -293,18 +272,15 @@ namespace netDxf.Entities
 
         #region private methods
 
-        private void SetDimensionLinePosition(Vector2 point, bool updateRefs)
-        {
+        private void SetDimensionLinePosition(Vector2 point, bool updateRefs) {
             Vector2 center = this.CenterPoint;
 
             if (Vector2.IsNaN(center))
                 throw new ArgumentException("The two lines that define the dimension are parallel.");
 
-            if (updateRefs)
-            {
+            if (updateRefs) {
                 double cross = Vector2.CrossProduct(this.EndFirstLine - this.StartFirstLine, this.EndSecondLine - this.StartSecondLine);
-                if (cross < 0)
-                {
+                if (cross < 0) {
                     Vector2 temp1 = this.startFirstLine;
                     Vector2 temp2 = this.endFirstLine;
 
@@ -326,22 +302,17 @@ namespace netDxf.Entities
                 double crossStart = Vector2.CrossProduct(dirRef1, dirOffset);
                 double crossEnd = Vector2.CrossProduct(dirRef2, dirOffset);
 
-                if (crossStart >= 0 && crossEnd >= 0)
-                {
+                if (crossStart >= 0 && crossEnd >= 0) {
                     this.StartFirstLine = ref2Start;
                     this.EndFirstLine = ref2End;
                     this.StartSecondLine = ref1End;
                     this.EndSecondLine = ref1Start;
-                }
-                else if (crossStart < 0 && crossEnd >= 0)
-                {
+                } else if (crossStart < 0 && crossEnd >= 0) {
                     this.StartFirstLine = ref1End;
                     this.EndFirstLine = ref1Start;
                     this.StartSecondLine = ref2End;
                     this.EndSecondLine = ref2Start;
-                }
-                else if (crossStart < 0 && crossEnd < 0)
-                {
+                } else if (crossStart < 0 && crossEnd < 0) {
                     this.StartFirstLine = ref2End;
                     this.EndFirstLine = ref2Start;
                     this.StartSecondLine = ref1Start;
@@ -358,17 +329,14 @@ namespace netDxf.Entities
             Vector2 midDim = Vector2.Polar(center, this.offset, midRot);
             this.arcDefinitionPoint = midDim;
 
-            if (!this.TextPositionManuallySet)
-            {
+            if (!this.TextPositionManuallySet) {
                 DimensionStyleOverride styleOverride;
                 double textGap = this.Style.TextOffset;
-                if (this.StyleOverrides.TryGetValue(DimensionStyleOverrideType.TextOffset, out styleOverride))
-                {
+                if (this.StyleOverrides.TryGetValue(DimensionStyleOverrideType.TextOffset, out styleOverride)) {
                     textGap = (double)styleOverride.Value;
                 }
                 double scale = this.Style.DimScaleOverall;
-                if (this.StyleOverrides.TryGetValue(DimensionStyleOverrideType.DimScaleOverall, out styleOverride))
-                {
+                if (this.StyleOverrides.TryGetValue(DimensionStyleOverrideType.DimScaleOverall, out styleOverride)) {
                     scale = (double)styleOverride.Value;
                 }
 
@@ -384,11 +352,10 @@ namespace netDxf.Entities
         /// <summary>
         /// Calculate the dimension reference points.
         /// </summary>
-        protected override void CalculteReferencePoints()
-        {
+        protected override void CalculteReferencePoints() {
             DimensionStyleOverride styleOverride;
 
-            double measure = this.Measurement * MathHelper.DegToRad ;
+            double measure = this.Measurement * MathHelper.DegToRad;
             Vector2 center = this.CenterPoint;
 
             if (Vector2.IsNaN(center))
@@ -402,34 +369,27 @@ namespace netDxf.Entities
             this.arcDefinitionPoint = midDim;
 
 
-            if (this.TextPositionManuallySet)
-            {
+            if (this.TextPositionManuallySet) {
                 DimensionStyleFitTextMove moveText = this.Style.FitTextMove;
-                if (this.StyleOverrides.TryGetValue(DimensionStyleOverrideType.FitTextMove, out styleOverride))
-                {
+                if (this.StyleOverrides.TryGetValue(DimensionStyleOverrideType.FitTextMove, out styleOverride)) {
                     moveText = (DimensionStyleFitTextMove)styleOverride.Value;
                 }
 
-                if (moveText == DimensionStyleFitTextMove.BesideDimLine)
-                {
+                if (moveText == DimensionStyleFitTextMove.BesideDimLine) {
                     this.SetDimensionLinePosition(this.textRefPoint, false);
                 }
-            }
-            else
-            {
+            } else {
                 double textGap = this.Style.TextOffset;
-                if (this.StyleOverrides.TryGetValue(DimensionStyleOverrideType.TextOffset, out styleOverride))
-                {
+                if (this.StyleOverrides.TryGetValue(DimensionStyleOverrideType.TextOffset, out styleOverride)) {
                     textGap = (double)styleOverride.Value;
                 }
                 double scale = this.Style.DimScaleOverall;
-                if (this.StyleOverrides.TryGetValue(DimensionStyleOverrideType.DimScaleOverall, out styleOverride))
-                {
+                if (this.StyleOverrides.TryGetValue(DimensionStyleOverrideType.DimScaleOverall, out styleOverride)) {
                     scale = (double)styleOverride.Value;
                 }
 
                 double gap = textGap * scale;
-                this.textRefPoint = midDim + gap * Vector2.Normalize(midDim-center);
+                this.textRefPoint = midDim + gap * Vector2.Normalize(midDim - center);
             }
         }
 
@@ -438,8 +398,7 @@ namespace netDxf.Entities
         /// </summary>
         /// <param name="name">Name to be assigned to the generated block.</param>
         /// <returns>The block that represents the actual dimension.</returns>
-        protected override Block BuildBlock(string name)
-        {
+        protected override Block BuildBlock(string name) {
             return DimensionBlock.Build(this, name);
         }
 
@@ -447,21 +406,19 @@ namespace netDxf.Entities
         /// Creates a new Angular2LineDimension that is a copy of the current instance.
         /// </summary>
         /// <returns>A new Angular2LineDimension that is a copy of this instance.</returns>
-        public override object Clone()
-        {
-            Angular2LineDimension entity = new Angular2LineDimension
-            {
+        public override object Clone() {
+            Angular2LineDimension entity = new Angular2LineDimension {
                 //EntityObject properties
-                Layer = (Layer) this.Layer.Clone(),
-                Linetype = (Linetype) this.Linetype.Clone(),
-                Color = (AciColor) this.Color.Clone(),
+                Layer = (Layer)this.Layer.Clone(),
+                Linetype = (Linetype)this.Linetype.Clone(),
+                Color = (AciColor)this.Color.Clone(),
                 Lineweight = this.Lineweight,
-                Transparency = (Transparency) this.Transparency.Clone(),
+                Transparency = (Transparency)this.Transparency.Clone(),
                 LinetypeScale = this.LinetypeScale,
                 Normal = this.Normal,
                 IsVisible = this.IsVisible,
                 //Dimension properties
-                Style = (DimensionStyle) this.Style.Clone(),
+                Style = (DimensionStyle)this.Style.Clone(),
                 DefinitionPoint = this.DefinitionPoint,
                 TextReferencePoint = this.TextReferencePoint,
                 TextPositionManuallySet = this.TextPositionManuallySet,
@@ -480,8 +437,7 @@ namespace netDxf.Entities
                 arcDefinitionPoint = this.arcDefinitionPoint
             };
 
-            foreach (DimensionStyleOverride styleOverride in this.StyleOverrides.Values)
-            {
+            foreach (DimensionStyleOverride styleOverride in this.StyleOverrides.Values) {
                 object copy;
                 ICloneable value = styleOverride.Value as ICloneable;
                 copy = value != null ? value.Clone() : styleOverride.Value;
@@ -490,7 +446,7 @@ namespace netDxf.Entities
             }
 
             foreach (XData data in this.XData.Values)
-                entity.XData.Add((XData) data.Clone());
+                entity.XData.Add((XData)data.Clone());
 
             return entity;
         }

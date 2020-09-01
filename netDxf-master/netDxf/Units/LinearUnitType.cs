@@ -20,13 +20,11 @@
 
 #endregion
 
-namespace netDxf.Units
-{
+namespace netDxf.Units {
     /// <summary>
     /// Linear units format for creating objects.
     /// </summary>
-    public enum LinearUnitType
-    {
+    public enum LinearUnitType {
         /// <summary>
         /// Scientific.
         /// </summary>

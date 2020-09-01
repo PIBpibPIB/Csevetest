@@ -22,14 +22,12 @@
 
 using System;
 
-namespace netDxf.Objects
-{
+namespace netDxf.Objects {
     /// <summary>
     /// Flags (bit-coded).
     /// </summary>
     [Flags]
-    public enum MLineStyleFlags
-    {
+    public enum MLineStyleFlags {
         /// <summary>
         /// None.
         /// </summary>

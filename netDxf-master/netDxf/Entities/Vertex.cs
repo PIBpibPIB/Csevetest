@@ -20,11 +20,10 @@
 
 #endregion
 
-using System;
 using netDxf.Tables;
+using System;
 
-namespace netDxf.Entities
-{
+namespace netDxf.Entities {
     /// <summary>
     /// Represents a dxf Vertex.
     /// </summary>
@@ -32,8 +31,7 @@ namespace netDxf.Entities
     /// The Vertex class holds all the information read from the dxf file even if its needed or not. For internal use only.
     /// </remarks>
     internal class Vertex :
-        DxfObject
-    {
+        DxfObject {
         #region private fields
 
         private VertexTypeFlags flags;
@@ -54,8 +52,7 @@ namespace netDxf.Entities
         /// Initializes a new instance of the <c>Vertex</c> class.
         /// </summary>
         public Vertex()
-            : this(Vector3.Zero)
-        {
+            : this(Vector3.Zero) {
         }
 
         /// <summary>
@@ -63,8 +60,7 @@ namespace netDxf.Entities
         /// </summary>
         /// <param name="position">Vertex <see cref="Vector2">location</see>.</param>
         public Vertex(Vector2 position)
-            : this(new Vector3(position.X, position.Y, 0.0))
-        {
+            : this(new Vector3(position.X, position.Y, 0.0)) {
         }
 
         /// <summary>
@@ -74,8 +70,7 @@ namespace netDxf.Entities
         /// <param name="y">Y coordinate.</param>
         /// <param name="z">Z coordinate.</param>
         public Vertex(double x, double y, double z)
-            : this(new Vector3(x, y, z))
-        {
+            : this(new Vector3(x, y, z)) {
         }
 
         /// <summary>
@@ -84,8 +79,7 @@ namespace netDxf.Entities
         /// <param name="x">X coordinate.</param>
         /// <param name="y">Y coordinate.</param>
         public Vertex(double x, double y)
-            : this(new Vector3(x, y, 0.0))
-        {
+            : this(new Vector3(x, y, 0.0)) {
         }
 
         /// <summary>
@@ -93,8 +87,7 @@ namespace netDxf.Entities
         /// </summary>
         /// <param name="position">Vertex <see cref="Vector3">location</see>.</param>
         public Vertex(Vector3 position)
-            : base(DxfObjectCode.Vertex)
-        {
+            : base(DxfObjectCode.Vertex) {
             this.flags = VertexTypeFlags.PolylineVertex;
             this.position = position;
             this.layer = Layer.Default;
@@ -112,14 +105,12 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets the polyline vertex <see cref="Vector3">location</see>.
         /// </summary>
-        public Vector3 Position
-        {
+        public Vector3 Position {
             get { return this.position; }
             set { this.position = value; }
         }
 
-        public short[] VertexIndexes
-        {
+        public short[] VertexIndexes {
             get { return this.vertexIndexes; }
             set { this.vertexIndexes = value; }
         }
@@ -127,11 +118,9 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets the light weight polyline start segment width.
         /// </summary>
-        public double StartWidth
-        {
+        public double StartWidth {
             get { return this.startWidth; }
-            set
-            {
+            set {
                 if (value < 0)
                     throw new ArgumentOutOfRangeException(nameof(value), value, "The Vertex width must be equals or greater than zero.");
                 this.startWidth = value;
@@ -141,11 +130,9 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets the light weight polyline end segment width.
         /// </summary>
-        public double EndWidth
-        {
+        public double EndWidth {
             get { return this.endWidth; }
-            set
-            {
+            set {
                 if (value < 0)
                     throw new ArgumentOutOfRangeException(nameof(value), value, "The Vertex width must be equals or greater than zero.");
                 this.endWidth = value;
@@ -160,11 +147,9 @@ namespace netDxf.Entities
         /// made negative if the arc goes clockwise from the start point to the endpoint. 
         /// A bulge of 0 indicates a straight segment, and a bulge of 1 is a semicircle.
         /// </remarks>
-        public double Bulge
-        {
+        public double Bulge {
             get { return this.bulge; }
-            set
-            {
+            set {
                 if (this.bulge < 0.0 || this.bulge > 1.0f)
                     throw new ArgumentOutOfRangeException(nameof(value), value, "The bulge must be a value between zero and one");
                 this.bulge = value;
@@ -174,8 +159,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets the vertex type.
         /// </summary>
-        public VertexTypeFlags Flags
-        {
+        public VertexTypeFlags Flags {
             get { return this.flags; }
             set { this.flags = value; }
         }
@@ -183,11 +167,9 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets the entity color.
         /// </summary>
-        public AciColor Color
-        {
+        public AciColor Color {
             get { return this.color; }
-            set
-            {
+            set {
                 if (value == null)
                     throw new ArgumentNullException(nameof(value));
                 this.color = value;
@@ -197,11 +179,9 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets the entity layer.
         /// </summary>
-        public Layer Layer
-        {
+        public Layer Layer {
             get { return this.layer; }
-            set
-            {
+            set {
                 if (value == null)
                     throw new ArgumentNullException(nameof(value));
                 this.layer = value;
@@ -211,11 +191,9 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets the entity line type.
         /// </summary>
-        public Linetype Linetype
-        {
+        public Linetype Linetype {
             get { return this.linetype; }
-            set
-            {
+            set {
                 if (value == null)
                     throw new ArgumentNullException(nameof(value));
                 this.linetype = value;
@@ -226,8 +204,7 @@ namespace netDxf.Entities
 
         #region overrides
 
-        public override string ToString()
-        {
+        public override string ToString() {
             return this.CodeName;
         }
 

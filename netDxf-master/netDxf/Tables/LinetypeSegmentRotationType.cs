@@ -20,13 +20,11 @@
 
 #endregion
 
-namespace netDxf.Tables
-{
+namespace netDxf.Tables {
     /// <summary>
     /// Define the type of rotation specified by the rotation value of the text or shape linetype segment.
     /// </summary>
-    public enum LinetypeSegmentRotationType
-    {
+    public enum LinetypeSegmentRotationType {
         /// <summary>
         /// Specifies upright or easy-to-read text.
         /// </summary>

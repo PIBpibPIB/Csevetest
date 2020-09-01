@@ -20,15 +20,14 @@
 
 #endregion
 
-using System;
-using System.Collections.Generic;
 using netDxf.Blocks;
 using netDxf.Entities;
 using netDxf.Objects;
 using netDxf.Tables;
+using System;
+using System.Collections.Generic;
 
-namespace netDxf.Collections
-{
+namespace netDxf.Collections {
     /// <summary>
     /// Represents a collection of layouts.
     /// </summary>
@@ -38,18 +37,15 @@ namespace netDxf.Collections
     /// The maximum number of layouts is also limited by the number of blocks, due to that for each layout a block record must exist in the blocks collection.
     /// </remarks>
     public sealed class Layouts :
-        TableObjects<Layout>
-    {
+        TableObjects<Layout> {
         #region constructor
 
         internal Layouts(DxfDocument document)
-            : this(document, null)
-        {
+            : this(document, null) {
         }
 
         internal Layouts(DxfDocument document, string handle)
-            : base(document, DxfObjectCode.LayoutDictionary, handle)
-        {
+            : base(document, DxfObjectCode.LayoutDictionary, handle) {
             this.MaxCapacity = short.MaxValue;
             this.references = null;
         }
@@ -67,8 +63,7 @@ namespace netDxf.Collections
         /// If there is no table object with the specified name in the list the method an empty list.<br />
         /// The Groups collection method GetReferences will always return an empty list since there are no DxfObjects that references them.
         /// </remarks>
-        public new List<DxfObject> GetReferences(string name)
-        {
+        public new List<DxfObject> GetReferences(string name) {
             if (!this.Contains(name))
                 return new List<DxfObject>();
             return this.GetReferences(this[name]);
@@ -83,8 +78,7 @@ namespace netDxf.Collections
         /// If there is no table object with the specified name in the list the method an empty list.<br />
         /// The Groups collection method GetReferences will always return an empty list since there are no DxfObjects that references them.
         /// </remarks>
-        public new List<DxfObject> GetReferences(Layout item)
-        {
+        public new List<DxfObject> GetReferences(Layout item) {
             if (item == null)
                 throw new ArgumentNullException(nameof(item));
             List<DxfObject> refs = new List<DxfObject>();
@@ -101,8 +95,7 @@ namespace netDxf.Collections
         /// <returns>
         /// If a layout already exists with the same name as the instance that is being added the method returns the existing layout.
         /// </returns>
-        internal override Layout Add(Layout layout, bool assignHandle)
-        {
+        internal override Layout Add(Layout layout, bool assignHandle) {
             if (this.list.Count >= this.MaxCapacity)
                 throw new OverflowException(string.Format("Table overflow. The maximum number of elements the table {0} can have is {1}", this.CodeName, this.MaxCapacity));
             if (layout == null)
@@ -118,13 +111,12 @@ namespace netDxf.Collections
             Block associatadBlock = layout.AssociatedBlock;
 
             // create and add the corresponding PaperSpace block
-            if (layout.IsPaperSpace && associatadBlock == null)
-            {
+            if (layout.IsPaperSpace && associatadBlock == null) {
                 // the PaperSpace block names follow the naming Paper_Space, Paper_Space0, Paper_Space1, ...
                 string spaceName = this.list.Count == 1 ? Block.DefaultPaperSpaceName : string.Concat(Block.DefaultPaperSpaceName, this.list.Count - 2);
                 associatadBlock = new Block(spaceName, null, null, false);
                 if (layout.TabOrder == 0)
-                    layout.TabOrder = (short) this.list.Count;
+                    layout.TabOrder = (short)this.list.Count;
             }
 
             associatadBlock = this.Owner.Blocks.Add(associatadBlock);
@@ -158,8 +150,7 @@ namespace netDxf.Collections
         /// When a Layout is deleted all entities that has been added to it will also be removed.<br />
         /// Removing a Layout will rebuild the PaperSpace block names, to follow the naming rule: Paper_Space, Paper_Space0, Paper_Space1, ...
         /// </remarks>
-        public override bool Remove(string name)
-        {
+        public override bool Remove(string name) {
             return this.Remove(this[name]);
         }
 
@@ -169,8 +160,7 @@ namespace netDxf.Collections
         /// <param name="item"><see cref="Layout">Layout</see> to remove from the document.</param>
         /// <returns>True if the layout has been successfully removed, or false otherwise.</returns>
         /// <remarks>Reserved layouts or any other referenced by objects cannot be removed.</remarks>
-        public override bool Remove(Layout item)
-        {
+        public override bool Remove(Layout item) {
             if (item == null)
                 return false;
 
@@ -182,8 +172,7 @@ namespace netDxf.Collections
 
             // remove the entities of the layout
             List<DxfObject> refObjects = this.references[item.Name];
-            if (refObjects.Count != 0)
-            {
+            if (refObjects.Count != 0) {
                 DxfObject[] entities = new DxfObject[refObjects.Count];
                 refObjects.CopyTo(entities);
                 foreach (DxfObject e in entities)
@@ -191,11 +180,9 @@ namespace netDxf.Collections
             }
 
             // When a layout is removed we need to rebuild the PaperSpace block names, to follow the naming Paper_Space, Paper_Space0, Paper_Space1, ...
-            foreach (Layout l in this.list.Values)
-            {
+            foreach (Layout l in this.list.Values) {
                 // The ModelSpace block cannot be removed. 
-                if (l.IsPaperSpace)
-                {
+                if (l.IsPaperSpace) {
                     this.Owner.Blocks.References[l.AssociatedBlock.Name].Remove(l);
                     this.Owner.Blocks.Remove(l.AssociatedBlock);
                     l.AssociatedBlock = null;
@@ -215,11 +202,9 @@ namespace netDxf.Collections
 
             // When a layout is removed we need to rebuild the PaperSpace block names, to follow the naming Paper_Space, Paper_Space0, Paper_Space1, ...
             int index = 0;
-            foreach (Layout l in this.list.Values)
-            {
+            foreach (Layout l in this.list.Values) {
                 // Create and add the corresponding PaperSpace block
-                if (l.IsPaperSpace)
-                {
+                if (l.IsPaperSpace) {
                     string spaceName = index == 0 ? Block.PaperSpace.Name : string.Concat(Block.PaperSpace.Name, index - 1);
                     Block associatadBlock = this.Owner.Blocks.Add(new Block(spaceName, null, null, false));
                     this.Owner.Blocks.References[associatadBlock.Name].Add(l);
@@ -240,13 +225,12 @@ namespace netDxf.Collections
 
         #region Linetype events
 
-        private void Item_NameChanged(TableObject sender, TableObjectChangedEventArgs<string> e)
-        {
+        private void Item_NameChanged(TableObject sender, TableObjectChangedEventArgs<string> e) {
             if (this.Contains(e.NewValue))
                 throw new ArgumentException("There is already another layout with the same name.");
 
             this.list.Remove(sender.Name);
-            this.list.Add(e.NewValue, (Layout) sender);
+            this.list.Add(e.NewValue, (Layout)sender);
 
             List<DxfObject> refs = this.references[sender.Name];
             this.references.Remove(sender.Name);

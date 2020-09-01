@@ -20,13 +20,11 @@
 
 #endregion
 
-namespace netDxf.Entities
-{
+namespace netDxf.Entities {
     /// <summary>
     /// Defines the curves type.
     /// </summary>
-    public enum PolylineSmoothType
-    {
+    public enum PolylineSmoothType {
         /// <summary>
         /// No smooth curve.
         /// </summary>

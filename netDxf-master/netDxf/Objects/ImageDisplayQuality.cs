@@ -20,13 +20,11 @@
 
 #endregion
 
-namespace netDxf.Objects
-{
+namespace netDxf.Objects {
     /// <summary>
     /// Image display quality (screen only).
     /// </summary>
-    public enum ImageDisplayQuality
-    {
+    public enum ImageDisplayQuality {
         /// <summary>
         /// Draft quality.
         /// </summary>

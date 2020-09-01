@@ -20,13 +20,11 @@
 
 #endregion
 
-namespace netDxf.Tables
-{
+namespace netDxf.Tables {
     /// <summary>
     /// Define the linetype segment type simple, text, or shape.
     /// </summary>
-    public enum LinetypeSegmentType
-    {
+    public enum LinetypeSegmentType {
         /// <summary>
         /// Linetype segment made only of a simple dash, dot, or space.
         /// </summary>

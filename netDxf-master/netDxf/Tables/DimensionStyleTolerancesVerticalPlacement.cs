@@ -20,13 +20,11 @@
 
 #endregion
 
-namespace netDxf.Tables
-{
+namespace netDxf.Tables {
     /// <summary>
     /// Controls text justification for symmetrical and deviation tolerances.
     /// </summary>
-    public enum DimensionStyleTolerancesVerticalPlacement
-    {
+    public enum DimensionStyleTolerancesVerticalPlacement {
         /// <summary>
         /// Aligns the tolerance text with the bottom of the main dimension text.
         /// </summary>

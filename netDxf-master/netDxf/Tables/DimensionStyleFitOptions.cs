@@ -20,13 +20,11 @@
 
 #endregion
 
-namespace netDxf.Tables
-{
+namespace netDxf.Tables {
     /// <summary>
     /// Controls dimension text and arrow placement when space is not sufficient to place both within the extension lines.
     /// </summary>
-    public enum DimensionStyleFitOptions
-    {
+    public enum DimensionStyleFitOptions {
         /// <summary>
         /// Places both text and arrows outside extension lines.
         /// </summary>

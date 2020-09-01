@@ -20,13 +20,11 @@
 
 #endregion
 
-namespace netDxf.Entities
-{
+namespace netDxf.Entities {
     /// <summary>
     /// Gradient pattern types.
     /// </summary>
-    public enum HatchGradientPatternType
-    {
+    public enum HatchGradientPatternType {
         /// <summary>
         /// Linear.
         /// </summary>

@@ -20,26 +20,23 @@
 
 #endregion
 
-using System;
-using System.Collections.Generic;
 using netDxf.Objects;
 using netDxf.Tables;
+using System;
+using System.Collections.Generic;
 
-namespace netDxf.Entities
-{
+namespace netDxf.Entities {
     /// <summary>
     /// Represents a multiline <see cref="EntityObject">entity</see>.
     /// </summary>
     public class MLine :
-        EntityObject
-    {
+        EntityObject {
         #region internal properties
 
         /// <summary>
         /// MLine flags.
         /// </summary>
-        internal MLineFlags Flags
-        {
+        internal MLineFlags Flags {
             get { return this.flags; }
             set { this.flags = value; }
         }
@@ -60,14 +57,12 @@ namespace netDxf.Entities
         /// It will calculate the minimum information needed to build a correct multiline.
         /// </para>
         /// </remarks>
-        public void Update()
-        {
+        public void Update() {
             if (this.vertexes.Count == 0)
                 return;
 
             double reference = 0.0;
-            switch (this.justification)
-            {
+            switch (this.justification) {
                 case MLineJustification.Top:
                     reference = this.style.Elements[this.style.Elements.Count - 1].Offset;
                     break;
@@ -82,60 +77,45 @@ namespace netDxf.Entities
             Vector2 prevDir;
             if (this.vertexes[0].Location.Equals(this.vertexes[this.vertexes.Count - 1].Location))
                 prevDir = Vector2.UnitY;
-            else
-            {
+            else {
                 prevDir = this.vertexes[0].Location - this.vertexes[this.vertexes.Count - 1].Location;
                 prevDir.Normalize();
             }
 
-            for (int i = 0; i < this.vertexes.Count; i++)
-            {
+            for (int i = 0; i < this.vertexes.Count; i++) {
                 Vector2 position = this.vertexes[i].Location;
                 Vector2 mitter;
                 Vector2 dir;
-                if (i == 0)
-                {
+                if (i == 0) {
                     if (this.vertexes[i + 1].Location.Equals(position))
                         dir = Vector2.UnitY;
-                    else
-                    {
+                    else {
                         dir = this.vertexes[i + 1].Location - position;
                         dir.Normalize();
                     }
-                    if (this.IsClosed)
-                    {
+                    if (this.IsClosed) {
                         mitter = prevDir - dir;
                         mitter.Normalize();
-                    }
-                    else
-                        mitter = MathHelper.Transform(dir, this.style.StartAngle*MathHelper.DegToRad, CoordinateSystem.Object, CoordinateSystem.World);
-                }
-                else if (i + 1 == this.vertexes.Count)
-                {
-                    if (this.IsClosed)
-                    {
+                    } else
+                        mitter = MathHelper.Transform(dir, this.style.StartAngle * MathHelper.DegToRad, CoordinateSystem.Object, CoordinateSystem.World);
+                } else if (i + 1 == this.vertexes.Count) {
+                    if (this.IsClosed) {
                         if (this.vertexes[0].Location.Equals(position))
                             dir = Vector2.UnitY;
-                        else
-                        {
+                        else {
                             dir = this.vertexes[0].Location - position;
                             dir.Normalize();
                         }
                         mitter = prevDir - dir;
                         mitter.Normalize();
-                    }
-                    else
-                    {
+                    } else {
                         dir = prevDir;
-                        mitter = MathHelper.Transform(dir, this.style.EndAngle*MathHelper.DegToRad, CoordinateSystem.Object, CoordinateSystem.World);
+                        mitter = MathHelper.Transform(dir, this.style.EndAngle * MathHelper.DegToRad, CoordinateSystem.Object, CoordinateSystem.World);
                     }
-                }
-                else
-                {
+                } else {
                     if (this.vertexes[i + 1].Location.Equals(position))
                         dir = Vector2.UnitY;
-                    else
-                    {
+                    else {
                         dir = this.vertexes[i + 1].Location - position;
                         dir.Normalize();
                     }
@@ -149,9 +129,8 @@ namespace netDxf.Entities
                 double angleMitter = Vector2.Angle(mitter);
                 double angleDir = Vector2.Angle(dir);
                 double cos = Math.Cos(angleMitter + (MathHelper.HalfPI - angleDir));
-                for (int j = 0; j < this.style.Elements.Count; j++)
-                {
-                    double distance = (this.style.Elements[j].Offset + reference)/cos;
+                for (int j = 0; j < this.style.Elements.Count; j++) {
+                    double distance = (this.style.Elements[j].Offset + reference) / cos;
                     distances[j] = new List<double>
                     {
                         distance*this.scale,
@@ -171,16 +150,14 @@ namespace netDxf.Entities
         /// Creates a new MLine that is a copy of the current instance.
         /// </summary>
         /// <returns>A new MLine that is a copy of this instance.</returns>
-        public override object Clone()
-        {
-            MLine entity = new MLine
-            {
+        public override object Clone() {
+            MLine entity = new MLine {
                 //EntityObject properties
-                Layer = (Layer) this.Layer.Clone(),
-                Linetype = (Linetype) this.Linetype.Clone(),
-                Color = (AciColor) this.Color.Clone(),
+                Layer = (Layer)this.Layer.Clone(),
+                Linetype = (Linetype)this.Linetype.Clone(),
+                Color = (AciColor)this.Color.Clone(),
                 Lineweight = this.Lineweight,
-                Transparency = (Transparency) this.Transparency.Clone(),
+                Transparency = (Transparency)this.Transparency.Clone(),
                 LinetypeScale = this.LinetypeScale,
                 Normal = this.Normal,
                 IsVisible = this.IsVisible,
@@ -188,15 +165,15 @@ namespace netDxf.Entities
                 Elevation = this.elevation,
                 Scale = this.scale,
                 Justification = this.justification,
-                Style = (MLineStyle) this.style.Clone(),
+                Style = (MLineStyle)this.style.Clone(),
                 Flags = this.flags
             };
 
             foreach (MLineVertex vertex in this.vertexes)
-                entity.vertexes.Add((MLineVertex) vertex.Clone());
+                entity.vertexes.Add((MLineVertex)vertex.Clone());
 
             foreach (XData data in this.XData.Values)
-                entity.XData.Add((XData) data.Clone());
+                entity.XData.Add((XData)data.Clone());
 
             return entity;
         }
@@ -209,11 +186,9 @@ namespace netDxf.Entities
 
         public event MLineStyleChangedEventHandler MLineStyleChanged;
 
-        protected virtual MLineStyle OnMLineStyleChangedEvent(MLineStyle oldMLineStyle, MLineStyle newMLineStyle)
-        {
+        protected virtual MLineStyle OnMLineStyleChangedEvent(MLineStyle oldMLineStyle, MLineStyle newMLineStyle) {
             MLineStyleChangedEventHandler ae = this.MLineStyleChanged;
-            if (ae != null)
-            {
+            if (ae != null) {
                 TableObjectChangedEventArgs<MLineStyle> eventArgs = new TableObjectChangedEventArgs<MLineStyle>(oldMLineStyle, newMLineStyle);
                 ae(this, eventArgs);
                 return eventArgs.NewValue;
@@ -240,8 +215,7 @@ namespace netDxf.Entities
         /// Initializes a new instance of the <c>MLine</c> class.
         /// </summary>
         public MLine()
-            : this(new List<Vector2>())
-        {
+            : this(new List<Vector2>()) {
         }
 
         /// <summary>
@@ -249,8 +223,7 @@ namespace netDxf.Entities
         /// </summary>
         /// <param name="vertexes">Multiline <see cref="Vector2">vertex</see> location list in object coordinates.</param>
         public MLine(IEnumerable<Vector2> vertexes)
-            : this(vertexes, MLineStyle.Default, 1.0, false)
-        {
+            : this(vertexes, MLineStyle.Default, 1.0, false) {
         }
 
         /// <summary>
@@ -259,8 +232,7 @@ namespace netDxf.Entities
         /// <param name="vertexes">Multiline <see cref="Vector2">vertex</see> location list in object coordinates.</param>
         /// <param name="isClosed">Sets if the multiline is closed  (default: false).</param>
         public MLine(IEnumerable<Vector2> vertexes, bool isClosed)
-            : this(vertexes, MLineStyle.Default, 1.0, isClosed)
-        {
+            : this(vertexes, MLineStyle.Default, 1.0, isClosed) {
         }
 
         /// <summary>
@@ -269,8 +241,7 @@ namespace netDxf.Entities
         /// <param name="vertexes">Multiline <see cref="Vector2">vertex</see> location list in object coordinates.</param>
         /// <param name="scale">Multiline scale.</param>
         public MLine(IEnumerable<Vector2> vertexes, double scale)
-            : this(vertexes, MLineStyle.Default, scale, false)
-        {
+            : this(vertexes, MLineStyle.Default, scale, false) {
         }
 
         /// <summary>
@@ -280,8 +251,7 @@ namespace netDxf.Entities
         /// <param name="scale">Multiline scale.</param>
         /// <param name="isClosed">Sets if the multiline is closed  (default: false).</param>
         public MLine(IEnumerable<Vector2> vertexes, double scale, bool isClosed)
-            : this(vertexes, MLineStyle.Default, scale, isClosed)
-        {
+            : this(vertexes, MLineStyle.Default, scale, isClosed) {
         }
 
         /// <summary>
@@ -291,8 +261,7 @@ namespace netDxf.Entities
         /// <param name="style">MLine <see cref="MLineStyle">style.</see></param>
         /// <param name="scale">MLine scale.</param>
         public MLine(IEnumerable<Vector2> vertexes, MLineStyle style, double scale)
-            : this(vertexes, style, scale, false)
-        {
+            : this(vertexes, style, scale, false) {
         }
 
         /// <summary>
@@ -303,8 +272,7 @@ namespace netDxf.Entities
         /// <param name="scale">MLine scale.</param>
         /// <param name="isClosed">Sets if the multiline is closed  (default: false).</param>
         public MLine(IEnumerable<Vector2> vertexes, MLineStyle style, double scale, bool isClosed)
-            : base(EntityType.MLine, DxfObjectCode.MLine)
-        {
+            : base(EntityType.MLine, DxfObjectCode.MLine) {
             this.scale = scale;
             if (style == null)
                 throw new ArgumentNullException(nameof(style));
@@ -331,16 +299,14 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets the multiline <see cref="MLineVertex">vertexes</see> list.
         /// </summary>
-        public List<MLineVertex> Vertexes
-        {
+        public List<MLineVertex> Vertexes {
             get { return this.vertexes; }
         }
 
         /// <summary>
         /// Gets or sets the multiline elevation.
         /// </summary>
-        public double Elevation
-        {
+        public double Elevation {
             get { return this.elevation; }
             set { this.elevation = value; }
         }
@@ -349,8 +315,7 @@ namespace netDxf.Entities
         /// Gets or sets the multiline scale.
         /// </summary>
         /// <remarks>AutoCad accepts negative scales, but it is not recommended. </remarks>
-        public double Scale
-        {
+        public double Scale {
             get { return this.scale; }
             set { this.scale = value; }
         }
@@ -358,11 +323,9 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets if the multiline is closed.
         /// </summary>
-        public bool IsClosed
-        {
+        public bool IsClosed {
             get { return this.flags.HasFlag(MLineFlags.Closed); }
-            set
-            {
+            set {
                 if (value)
                     this.flags |= MLineFlags.Closed;
                 else
@@ -373,11 +336,9 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets the suppression of start caps.
         /// </summary>
-        public bool NoStartCaps
-        {
+        public bool NoStartCaps {
             get { return this.flags.HasFlag(MLineFlags.NoStartCaps); }
-            set
-            {
+            set {
                 if (value)
                     this.flags |= MLineFlags.NoStartCaps;
                 else
@@ -388,11 +349,9 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets the suppression of end caps.
         /// </summary>
-        public bool NoEndCaps
-        {
+        public bool NoEndCaps {
             get { return this.flags.HasFlag(MLineFlags.NoEndCaps); }
-            set
-            {
+            set {
                 if (value)
                     this.flags |= MLineFlags.NoEndCaps;
                 else
@@ -403,8 +362,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets the multiline justification.
         /// </summary>
-        public MLineJustification Justification
-        {
+        public MLineJustification Justification {
             get { return this.justification; }
             set { this.justification = value; }
         }
@@ -412,11 +370,9 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or set the multiline style.
         /// </summary>
-        public MLineStyle Style
-        {
+        public MLineStyle Style {
             get { return this.style; }
-            set
-            {
+            set {
                 if (value == null)
                     throw new ArgumentNullException(nameof(value));
                 this.style = this.OnMLineStyleChangedEvent(this.style, value);

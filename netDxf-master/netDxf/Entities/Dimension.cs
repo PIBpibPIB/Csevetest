@@ -20,13 +20,12 @@
 
 #endregion
 
-using System;
 using netDxf.Blocks;
 using netDxf.Collections;
 using netDxf.Tables;
+using System;
 
-namespace netDxf.Entities
-{
+namespace netDxf.Entities {
     /// <summary>
     /// Represents the base class for a dimension <see cref="EntityObject">entity</see>.
     /// </summary>
@@ -34,19 +33,16 @@ namespace netDxf.Entities
     /// Once a dimension is added to the dxf document, its properties should not be modified or the changes will not be reflected in the saved dxf file.
     /// </reamarks>
     public abstract class Dimension :
-        EntityObject
-    {
+        EntityObject {
         #region delegates and events
 
         public delegate void DimensionStyleChangedEventHandler(Dimension sender, TableObjectChangedEventArgs<DimensionStyle> e);
 
         public event DimensionStyleChangedEventHandler DimensionStyleChanged;
 
-        protected virtual DimensionStyle OnDimensionStyleChangedEvent(DimensionStyle oldStyle, DimensionStyle newStyle)
-        {
+        protected virtual DimensionStyle OnDimensionStyleChangedEvent(DimensionStyle oldStyle, DimensionStyle newStyle) {
             DimensionStyleChangedEventHandler ae = this.DimensionStyleChanged;
-            if (ae != null)
-            {
+            if (ae != null) {
                 TableObjectChangedEventArgs<DimensionStyle> eventArgs = new TableObjectChangedEventArgs<DimensionStyle>(oldStyle, newStyle);
                 ae(this, eventArgs);
                 return eventArgs.NewValue;
@@ -58,11 +54,9 @@ namespace netDxf.Entities
 
         public event DimensionBlockChangedEventHandler DimensionBlockChanged;
 
-        protected virtual Block OnDimensionBlockChangedEvent(Block oldBlock, Block newBlock)
-        {
+        protected virtual Block OnDimensionBlockChangedEvent(Block oldBlock, Block newBlock) {
             DimensionBlockChangedEventHandler ae = this.DimensionBlockChanged;
-            if (ae != null)
-            {
+            if (ae != null) {
                 TableObjectChangedEventArgs<Block> eventArgs = new TableObjectChangedEventArgs<Block>(oldBlock, newBlock);
                 ae(this, eventArgs);
                 return eventArgs.NewValue;
@@ -78,8 +72,7 @@ namespace netDxf.Entities
 
         public event DimensionStyleOverrideAddedEventHandler DimensionStyleOverrideAdded;
 
-        protected virtual void OnDimensionStyleOverrideAddedEvent(DimensionStyleOverride item)
-        {
+        protected virtual void OnDimensionStyleOverrideAddedEvent(DimensionStyleOverride item) {
             DimensionStyleOverrideAddedEventHandler ae = this.DimensionStyleOverrideAdded;
             if (ae != null)
                 ae(this, new DimensionStyleOverrideChangeEventArgs(item));
@@ -89,8 +82,7 @@ namespace netDxf.Entities
 
         public event DimensionStyleOverrideRemovedEventHandler DimensionStyleOverrideRemoved;
 
-        protected virtual void OnDimensionStyleOverrideRemovedEvent(DimensionStyleOverride item)
-        {
+        protected virtual void OnDimensionStyleOverrideRemovedEvent(DimensionStyleOverride item) {
             DimensionStyleOverrideRemovedEventHandler ae = this.DimensionStyleOverrideRemoved;
             if (ae != null)
                 ae(this, new DimensionStyleOverrideChangeEventArgs(item));
@@ -122,8 +114,7 @@ namespace netDxf.Entities
         /// Initializes a new instance of the <c>Dimension</c> class.
         /// </summary>
         protected Dimension(DimensionType type)
-            : base(EntityType.Dimension, DxfObjectCode.Dimension)
-        {
+            : base(EntityType.Dimension, DxfObjectCode.Dimension) {
             this.defPoint = Vector2.Zero;
             this.textRefPoint = Vector2.Zero;
             this.dimensionType = type;
@@ -149,8 +140,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets the reference <see cref="Vector2">position</see> for the dimension line in local coordinates.
         /// </summary>
-        internal Vector2 DefinitionPoint
-        {
+        internal Vector2 DefinitionPoint {
             get { return this.defPoint; }
             set { this.defPoint = value; }
         }
@@ -162,8 +152,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets if the text reference point has been set by the user. Set to false to reset the dimension text to its original position.
         /// </summary>
-        public bool TextPositionManuallySet
-        {
+        public bool TextPositionManuallySet {
             get { return this.userTextPosition; }
             set { this.userTextPosition = value; }
         }
@@ -177,11 +166,9 @@ namespace netDxf.Entities
         /// In case of Ordinate dimensions if the text has been manually set the text position will take precedence over the EndLeaderPoint only if FitTextMove
         /// has been set to OverDimLineWithoutLeader.
         /// </remarks>
-        public Vector2 TextReferencePoint
-        {
+        public Vector2 TextReferencePoint {
             get { return this.textRefPoint; }
-            set
-            {
+            set {
                 this.userTextPosition = true;
                 this.textRefPoint = value;
             }
@@ -190,11 +177,9 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets the style associated with the dimension.
         /// </summary>
-        public DimensionStyle Style
-        {
+        public DimensionStyle Style {
             get { return this.style; }
-            set
-            {
+            set {
                 if (value == null)
                     throw new ArgumentNullException(nameof(value));
                 this.style = this.OnDimensionStyleChangedEvent(this.style, value);
@@ -205,16 +190,14 @@ namespace netDxf.Entities
         /// Gets the dimension style overrides list.
         /// </summary>
         /// <remarks>Any dimension style value stored in this list will override its corresponding value in the assigned style to the dimension.</remarks>
-        public DimensionStyleOverrideDictionary StyleOverrides
-        {
+        public DimensionStyleOverrideDictionary StyleOverrides {
             get { return this.styleOverrides; }
         }
 
         /// <summary>
         /// Gets the dimension type.
         /// </summary>
-        public DimensionType DimensionType
-        {
+        public DimensionType DimensionType {
             get { return this.dimensionType; }
         }
 
@@ -226,8 +209,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets the dimension text attachment point.
         /// </summary>
-        public MTextAttachmentPoint AttachmentPoint
-        {
+        public MTextAttachmentPoint AttachmentPoint {
             get { return this.attachmentPoint; }
             set { this.attachmentPoint = value; }
         }
@@ -235,8 +217,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Get or sets the dimension text <see cref="MTextLineSpacingStyle">line spacing style</see>.
         /// </summary>
-        public MTextLineSpacingStyle LineSpacingStyle
-        {
+        public MTextLineSpacingStyle LineSpacingStyle {
             get { return this.lineSpacingStyle; }
             set { this.lineSpacingStyle = value; }
         }
@@ -247,11 +228,9 @@ namespace netDxf.Entities
         /// <remarks>
         /// Percentage of default line spacing to be applied. Valid values range from 0.25 to 4.00, the default value 1.0.
         /// </remarks>
-        public double LineSpacingFactor
-        {
+        public double LineSpacingFactor {
             get { return this.lineSpacing; }
-            set
-            {
+            set {
                 if (value < 0.25 || value > 4.0)
                     throw new ArgumentOutOfRangeException(nameof(value), value, "The line spacing factor valid values range from 0.25 to 4.00");
                 this.lineSpacing = value;
@@ -268,8 +247,7 @@ namespace netDxf.Entities
         /// The assigned block name is irrelevant, it will be automatically modified to accommodate the naming conventions of the blocks for dimension (*D#).<br />
         /// The block will be overwritten when adding the dimension to a <see cref="DxfDocument">DxfDocument</see> if <c>BuildDimensionBlocks</c> is set to true.
         /// </remarks>
-        public Block Block
-        {
+        public Block Block {
             get { return this.block; }
             set { this.block = this.OnDimensionBlockChangedEvent(this.block, value); }
         }
@@ -277,8 +255,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets the rotation angle in degrees of the dimension text away from its default orientation(the direction of the dimension line).
         /// </summary>
-        public double TextRotation
-        {
+        public double TextRotation {
             get { return this.textRotation; }
             set { this.textRotation = MathHelper.NormalizeAngle(value); }
         }
@@ -291,8 +268,7 @@ namespace netDxf.Entities
         /// If null or "&lt;&gt;", the dimension measurement is drawn as the text,
         /// if " " (one blank space), the text is suppressed. Anything else is drawn as the text.
         /// </remarks>
-        public string UserText
-        {
+        public string UserText {
             get { return this.userText; }
             set { this.userText = value; }
         }
@@ -300,8 +276,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets the dimension elevation, its position along its normal.
         /// </summary>
-        public double Elevation
-        {
+        public double Elevation {
             get { return this.elevation; }
             set { this.elevation = value; }
         }
@@ -332,12 +307,10 @@ namespace netDxf.Entities
         /// <remarks>
         /// This method needs to be manually called to reflect any change made to the dimension properties (geometry and/or style).
         /// </remarks>
-        public void Update()
-        {
+        public void Update() {
             this.CalculteReferencePoints();
 
-            if (this.block != null)
-            {
+            if (this.block != null) {
                 Block newBlock = this.BuildBlock(this.block.Name);
                 this.block = this.OnDimensionBlockChangedEvent(this.block, newBlock);
             }
@@ -347,25 +320,21 @@ namespace netDxf.Entities
 
         #region Dimension style overrides events
 
-        private void StyleOverrides_BeforeAddItem(DimensionStyleOverrideDictionary sender, DimensionStyleOverrideDictionaryEventArgs e)
-        {
+        private void StyleOverrides_BeforeAddItem(DimensionStyleOverrideDictionary sender, DimensionStyleOverrideDictionaryEventArgs e) {
             DimensionStyleOverride old;
             if (sender.TryGetValue(e.Item.Type, out old))
                 if (ReferenceEquals(old.Value, e.Item.Value))
                     e.Cancel = true;
         }
 
-        private void StyleOverrides_AddItem(DimensionStyleOverrideDictionary sender, DimensionStyleOverrideDictionaryEventArgs e)
-        {
+        private void StyleOverrides_AddItem(DimensionStyleOverrideDictionary sender, DimensionStyleOverrideDictionaryEventArgs e) {
             this.OnDimensionStyleOverrideAddedEvent(e.Item);
         }
 
-        private void StyleOverrides_BeforeRemoveItem(DimensionStyleOverrideDictionary sender, DimensionStyleOverrideDictionaryEventArgs e)
-        {
+        private void StyleOverrides_BeforeRemoveItem(DimensionStyleOverrideDictionary sender, DimensionStyleOverrideDictionaryEventArgs e) {
         }
 
-        private void StyleOverrides_RemoveItem(DimensionStyleOverrideDictionary sender, DimensionStyleOverrideDictionaryEventArgs e)
-        {
+        private void StyleOverrides_RemoveItem(DimensionStyleOverrideDictionary sender, DimensionStyleOverrideDictionaryEventArgs e) {
             this.OnDimensionStyleOverrideRemovedEvent(e.Item);
         }
 

@@ -22,14 +22,12 @@
 
 using System;
 
-namespace netDxf.Entities
-{
+namespace netDxf.Entities {
     /// <summary>
     /// Represents a control point of a <see cref="Spline">spline</see>.
     /// </summary>
     public class SplineVertex :
-        ICloneable
-    {
+        ICloneable {
         #region private fields
 
         private Vector3 position;
@@ -46,8 +44,7 @@ namespace netDxf.Entities
         /// <param name="y">Control point y coordinate.</param>
         /// <param name="z">Control point z coordinate.</param>
         public SplineVertex(double x, double y, double z)
-            : this(new Vector3(x, y, z), 1.0)
-        {
+            : this(new Vector3(x, y, z), 1.0) {
         }
 
         /// <summary>
@@ -58,8 +55,7 @@ namespace netDxf.Entities
         /// <param name="z">Control point z coordinate.</param>
         /// <param name="w">Control point weight (default 1.0).</param>
         public SplineVertex(double x, double y, double z, double w)
-            : this(new Vector3(x, y, z), w)
-        {
+            : this(new Vector3(x, y, z), w) {
         }
 
         /// <summary>
@@ -67,8 +63,7 @@ namespace netDxf.Entities
         /// </summary>
         /// <param name="position">Spline control point <see cref="Vector2">vertex</see> coordinates.</param>
         public SplineVertex(Vector2 position)
-            : this(new Vector3(position.X, position.Y, 0.0), 1.0)
-        {
+            : this(new Vector3(position.X, position.Y, 0.0), 1.0) {
         }
 
         /// <summary>
@@ -77,8 +72,7 @@ namespace netDxf.Entities
         /// <param name="position">Spline control point <see cref="Vector2">vertex</see> coordinates.</param>
         /// <param name="weigth">Weight of the spline control point (default 1.0).</param>
         public SplineVertex(Vector2 position, double weigth)
-            : this(new Vector3(position.X, position.Y, 0.0), weigth)
-        {
+            : this(new Vector3(position.X, position.Y, 0.0), weigth) {
         }
 
         /// <summary>
@@ -86,8 +80,7 @@ namespace netDxf.Entities
         /// </summary>
         /// <param name="position">Spline control point <see cref="Vector3">vertex</see> coordinates.</param>
         public SplineVertex(Vector3 position)
-            : this(position, 1.0)
-        {
+            : this(position, 1.0) {
         }
 
         /// <summary>
@@ -95,8 +88,7 @@ namespace netDxf.Entities
         /// </summary>
         /// <param name="position">Spline control point <see cref="Vector3">vertex</see> coordinates.</param>
         /// <param name="weight">Weight of the spline control point (default 1.0).</param>
-        public SplineVertex(Vector3 position, double weight)
-        {
+        public SplineVertex(Vector3 position, double weight) {
             if (weight <= 0)
                 throw new ArgumentOutOfRangeException(nameof(weight), weight, "The spline vertex weight must be greater than zero.");
             this.position = position;
@@ -110,8 +102,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Get or sets the spline control point <see cref="Vector3">vertex</see> coordinates.
         /// </summary>
-        public Vector3 Position
-        {
+        public Vector3 Position {
             get { return this.position; }
             set { this.position = value; }
         }
@@ -119,11 +110,9 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets the weight of the spline control point.
         /// </summary>
-        public double Weigth
-        {
+        public double Weigth {
             get { return this.weigth; }
-            set
-            {
+            set {
                 if (value <= 0)
                     throw new ArgumentOutOfRangeException(nameof(value), value, "The spline vertex weight must be greater than zero.");
                 this.weigth = value;
@@ -138,8 +127,7 @@ namespace netDxf.Entities
         /// Obtains a string that represents the spline vertex.
         /// </summary>
         /// <returns>A string text.</returns>
-        public override string ToString()
-        {
+        public override string ToString() {
             return string.Format("{0}: ({1}) w={2}", "SplineVertex", this.Position, this.Weigth);
         }
 
@@ -147,8 +135,7 @@ namespace netDxf.Entities
         /// Creates a new Spline that is a copy of the current instance.
         /// </summary>
         /// <returns>A new Spline that is a copy of this instance.</returns>
-        public object Clone()
-        {
+        public object Clone() {
             return new SplineVertex(this.position, this.weigth);
         }
 
@@ -157,8 +144,7 @@ namespace netDxf.Entities
         /// </summary>
         /// <param name="provider">An IFormatProvider interface implementation that supplies culture-specific formatting information. </param>
         /// <returns>A string text.</returns>
-        public string ToString(IFormatProvider provider)
-        {
+        public string ToString(IFormatProvider provider) {
             return string.Format("{0}: ({1}) w={2}", "SplineVertex", this.Position.ToString(provider), this.Weigth.ToString(provider));
         }
 

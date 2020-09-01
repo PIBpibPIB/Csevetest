@@ -19,13 +19,11 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #endregion
 
-namespace netDxf.Objects
-{
+namespace netDxf.Objects {
     /// <summary>
     /// Defines the portion of paper space to output to the media.
     /// </summary>
-    public enum PlotType
-    {
+    public enum PlotType {
         /// <summary>
         /// Last screen display
         /// </summary>

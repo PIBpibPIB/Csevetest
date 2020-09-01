@@ -20,12 +20,11 @@
 
 #endregion
 
+using netDxf.Tables;
 using System;
 using System.Text;
-using netDxf.Tables;
 
-namespace netDxf.Entities
-{
+namespace netDxf.Entities {
     /// <summary>
     /// Represents a multiline text <see cref="EntityObject">entity</see>.
     /// </summary>
@@ -82,19 +81,16 @@ namespace netDxf.Entities
     /// Codes and braces can be nested up to 8 levels deep.<br />
     /// </remarks>
     public class MText :
-        EntityObject
-    {
+        EntityObject {
         #region delegates and events
 
         public delegate void TextStyleChangedEventHandler(MText sender, TableObjectChangedEventArgs<TextStyle> e);
 
         public event TextStyleChangedEventHandler TextStyleChanged;
 
-        protected virtual TextStyle OnTextStyleChangedEvent(TextStyle oldTextStyle, TextStyle newTextStyle)
-        {
+        protected virtual TextStyle OnTextStyleChangedEvent(TextStyle oldTextStyle, TextStyle newTextStyle) {
             TextStyleChangedEventHandler ae = this.TextStyleChanged;
-            if (ae != null)
-            {
+            if (ae != null) {
                 TableObjectChangedEventArgs<TextStyle> eventArgs = new TableObjectChangedEventArgs<TextStyle>(oldTextStyle, newTextStyle);
                 ae(this, eventArgs);
                 return eventArgs.NewValue;
@@ -126,8 +122,7 @@ namespace netDxf.Entities
         /// Initializes a new instance of the <c>MText</c> class.
         /// </summary>
         public MText()
-            : this(string.Empty, Vector3.Zero, 1.0, 0.0, TextStyle.Default)
-        {
+            : this(string.Empty, Vector3.Zero, 1.0, 0.0, TextStyle.Default) {
         }
 
         /// <summary>
@@ -135,8 +130,7 @@ namespace netDxf.Entities
         /// </summary>
         /// <param name="text">Text string.</param>
         public MText(string text)
-            : this(text, Vector3.Zero, 1.0, 0.0, TextStyle.Default)
-        {
+            : this(text, Vector3.Zero, 1.0, 0.0, TextStyle.Default) {
         }
 
         /// <summary>
@@ -146,8 +140,7 @@ namespace netDxf.Entities
         /// <param name="height">Text height.</param>
         /// <param name="rectangleWidth">Reference rectangle width.</param>
         public MText(Vector3 position, double height, double rectangleWidth)
-            : this(string.Empty, position, height, rectangleWidth, TextStyle.Default)
-        {
+            : this(string.Empty, position, height, rectangleWidth, TextStyle.Default) {
         }
 
         /// <summary>
@@ -157,8 +150,7 @@ namespace netDxf.Entities
         /// <param name="height">Text height.</param>
         /// <param name="rectangleWidth">Reference rectangle width.</param>
         public MText(Vector2 position, double height, double rectangleWidth)
-            : this(string.Empty, new Vector3(position.X, position.Y, 0.0), height, rectangleWidth, TextStyle.Default)
-        {
+            : this(string.Empty, new Vector3(position.X, position.Y, 0.0), height, rectangleWidth, TextStyle.Default) {
         }
 
         /// <summary>
@@ -169,8 +161,7 @@ namespace netDxf.Entities
         /// <param name="rectangleWidth">Reference rectangle width.</param>
         /// <param name="style">Text <see cref="TextStyle">style</see>.</param>
         public MText(Vector3 position, double height, double rectangleWidth, TextStyle style)
-            : this(string.Empty, position, height, rectangleWidth, style)
-        {
+            : this(string.Empty, position, height, rectangleWidth, style) {
         }
 
         /// <summary>
@@ -181,8 +172,7 @@ namespace netDxf.Entities
         /// <param name="rectangleWidth">Reference rectangle width.</param>
         /// <param name="style">Text <see cref="TextStyle">style</see>.</param>
         public MText(Vector2 position, double height, double rectangleWidth, TextStyle style)
-            : this(string.Empty, new Vector3(position.X, position.Y, 0.0), height, rectangleWidth, style)
-        {
+            : this(string.Empty, new Vector3(position.X, position.Y, 0.0), height, rectangleWidth, style) {
         }
 
         /// <summary>
@@ -194,8 +184,7 @@ namespace netDxf.Entities
         /// <param name="rectangleWidth">Reference rectangle width.</param>
         /// <param name="style">Text <see cref="TextStyle">style</see>.</param>
         public MText(string text, Vector2 position, double height, double rectangleWidth, TextStyle style)
-            : this(text, new Vector3(position.X, position.Y, 0.0), height, rectangleWidth, style)
-        {
+            : this(text, new Vector3(position.X, position.Y, 0.0), height, rectangleWidth, style) {
         }
 
         /// <summary>
@@ -206,8 +195,7 @@ namespace netDxf.Entities
         /// <param name="height">Text height.</param>
         /// <param name="rectangleWidth">Reference rectangle width.</param>
         public MText(string text, Vector2 position, double height, double rectangleWidth)
-            : this(text, new Vector3(position.X, position.Y, 0.0), height, rectangleWidth, TextStyle.Default)
-        {
+            : this(text, new Vector3(position.X, position.Y, 0.0), height, rectangleWidth, TextStyle.Default) {
         }
 
         /// <summary>
@@ -218,8 +206,7 @@ namespace netDxf.Entities
         /// <param name="height">Text height.</param>
         /// <param name="rectangleWidth">Reference rectangle width.</param>
         public MText(string text, Vector3 position, double height, double rectangleWidth)
-            : this(text, position, height, rectangleWidth, TextStyle.Default)
-        {
+            : this(text, position, height, rectangleWidth, TextStyle.Default) {
         }
 
         /// <summary>
@@ -231,8 +218,7 @@ namespace netDxf.Entities
         /// <param name="rectangleWidth">Reference rectangle width.</param>
         /// <param name="style">Text <see cref="TextStyle">style</see>.</param>
         public MText(string text, Vector3 position, double height, double rectangleWidth, TextStyle style)
-            : base(EntityType.MText, DxfObjectCode.MText)
-        {
+            : base(EntityType.MText, DxfObjectCode.MText) {
             this.text = text;
             this.position = position;
             this.attachmentPoint = MTextAttachmentPoint.TopLeft;
@@ -257,8 +243,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets the text rotation in degrees.
         /// </summary>
-        public double Rotation
-        {
+        public double Rotation {
             get { return this.rotation; }
             set { this.rotation = MathHelper.NormalizeAngle(value); }
         }
@@ -266,11 +251,9 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets the text height.
         /// </summary>
-        public double Height
-        {
+        public double Height {
             get { return this.height; }
-            set
-            {
+            set {
                 if (value <= 0)
                     throw new ArgumentOutOfRangeException(nameof(value), value, "The MText height must be greater than zero.");
                 this.height = value;
@@ -283,11 +266,9 @@ namespace netDxf.Entities
         /// <remarks>
         /// Percentage of default line spacing to be applied. Valid values range from 0.25 to 4.00, the default value 1.0.
         /// </remarks>
-        public double LineSpacingFactor
-        {
+        public double LineSpacingFactor {
             get { return this.lineSpacing; }
-            set
-            {
+            set {
                 if (value < 0.25 || value > 4.0)
                     throw new ArgumentOutOfRangeException(nameof(value), value, "The MText LineSpacingFactor valid values range from 0.25 to 4.00");
                 this.lineSpacing = value;
@@ -300,11 +281,9 @@ namespace netDxf.Entities
         /// <remarks>
         /// Percentage of default paragraph height factor to be applied. Valid values range from 0.25 to 4.00, the default value 1.0.
         /// </remarks>
-        public double ParagraphHeightFactor
-        {
+        public double ParagraphHeightFactor {
             get { return this.paragraphHeightFactor; }
-            set
-            {
+            set {
                 if (value < 0.25 || value > 4.0)
                     throw new ArgumentOutOfRangeException(nameof(value), value, "The MText ParagraphHeightFactor valid values range from 0.25 to 4.00");
                 this.paragraphHeightFactor = value;
@@ -314,8 +293,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Get or sets the <see cref="MTextLineSpacingStyle">line spacing style</see>.
         /// </summary>
-        public MTextLineSpacingStyle LineSpacingStyle
-        {
+        public MTextLineSpacingStyle LineSpacingStyle {
             get { return this.lineSpacingStyle; }
             set { this.lineSpacingStyle = value; }
         }
@@ -323,8 +301,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Get or sets the <see cref="MTextDrawingDirection">text drawing direction</see>.
         /// </summary>
-        public MTextDrawingDirection DrawingDirection
-        {
+        public MTextDrawingDirection DrawingDirection {
             get { return this.drawingDirection; }
             set { this.drawingDirection = value; }
         }
@@ -337,11 +314,9 @@ namespace netDxf.Entities
         /// If a paragraph width is longer than the rectangle width it will be broken in several lines, using the word spaces as breaking points.<br/>
         /// If you specify a width of 0, word wrap is turned off and the width of the multiline text object is as wide as the longest line of text.
         ///  </remarks>
-        public double RectangleWidth
-        {
+        public double RectangleWidth {
             get { return this.rectangleWidth; }
-            set
-            {
+            set {
                 if (value < 0.0)
                     throw new ArgumentOutOfRangeException(nameof(value), value, "The MText rectangle width must be equals or greater than zero.");
                 this.rectangleWidth = value;
@@ -351,8 +326,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets the text <see cref="MTextAttachmentPoint">attachment point</see>.
         /// </summary>
-        public MTextAttachmentPoint AttachmentPoint
-        {
+        public MTextAttachmentPoint AttachmentPoint {
             get { return this.attachmentPoint; }
             set { this.attachmentPoint = value; }
         }
@@ -360,11 +334,9 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets the <see cref="TextStyle">text style</see>.
         /// </summary>
-        public TextStyle Style
-        {
+        public TextStyle Style {
             get { return this.style; }
-            set
-            {
+            set {
                 if (value == null)
                     throw new ArgumentNullException(nameof(value));
                 this.style = this.OnTextStyleChangedEvent(this.style, value);
@@ -374,8 +346,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets the Text <see cref="Vector3">position</see> in world coordinates.
         /// </summary>
-        public Vector3 Position
-        {
+        public Vector3 Position {
             get { return this.position; }
             set { this.position = value; }
         }
@@ -383,8 +354,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets the raw text string.
         /// </summary>
-        public string Value
-        {
+        public string Value {
             get { return this.text; }
             set { this.text = value; }
         }
@@ -397,8 +367,7 @@ namespace netDxf.Entities
         /// Adds the text to the existing paragraph. 
         /// </summary>
         /// <param name="txt">Text string.</param>
-        public void Write(string txt)
-        {
+        public void Write(string txt) {
             this.Write(txt, null);
         }
 
@@ -407,8 +376,7 @@ namespace netDxf.Entities
         /// </summary>
         /// <param name="txt">Text string.</param>
         /// <param name="options">Text formatting options.</param>
-        public void Write(string txt, MTextFormattingOptions options)
-        {
+        public void Write(string txt, MTextFormattingOptions options) {
             if (options == null)
                 this.text += txt;
             else
@@ -418,8 +386,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Ends the actual paragraph (adds the end paragraph code and the paragraph height factor). 
         /// </summary>
-        public void EndParagraph()
-        {
+        public void EndParagraph() {
             if (!MathHelper.IsOne(this.paragraphHeightFactor))
                 this.text += "{\\H" + this.paragraphHeightFactor + "x;}\\P";
             else
@@ -431,8 +398,7 @@ namespace netDxf.Entities
         /// the new paragraph command "\P" will be converted to new line feed '\r\n'.
         /// </summary>
         /// <returns>MText text value without the formatting codes.</returns>
-        public string PlainText()
-        {
+        public string PlainText() {
             if (string.IsNullOrEmpty(this.text))
                 return string.Empty;
 
@@ -445,8 +411,7 @@ namespace netDxf.Entities
             StringBuilder rawText = new StringBuilder();
             CharEnumerator chars = txt.GetEnumerator();
 
-            while (chars.MoveNext())
-            {
+            while (chars.MoveNext()) {
                 char token = chars.Current;
                 if (token == '\\') // is a formatting command
                 {
@@ -460,14 +425,12 @@ namespace netDxf.Entities
                     else if (token == 'L' | token == 'l' | token == 'O' | token == 'o' | token == 'K' | token == 'k' | token == 'P' | token == 'X') // one char commands
                         if (token == 'P')
                             rawText.Append(Environment.NewLine);
-                        else
-                        {
+                        else {
                         } // discard other commands
                     else // formatting commands of more than one character always terminate in ';'
                     {
                         bool stacking = token == 'S'; // we want to preserve the text under the stacking command
-                        while (token != ';')
-                        {
+                        while (token != ';') {
                             if (chars.MoveNext())
                                 token = chars.Current;
                             else
@@ -477,12 +440,9 @@ namespace netDxf.Entities
                                 rawText.Append(token); // append user data of stacking command
                         }
                     }
-                }
-                else if (token == '{' | token == '}')
-                {
+                } else if (token == '{' | token == '}') {
                     // discard group markers
-                }
-                else // char is what it is, a character
+                } else // char is what it is, a character
                     rawText.Append(token);
             }
             return rawText.ToString();
@@ -496,16 +456,14 @@ namespace netDxf.Entities
         /// Creates a new MText that is a copy of the current instance.
         /// </summary>
         /// <returns>A new MText that is a copy of this instance.</returns>
-        public override object Clone()
-        {
-            MText entity = new MText
-            {
+        public override object Clone() {
+            MText entity = new MText {
                 //EntityObject properties
-                Layer = (Layer) this.Layer.Clone(),
-                Linetype = (Linetype) this.Linetype.Clone(),
-                Color = (AciColor) this.Color.Clone(),
+                Layer = (Layer)this.Layer.Clone(),
+                Linetype = (Linetype)this.Linetype.Clone(),
+                Color = (AciColor)this.Color.Clone(),
                 Lineweight = this.Lineweight,
-                Transparency = (Transparency) this.Transparency.Clone(),
+                Transparency = (Transparency)this.Transparency.Clone(),
                 LinetypeScale = this.LinetypeScale,
                 Normal = this.Normal,
                 IsVisible = this.IsVisible,
@@ -518,12 +476,12 @@ namespace netDxf.Entities
                 LineSpacingStyle = this.lineSpacingStyle,
                 RectangleWidth = this.rectangleWidth,
                 AttachmentPoint = this.attachmentPoint,
-                Style = (TextStyle) this.style.Clone(),
+                Style = (TextStyle)this.style.Clone(),
                 Value = this.text
             };
 
             foreach (XData data in this.XData.Values)
-                entity.XData.Add((XData) data.Clone());
+                entity.XData.Add((XData)data.Clone());
 
             return entity;
         }

@@ -22,14 +22,12 @@
 
 using netDxf.Tables;
 
-namespace netDxf.Entities
-{
+namespace netDxf.Entities {
     /// <summary>
     /// Represents a 3dFace <see cref="EntityObject">entity</see>.
     /// </summary>
     public class Face3d :
-        EntityObject
-    {
+        EntityObject {
         #region private fields
 
         private Vector3 firstVertex;
@@ -46,8 +44,7 @@ namespace netDxf.Entities
         /// Initializes a new instance of the <c>Face3d</c> class.
         /// </summary>
         public Face3d()
-            : this(Vector3.Zero, Vector3.Zero, Vector3.Zero, Vector3.Zero)
-        {
+            : this(Vector3.Zero, Vector3.Zero, Vector3.Zero, Vector3.Zero) {
         }
 
         /// <summary>
@@ -60,8 +57,7 @@ namespace netDxf.Entities
             : this(new Vector3(firstVertex.X, firstVertex.Y, 0.0),
                 new Vector3(secondVertex.X, secondVertex.Y, 0.0),
                 new Vector3(thirdVertex.X, thirdVertex.Y, 0.0),
-                new Vector3(thirdVertex.X, thirdVertex.Y, 0.0))
-        {
+                new Vector3(thirdVertex.X, thirdVertex.Y, 0.0)) {
         }
 
         /// <summary>
@@ -75,8 +71,7 @@ namespace netDxf.Entities
             : this(new Vector3(firstVertex.X, firstVertex.Y, 0.0),
                 new Vector3(secondVertex.X, secondVertex.Y, 0.0),
                 new Vector3(thirdVertex.X, thirdVertex.Y, 0.0),
-                new Vector3(fourthVertex.X, fourthVertex.Y, 0.0))
-        {
+                new Vector3(fourthVertex.X, fourthVertex.Y, 0.0)) {
         }
 
         /// <summary>
@@ -86,8 +81,7 @@ namespace netDxf.Entities
         /// <param name="secondVertex">3d face <see cref="Vector3">second vertex</see>.</param>
         /// <param name="thirdVertex">3d face <see cref="Vector3">third vertex</see>.</param>
         public Face3d(Vector3 firstVertex, Vector3 secondVertex, Vector3 thirdVertex)
-            : this(firstVertex, secondVertex, thirdVertex, thirdVertex)
-        {
+            : this(firstVertex, secondVertex, thirdVertex, thirdVertex) {
         }
 
         /// <summary>
@@ -98,8 +92,7 @@ namespace netDxf.Entities
         /// <param name="thirdVertex">3d face <see cref="Vector3">third vertex</see>.</param>
         /// <param name="fourthVertex">3d face <see cref="Vector3">fourth vertex</see>.</param>
         public Face3d(Vector3 firstVertex, Vector3 secondVertex, Vector3 thirdVertex, Vector3 fourthVertex)
-            : base(EntityType.Face3D, DxfObjectCode.Face3d)
-        {
+            : base(EntityType.Face3D, DxfObjectCode.Face3d) {
             this.firstVertex = firstVertex;
             this.secondVertex = secondVertex;
             this.thirdVertex = thirdVertex;
@@ -114,8 +107,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets the first 3d face <see cref="Vector3">vertex</see>.
         /// </summary>
-        public Vector3 FirstVertex
-        {
+        public Vector3 FirstVertex {
             get { return this.firstVertex; }
             set { this.firstVertex = value; }
         }
@@ -123,8 +115,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets the second 3d face <see cref="Vector3">vertex</see>.
         /// </summary>
-        public Vector3 SecondVertex
-        {
+        public Vector3 SecondVertex {
             get { return this.secondVertex; }
             set { this.secondVertex = value; }
         }
@@ -132,8 +123,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets the third 3d face <see cref="Vector3">vertex</see>.
         /// </summary>
-        public Vector3 ThirdVertex
-        {
+        public Vector3 ThirdVertex {
             get { return this.thirdVertex; }
             set { this.thirdVertex = value; }
         }
@@ -141,8 +131,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets the fourth 3d face <see cref="Vector3">vertex</see>.
         /// </summary>
-        public Vector3 FourthVertex
-        {
+        public Vector3 FourthVertex {
             get { return this.fourthVertex; }
             set { this.fourthVertex = value; }
         }
@@ -150,8 +139,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets the 3d face edge visibility.
         /// </summary>
-        public Face3dEdgeFlags EdgeFlags
-        {
+        public Face3dEdgeFlags EdgeFlags {
             get { return this.edgeFlags; }
             set { this.edgeFlags = value; }
         }
@@ -164,16 +152,14 @@ namespace netDxf.Entities
         /// Creates a new Face3d that is a copy of the current instance.
         /// </summary>
         /// <returns>A new Face3d that is a copy of this instance.</returns>
-        public override object Clone()
-        {
-            Face3d entity = new Face3d
-            {
+        public override object Clone() {
+            Face3d entity = new Face3d {
                 //EntityObject properties
-                Layer = (Layer) this.Layer.Clone(),
-                Linetype = (Linetype) this.Linetype.Clone(),
-                Color = (AciColor) this.Color.Clone(),
+                Layer = (Layer)this.Layer.Clone(),
+                Linetype = (Linetype)this.Linetype.Clone(),
+                Color = (AciColor)this.Color.Clone(),
                 Lineweight = this.Lineweight,
-                Transparency = (Transparency) this.Transparency.Clone(),
+                Transparency = (Transparency)this.Transparency.Clone(),
                 LinetypeScale = this.LinetypeScale,
                 Normal = this.Normal,
                 IsVisible = this.IsVisible,
@@ -186,7 +172,7 @@ namespace netDxf.Entities
             };
 
             foreach (XData data in this.XData.Values)
-                entity.XData.Add((XData) data.Clone());
+                entity.XData.Add((XData)data.Clone());
 
             return entity;
         }

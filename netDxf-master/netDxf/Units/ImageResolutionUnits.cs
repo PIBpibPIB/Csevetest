@@ -20,13 +20,11 @@
 
 #endregion
 
-namespace netDxf.Units
-{
+namespace netDxf.Units {
     /// <summary>
     /// Defines the image resolution units.
     /// </summary>
-    public enum ImageResolutionUnits
-    {
+    public enum ImageResolutionUnits {
         /// <summary>
         /// No units.
         /// </summary>

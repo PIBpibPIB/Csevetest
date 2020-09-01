@@ -20,18 +20,16 @@
 
 #endregion
 
-using System;
 using netDxf.Blocks;
 using netDxf.Tables;
+using System;
 
-namespace netDxf.Entities
-{
+namespace netDxf.Entities {
     /// <summary>
     /// Represents a 3 point angular dimension <see cref="EntityObject">entity</see>.
     /// </summary>
     public class Angular3PointDimension :
-        Dimension
-    {
+        Dimension {
         #region private fields
 
         private double offset;
@@ -47,8 +45,7 @@ namespace netDxf.Entities
         /// Initializes a new instance of the <c>Angular3PointDimension</c> class.
         /// </summary>
         public Angular3PointDimension()
-            : this(Vector2.Zero, Vector2.UnitX, Vector2.UnitY, 0.1)
-        {
+            : this(Vector2.Zero, Vector2.UnitX, Vector2.UnitY, 0.1) {
         }
 
         /// <summary>
@@ -57,8 +54,7 @@ namespace netDxf.Entities
         /// <param name="arc"><see cref="Arc">Arc</see> to measure.</param>
         /// <param name="offset">Distance between the center of the arc and the dimension line.</param>
         public Angular3PointDimension(Arc arc, double offset)
-            : this(arc, offset, DimensionStyle.Default)
-        {
+            : this(arc, offset, DimensionStyle.Default) {
         }
 
         /// <summary>
@@ -68,15 +64,14 @@ namespace netDxf.Entities
         /// <param name="offset">Distance between the center of the arc and the dimension line.</param>
         /// <param name="style">The <see cref="DimensionStyle">style</see> to use with the dimension.</param>
         public Angular3PointDimension(Arc arc, double offset, DimensionStyle style)
-            : base(DimensionType.Angular3Point)
-        {
+            : base(DimensionType.Angular3Point) {
             if (arc == null)
                 throw new ArgumentNullException(nameof(arc));
 
             Vector3 refPoint = MathHelper.Transform(arc.Center, arc.Normal, CoordinateSystem.World, CoordinateSystem.Object);
             this.center = new Vector2(refPoint.X, refPoint.Y);
-            this.start = Vector2.Polar(this.center, arc.Radius, arc.StartAngle*MathHelper.DegToRad);
-            this.end = Vector2.Polar(this.center, arc.Radius, arc.EndAngle*MathHelper.DegToRad);
+            this.start = Vector2.Polar(this.center, arc.Radius, arc.StartAngle * MathHelper.DegToRad);
+            this.end = Vector2.Polar(this.center, arc.Radius, arc.EndAngle * MathHelper.DegToRad);
 
             if (offset < 0)
                 throw new ArgumentOutOfRangeException(nameof(offset), "The offset value must be equal or greater than zero.");
@@ -98,8 +93,7 @@ namespace netDxf.Entities
         /// <param name="endPoint">Angle end point.</param>
         /// <param name="offset">Distance between the center point and the dimension line.</param>
         public Angular3PointDimension(Vector2 centerPoint, Vector2 startPoint, Vector2 endPoint, double offset)
-            : this(centerPoint, startPoint, endPoint, offset, DimensionStyle.Default)
-        {
+            : this(centerPoint, startPoint, endPoint, offset, DimensionStyle.Default) {
         }
 
         /// <summary>
@@ -111,8 +105,7 @@ namespace netDxf.Entities
         /// <param name="offset">Distance between the center point and the dimension line.</param>
         /// <param name="style">The <see cref="DimensionStyle">style</see> to use with the dimension.</param>
         public Angular3PointDimension(Vector2 centerPoint, Vector2 startPoint, Vector2 endPoint, double offset, DimensionStyle style)
-            : base(DimensionType.Angular3Point)
-        {
+            : base(DimensionType.Angular3Point) {
             this.center = centerPoint;
             this.start = startPoint;
             this.end = endPoint;
@@ -132,8 +125,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets the center <see cref="Vector2">point</see> of the arc in OCS (object coordinate system).
         /// </summary>
-        public Vector2 CenterPoint
-        {
+        public Vector2 CenterPoint {
             get { return this.center; }
             set { this.center = value; }
         }
@@ -141,8 +133,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets the angle start <see cref="Vector2">point</see> of the dimension in OCS (object coordinate system).
         /// </summary>
-        public Vector2 StartPoint
-        {
+        public Vector2 StartPoint {
             get { return this.start; }
             set { this.start = value; }
         }
@@ -150,8 +141,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets the angle end <see cref="Vector2">point</see> of the dimension in OCS (object coordinate system).
         /// </summary>
-        public Vector2 EndPoint
-        {
+        public Vector2 EndPoint {
             get { return this.end; }
             set { this.end = value; }
         }
@@ -159,8 +149,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets the location of the dimension line arc.
         /// </summary>
-        public Vector2 ArcDefinitionPoint
-        {
+        public Vector2 ArcDefinitionPoint {
             get { return this.defPoint; }
         }
 
@@ -170,11 +159,9 @@ namespace netDxf.Entities
         /// <remarks>
         /// Offset values cannot be negative and, even thought, zero values are allowed, they are not recommended.
         /// </remarks>
-        public double Offset
-        {
+        public double Offset {
             get { return this.offset; }
-            set
-            {
+            set {
                 if (value < 0)
                     throw new ArgumentOutOfRangeException(nameof(value), "The offset value must be equal or greater than zero.");
                 this.offset = value;
@@ -185,11 +172,9 @@ namespace netDxf.Entities
         /// Actual measurement.
         /// </summary>
         /// <remarks>The dimension is always measured in the plane defined by the normal.</remarks>
-        public override double Measurement
-        {
-            get
-            {
-                double angle = (Vector2.Angle(this.center, this.end) - Vector2.Angle(this.center, this.start))*MathHelper.RadToDeg;
+        public override double Measurement {
+            get {
+                double angle = (Vector2.Angle(this.center, this.end) - Vector2.Angle(this.center, this.start)) * MathHelper.RadToDeg;
                 return MathHelper.NormalizeAngle(angle);
             }
         }
@@ -206,8 +191,7 @@ namespace netDxf.Entities
         /// The start and end points of the reference lines will be modified,
         /// the angle measurement is always made from the direction of the center-first point line to the direction of the center-second point line.
         /// </remarks>
-        public void SetDimensionLinePosition(Vector2 point)
-        {
+        public void SetDimensionLinePosition(Vector2 point) {
             this.SetDimensionLinePosition(point, true);
         }
 
@@ -215,10 +199,8 @@ namespace netDxf.Entities
 
         #region private methods
 
-        public void SetDimensionLinePosition(Vector2 point, bool updateRefs)
-        {
-            if (updateRefs)
-            {
+        public void SetDimensionLinePosition(Vector2 point, bool updateRefs) {
+            if (updateRefs) {
                 Vector2 refStart = this.start;
                 Vector2 refEnd = this.end;
                 Vector2 dirStart = refStart - this.center;
@@ -227,21 +209,17 @@ namespace netDxf.Entities
                 double cross = Vector2.CrossProduct(dirStart, dirEnd);
                 double cross1 = Vector2.CrossProduct(dirStart, dirPoint);
                 double cross2 = Vector2.CrossProduct(dirEnd, dirPoint);
-                if (cross >= 0)
-                {
-                    if (!(cross1 >= 0 && cross2 < 0))
-                    {
+                if (cross >= 0) {
+                    if (!(cross1 >= 0 && cross2 < 0)) {
                         this.start = refEnd;
                         this.end = refStart;
                     }
-                }              
-                else if (cross1 < 0 && cross2 >= 0)
-                {
+                } else if (cross1 < 0 && cross2 >= 0) {
                     this.start = refEnd;
                     this.end = refStart;
                 }
             }
-            
+
             this.offset = Vector2.Distance(this.center, point);
 
             double startAngle = Vector2.Angle(this.center, this.start);
@@ -249,17 +227,14 @@ namespace netDxf.Entities
             Vector2 midDim = Vector2.Polar(this.center, this.offset, midRot);
             this.defPoint = midDim;
 
-            if (!this.TextPositionManuallySet)
-            {
+            if (!this.TextPositionManuallySet) {
                 DimensionStyleOverride styleOverride;
                 double textGap = this.Style.TextOffset;
-                if (this.StyleOverrides.TryGetValue(DimensionStyleOverrideType.TextOffset, out styleOverride))
-                {
+                if (this.StyleOverrides.TryGetValue(DimensionStyleOverrideType.TextOffset, out styleOverride)) {
                     textGap = (double)styleOverride.Value;
                 }
                 double scale = this.Style.DimScaleOverall;
-                if (this.StyleOverrides.TryGetValue(DimensionStyleOverrideType.DimScaleOverall, out styleOverride))
-                {
+                if (this.StyleOverrides.TryGetValue(DimensionStyleOverrideType.DimScaleOverall, out styleOverride)) {
                     scale = (double)styleOverride.Value;
                 }
 
@@ -275,8 +250,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Calculate the dimension reference points.
         /// </summary>
-        protected override void CalculteReferencePoints()
-        {
+        protected override void CalculteReferencePoints() {
             DimensionStyleOverride styleOverride;
 
             double measure = this.Measurement;
@@ -286,29 +260,22 @@ namespace netDxf.Entities
 
             this.defPoint = midDim;
 
-            if (this.TextPositionManuallySet)
-            {
+            if (this.TextPositionManuallySet) {
                 DimensionStyleFitTextMove moveText = this.Style.FitTextMove;
-                if (this.StyleOverrides.TryGetValue(DimensionStyleOverrideType.FitTextMove, out styleOverride))
-                {
+                if (this.StyleOverrides.TryGetValue(DimensionStyleOverrideType.FitTextMove, out styleOverride)) {
                     moveText = (DimensionStyleFitTextMove)styleOverride.Value;
                 }
 
-                if (moveText == DimensionStyleFitTextMove.BesideDimLine)
-                {
+                if (moveText == DimensionStyleFitTextMove.BesideDimLine) {
                     this.SetDimensionLinePosition(this.textRefPoint, false);
                 }
-            }
-            else
-            {
+            } else {
                 double textGap = this.Style.TextOffset;
-                if (this.StyleOverrides.TryGetValue(DimensionStyleOverrideType.TextOffset, out styleOverride))
-                {
+                if (this.StyleOverrides.TryGetValue(DimensionStyleOverrideType.TextOffset, out styleOverride)) {
                     textGap = (double)styleOverride.Value;
                 }
                 double scale = this.Style.DimScaleOverall;
-                if (this.StyleOverrides.TryGetValue(DimensionStyleOverrideType.DimScaleOverall, out styleOverride))
-                {
+                if (this.StyleOverrides.TryGetValue(DimensionStyleOverrideType.DimScaleOverall, out styleOverride)) {
                     scale = (double)styleOverride.Value;
                 }
 
@@ -322,8 +289,7 @@ namespace netDxf.Entities
         /// </summary>
         /// <param name="name">Name to be assigned to the generated block.</param>
         /// <returns>The block that represents the actual dimension.</returns>
-        protected override Block BuildBlock(string name)
-        {
+        protected override Block BuildBlock(string name) {
             return DimensionBlock.Build(this, name);
         }
 
@@ -331,21 +297,19 @@ namespace netDxf.Entities
         /// Creates a new Angular3PointDimension that is a copy of the current instance.
         /// </summary>
         /// <returns>A new Angular3PointDimension that is a copy of this instance.</returns>
-        public override object Clone()
-        {
-            Angular3PointDimension entity = new Angular3PointDimension
-            {
+        public override object Clone() {
+            Angular3PointDimension entity = new Angular3PointDimension {
                 //EntityObject properties
-                Layer = (Layer) this.Layer.Clone(),
-                Linetype = (Linetype) this.Linetype.Clone(),
-                Color = (AciColor) this.Color.Clone(),
+                Layer = (Layer)this.Layer.Clone(),
+                Linetype = (Linetype)this.Linetype.Clone(),
+                Color = (AciColor)this.Color.Clone(),
                 Lineweight = this.Lineweight,
-                Transparency = (Transparency) this.Transparency.Clone(),
+                Transparency = (Transparency)this.Transparency.Clone(),
                 LinetypeScale = this.LinetypeScale,
                 Normal = this.Normal,
                 IsVisible = this.IsVisible,
                 //Dimension properties
-                Style = (DimensionStyle) this.Style.Clone(),
+                Style = (DimensionStyle)this.Style.Clone(),
                 DefinitionPoint = this.DefinitionPoint,
                 TextReferencePoint = this.TextReferencePoint,
                 TextPositionManuallySet = this.TextPositionManuallySet,
@@ -362,8 +326,7 @@ namespace netDxf.Entities
                 Offset = this.offset
             };
 
-            foreach (DimensionStyleOverride styleOverride in this.StyleOverrides.Values)
-            {
+            foreach (DimensionStyleOverride styleOverride in this.StyleOverrides.Values) {
                 object copy;
                 ICloneable value = styleOverride.Value as ICloneable;
                 copy = value != null ? value.Clone() : styleOverride.Value;
@@ -372,7 +335,7 @@ namespace netDxf.Entities
             }
 
             foreach (XData data in this.XData.Values)
-                entity.XData.Add((XData) data.Clone());
+                entity.XData.Add((XData)data.Clone());
 
             return entity;
         }

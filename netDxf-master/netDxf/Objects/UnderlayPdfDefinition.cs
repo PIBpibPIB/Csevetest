@@ -20,18 +20,16 @@
 
 #endregion
 
-using System.IO;
 using netDxf.Collections;
 using netDxf.Tables;
+using System.IO;
 
-namespace netDxf.Objects
-{
+namespace netDxf.Objects {
     /// <summary>
     /// Represents a PDF underlay definition.
     /// </summary>
     public class UnderlayPdfDefinition :
-        UnderlayDefinition
-    {
+        UnderlayDefinition {
         #region private fields
 
         private string page;
@@ -45,8 +43,7 @@ namespace netDxf.Objects
         /// </summary>
         /// <param name="file">Underlay file name with full or relative path.</param>
         public UnderlayPdfDefinition(string file)
-            : this(Path.GetFileNameWithoutExtension(file), file)
-        {
+            : this(Path.GetFileNameWithoutExtension(file), file) {
         }
 
         /// <summary>
@@ -55,8 +52,7 @@ namespace netDxf.Objects
         /// <param name="name">Underlay definition name.</param>
         /// <param name="file">Underlay file name with full or relative path.</param>
         public UnderlayPdfDefinition(string name, string file)
-            : base(name, file, UnderlayType.PDF)
-        {
+            : base(name, file, UnderlayType.PDF) {
             this.page = "1";
         }
 
@@ -67,8 +63,7 @@ namespace netDxf.Objects
         /// <summary>
         /// Gets or sets the PDF page to show.
         /// </summary>
-        public string Page
-        {
+        public string Page {
             get { return this.page; }
             set { this.page = value; }
         }
@@ -76,8 +71,7 @@ namespace netDxf.Objects
         /// <summary>
         /// Gets the owner of the actual underlay PDF definition.
         /// </summary>
-        public new UnderlayPdfDefinitions Owner
-        {
+        public new UnderlayPdfDefinitions Owner {
             get { return (UnderlayPdfDefinitions)base.Owner; }
             internal set { base.Owner = value; }
         }
@@ -91,10 +85,8 @@ namespace netDxf.Objects
         /// </summary>
         /// <param name="newName">UnderlayPdfDefinition name of the copy.</param>
         /// <returns>A new UnderlayPdfDefinition that is a copy of this instance.</returns>
-        public override TableObject Clone(string newName)
-        {
-            UnderlayPdfDefinition copy = new UnderlayPdfDefinition(newName, this.File)
-            {
+        public override TableObject Clone(string newName) {
+            UnderlayPdfDefinition copy = new UnderlayPdfDefinition(newName, this.File) {
                 Page = this.page
             };
 
@@ -108,8 +100,7 @@ namespace netDxf.Objects
         /// Creates a new UnderlayPdfDefinition that is a copy of the current instance.
         /// </summary>
         /// <returns>A new UnderlayPdfDefinition that is a copy of this instance.</returns>
-        public override object Clone()
-        {
+        public override object Clone() {
             return this.Clone(this.Name);
         }
 

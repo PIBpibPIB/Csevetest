@@ -20,29 +20,25 @@
 
 #endregion
 
-using System;
-using System.Collections.Generic;
 using netDxf.Blocks;
 using netDxf.Tables;
+using System;
+using System.Collections.Generic;
 
-namespace netDxf.Collections
-{
+namespace netDxf.Collections {
     /// <summary>
     /// Represents a collection of dimension styles.
     /// </summary>
     public sealed class DimensionStyles :
-        TableObjects<DimensionStyle>
-    {
+        TableObjects<DimensionStyle> {
         #region constructor
 
         internal DimensionStyles(DxfDocument document)
-            : this(document, null)
-        {
+            : this(document, null) {
         }
 
         internal DimensionStyles(DxfDocument document, string handle)
-            : base(document, DxfObjectCode.DimensionStyleTable, handle)
-        {
+            : base(document, DxfObjectCode.DimensionStyleTable, handle) {
             this.MaxCapacity = short.MaxValue;
         }
 
@@ -59,8 +55,7 @@ namespace netDxf.Collections
         /// If a dimension style already exists with the same name as the instance that is being added the method returns the existing dimension style,
         /// if not it will return the new dimension style.
         /// </returns>
-        internal override DimensionStyle Add(DimensionStyle style, bool assignHandle)
-        {
+        internal override DimensionStyle Add(DimensionStyle style, bool assignHandle) {
             if (this.list.Count >= this.MaxCapacity)
                 throw new OverflowException(string.Format("Table overflow. The maximum number of elements the table {0} can have is {1}", this.CodeName, this.MaxCapacity));
             if (style == null)
@@ -81,19 +76,16 @@ namespace netDxf.Collections
             this.Owner.TextStyles.References[style.TextStyle.Name].Add(style);
 
             // add referenced blocks
-            if (style.LeaderArrow != null)
-            {
+            if (style.LeaderArrow != null) {
                 style.LeaderArrow = this.Owner.Blocks.Add(style.LeaderArrow, assignHandle);
                 this.Owner.Blocks.References[style.LeaderArrow.Name].Add(style);
             }
 
-            if (style.DimArrow1 != null)
-            {
+            if (style.DimArrow1 != null) {
                 style.DimArrow1 = this.Owner.Blocks.Add(style.DimArrow1, assignHandle);
                 this.Owner.Blocks.References[style.DimArrow1.Name].Add(style);
             }
-            if (style.DimArrow2 != null)
-            {
+            if (style.DimArrow2 != null) {
                 style.DimArrow2 = this.Owner.Blocks.Add(style.DimArrow2, assignHandle);
                 this.Owner.Blocks.References[style.DimArrow2.Name].Add(style);
             }
@@ -126,8 +118,7 @@ namespace netDxf.Collections
         /// <param name="name"><see cref="DimensionStyle">DimensionStyle</see> name to remove from the document.</param>
         /// <returns>True if the dimension style has been successfully removed, or false otherwise.</returns>
         /// <remarks>Reserved dimension styles or any other referenced by objects cannot be removed.</remarks>
-        public override bool Remove(string name)
-        {
+        public override bool Remove(string name) {
             return this.Remove(this[name]);
         }
 
@@ -137,8 +128,7 @@ namespace netDxf.Collections
         /// <param name="item"><see cref="DimensionStyle">DimensionStyle</see> to remove from the document.</param>
         /// <returns>True if the dimension style has been successfully removed, or false otherwise.</returns>
         /// <remarks>Reserved dimension styles or any other referenced by objects cannot be removed.</remarks>
-        public override bool Remove(DimensionStyle item)
-        {
+        public override bool Remove(DimensionStyle item) {
             if (item == null)
                 return false;
 
@@ -186,37 +176,33 @@ namespace netDxf.Collections
 
         #region TableObject events
 
-        private void Item_NameChanged(TableObject sender, TableObjectChangedEventArgs<string> e)
-        {
+        private void Item_NameChanged(TableObject sender, TableObjectChangedEventArgs<string> e) {
             if (this.Contains(e.NewValue))
                 throw new ArgumentException("There is already another dimension style with the same name.");
 
             this.list.Remove(sender.Name);
-            this.list.Add(e.NewValue, (DimensionStyle) sender);
+            this.list.Add(e.NewValue, (DimensionStyle)sender);
 
             List<DxfObject> refs = this.references[sender.Name];
             this.references.Remove(sender.Name);
             this.references.Add(e.NewValue, refs);
         }
 
-        private void DimensionStyleLinetypeChanged(TableObject sender, TableObjectChangedEventArgs<Linetype> e)
-        {
+        private void DimensionStyleLinetypeChanged(TableObject sender, TableObjectChangedEventArgs<Linetype> e) {
             this.Owner.Linetypes.References[e.OldValue.Name].Remove(sender);
 
             e.NewValue = this.Owner.Linetypes.Add(e.NewValue);
             this.Owner.Linetypes.References[e.NewValue.Name].Add(sender);
         }
 
-        private void DimensionStyleTextStyleChanged(TableObject sender, TableObjectChangedEventArgs<TextStyle> e)
-        {
+        private void DimensionStyleTextStyleChanged(TableObject sender, TableObjectChangedEventArgs<TextStyle> e) {
             this.Owner.TextStyles.References[e.OldValue.Name].Remove(sender);
 
             e.NewValue = this.Owner.TextStyles.Add(e.NewValue);
             this.Owner.TextStyles.References[e.NewValue.Name].Add(sender);
         }
 
-        private void DimensionStyleBlockChanged(TableObject sender, TableObjectChangedEventArgs<Block> e)
-        {
+        private void DimensionStyleBlockChanged(TableObject sender, TableObjectChangedEventArgs<Block> e) {
             if (e.OldValue != null)
                 this.Owner.Blocks.References[e.OldValue.Name].Remove(sender);
 

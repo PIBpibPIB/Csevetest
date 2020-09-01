@@ -20,28 +20,24 @@
 
 #endregion
 
-using System;
 using netDxf.Collections;
+using System;
 
-namespace netDxf.Tables
-{
+namespace netDxf.Tables {
     /// <summary>
     /// Represents a layer.
     /// </summary>
     public class Layer :
-        TableObject
-    {
+        TableObject {
         #region delegates and events
 
         public delegate void LinetypeChangedEventHandler(TableObject sender, TableObjectChangedEventArgs<Linetype> e);
 
         public event LinetypeChangedEventHandler LinetypeChanged;
 
-        protected virtual Linetype OnLinetypeChangedEvent(Linetype oldLinetype, Linetype newLinetype)
-        {
+        protected virtual Linetype OnLinetypeChangedEvent(Linetype oldLinetype, Linetype newLinetype) {
             LinetypeChangedEventHandler ae = this.LinetypeChanged;
-            if (ae != null)
-            {
+            if (ae != null) {
                 TableObjectChangedEventArgs<Linetype> eventArgs = new TableObjectChangedEventArgs<Linetype>(oldLinetype, newLinetype);
                 ae(this, eventArgs);
                 return eventArgs.NewValue;
@@ -74,8 +70,7 @@ namespace netDxf.Tables
         /// <summary>
         /// Gets the default Layer 0.
         /// </summary>
-        public static Layer Default
-        {
+        public static Layer Default {
             get { return new Layer(DefaultName); }
         }
 
@@ -88,13 +83,11 @@ namespace netDxf.Tables
         /// </summary>
         /// <param name="name">Layer name.</param>
         public Layer(string name)
-            : this(name, true)
-        {
+            : this(name, true) {
         }
 
         internal Layer(string name, bool checkName)
-            : base(name, DxfObjectCode.Layer, checkName)
-        {
+            : base(name, DxfObjectCode.Layer, checkName) {
             if (string.IsNullOrEmpty(name))
                 throw new ArgumentNullException(nameof(name), "The layer name should be at least one character long.");
 
@@ -114,11 +107,9 @@ namespace netDxf.Tables
         /// <summary>
         /// Gets or sets the layer <see cref="Linetype">line type</see>.
         /// </summary>
-        public Linetype Linetype
-        {
+        public Linetype Linetype {
             get { return this.linetype; }
-            set
-            {
+            set {
                 if (value == null)
                     throw new ArgumentNullException(nameof(value));
                 this.linetype = this.OnLinetypeChangedEvent(this.linetype, value);
@@ -128,11 +119,9 @@ namespace netDxf.Tables
         /// <summary>
         /// Gets or sets the layer <see cref="AciColor">color</see>.
         /// </summary>
-        public AciColor Color
-        {
+        public AciColor Color {
             get { return this.color; }
-            set
-            {
+            set {
                 if (value == null)
                     throw new ArgumentNullException(nameof(value));
                 if (value.IsByLayer || value.IsByBlock)
@@ -144,8 +133,7 @@ namespace netDxf.Tables
         /// <summary>
         /// Gets or sets the layer visibility.
         /// </summary>
-        public bool IsVisible
-        {
+        public bool IsVisible {
             get { return this.isVisible; }
             set { this.isVisible = value; }
         }
@@ -153,8 +141,7 @@ namespace netDxf.Tables
         /// <summary>
         /// Gets or sets if the layer is frozen; otherwise layer is thawed.
         /// </summary>
-        public bool IsFrozen
-        {
+        public bool IsFrozen {
             get { return this.isFrozen; }
             set { this.isFrozen = value; }
         }
@@ -162,8 +149,7 @@ namespace netDxf.Tables
         /// <summary>
         /// Gets or sets if the layer is locked.
         /// </summary>
-        public bool IsLocked
-        {
+        public bool IsLocked {
             get { return this.isLocked; }
             set { this.isLocked = value; }
         }
@@ -172,8 +158,7 @@ namespace netDxf.Tables
         /// Gets or sets if the plotting flag.
         /// </summary>
         /// <remarks>If set to false, do not plot this layer.</remarks>
-        public bool Plot
-        {
+        public bool Plot {
             get { return this.plot; }
             set { this.plot = value; }
         }
@@ -181,11 +166,9 @@ namespace netDxf.Tables
         /// <summary>
         /// Gets or sets the layer line weight, one unit is always 1/100 mm (default = Default).
         /// </summary>
-        public Lineweight Lineweight
-        {
+        public Lineweight Lineweight {
             get { return this.lineweight; }
-            set
-            {
+            set {
                 if (value == Lineweight.ByLayer || value == Lineweight.ByBlock)
                     throw new ArgumentException("The lineweight of a layer cannot be set to ByLayer or ByBlock.", nameof(value));
                 this.lineweight = value;
@@ -195,11 +178,9 @@ namespace netDxf.Tables
         /// <summary>
         /// Gets or sets layer transparency (default: 0, opaque).
         /// </summary>
-        public Transparency Transparency
-        {
+        public Transparency Transparency {
             get { return this.transparency; }
-            set
-            {
+            set {
                 if (value == null)
                     throw new ArgumentNullException(nameof(value));
                 this.transparency = value;
@@ -209,9 +190,8 @@ namespace netDxf.Tables
         /// <summary>
         /// Gets the owner of the actual layer.
         /// </summary>
-        public new Layers Owner
-        {
-            get { return (Layers) base.Owner; }
+        public new Layers Owner {
+            get { return (Layers)base.Owner; }
             internal set { base.Owner = value; }
         }
 
@@ -224,18 +204,16 @@ namespace netDxf.Tables
         /// </summary>
         /// <param name="newName">Layer name of the copy.</param>
         /// <returns>A new Layer that is a copy of this instance.</returns>
-        public override TableObject Clone(string newName)
-        {
-            Layer copy = new Layer(newName)
-            {
-                Color = (AciColor) this.Color.Clone(),
+        public override TableObject Clone(string newName) {
+            Layer copy = new Layer(newName) {
+                Color = (AciColor)this.Color.Clone(),
                 IsVisible = this.isVisible,
                 IsFrozen = this.isFrozen,
                 IsLocked = this.isLocked,
                 Plot = this.plot,
-                Linetype = (Linetype) this.Linetype.Clone(),
+                Linetype = (Linetype)this.Linetype.Clone(),
                 Lineweight = this.Lineweight,
-                Transparency = (Transparency) this.Transparency.Clone()
+                Transparency = (Transparency)this.Transparency.Clone()
             };
 
             foreach (XData data in this.XData.Values)
@@ -248,8 +226,7 @@ namespace netDxf.Tables
         /// Creates a new Layer that is a copy of the current instance.
         /// </summary>
         /// <returns>A new Layer that is a copy of this instance.</returns>
-        public override object Clone()
-        {
+        public override object Clone() {
             return this.Clone(this.Name);
         }
 

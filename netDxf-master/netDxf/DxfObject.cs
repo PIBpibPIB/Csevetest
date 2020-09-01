@@ -20,13 +20,11 @@
 
 #endregion
 
-namespace netDxf
-{
+namespace netDxf {
     /// <summary>
     /// Represents the base class for all DXF objects.
     /// </summary>
-    public abstract class DxfObject
-    {
+    public abstract class DxfObject {
         #region private fields
 
         private string codename;
@@ -41,8 +39,7 @@ namespace netDxf
         /// Initializes a new instance of the <c>DxfObject</c> class.
         /// </summary>
         /// <param name="codename"><see cref="DxfObjectCode">DXF object name</see>.</param>
-        protected DxfObject(string codename)
-        {
+        protected DxfObject(string codename) {
             this.codename = codename;
             this.handle = null;
             this.owner = null;
@@ -55,8 +52,7 @@ namespace netDxf
         /// <summary>
         /// Gets the <see cref="DxfObjectCode">DXF object name</see>.
         /// </summary>
-        public string CodeName
-        {
+        public string CodeName {
             get { return this.codename; }
             protected set { this.codename = value; }
         }
@@ -68,8 +64,7 @@ namespace netDxf
         /// The handle is a unique hexadecimal number assigned automatically to every dxf object,
         /// that has been added to a <see cref="DxfDocument">DxfDocument</see>.
         /// </remarks>
-        public string Handle
-        {
+        public string Handle {
             get { return this.handle; }
             internal set { this.handle = value; }
         }
@@ -77,8 +72,7 @@ namespace netDxf
         /// <summary>
         /// Gets the owner of the actual <see cref="DxfObject">DxfObject</see>.
         /// </summary>
-        public DxfObject Owner
-        {
+        public DxfObject Owner {
             get { return this.owner; }
             internal set { this.owner = value; }
         }
@@ -96,8 +90,7 @@ namespace netDxf
         /// Some objects might consume more than one, is, for example, the case of polylines that will assign
         /// automatically a handle to its vertexes. The entity number will be converted to an hexadecimal number.
         /// </remarks>
-        internal virtual long AsignHandle(long entityNumber)
-        {
+        internal virtual long AsignHandle(long entityNumber) {
             this.handle = entityNumber.ToString("X");
             return entityNumber + 1;
         }
@@ -110,8 +103,7 @@ namespace netDxf
         /// Obtains a string that represents the DXF object.
         /// </summary>
         /// <returns>A string text.</returns>
-        public override string ToString()
-        {
+        public override string ToString() {
             return this.codename;
         }
 

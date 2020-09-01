@@ -20,13 +20,11 @@
 
 #endregion
 
-namespace netDxf.Entities
-{
+namespace netDxf.Entities {
     /// <summary>
     /// Justification.
     /// </summary>
-    public enum MLineJustification
-    {
+    public enum MLineJustification {
         /// <summary>
         /// Top.
         /// </summary>

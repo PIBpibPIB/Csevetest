@@ -20,29 +20,26 @@
 
 #endregion
 
-using System;
 using netDxf.Collections;
 using netDxf.Objects;
 using netDxf.Tables;
 using netDxf.Units;
+using System;
 
-namespace netDxf.Blocks
-{
+namespace netDxf.Blocks {
     /// <summary>
     /// Represent the record of a block in the tables section.
     /// </summary>
     public class BlockRecord :
         DxfObject,
-        IHasXData
-    {
+        IHasXData {
         #region delegates and events
 
         //public delegate void XDataAddAppRegEventHandler(EntityObject sender, ObservableCollectionEventArgs<ApplicationRegistry> e);
 
         public event XDataAddAppRegEventHandler XDataAddAppReg;
 
-        protected virtual void OnXDataAddAppRegEvent(ApplicationRegistry item)
-        {
+        protected virtual void OnXDataAddAppRegEvent(ApplicationRegistry item) {
             XDataAddAppRegEventHandler ae = this.XDataAddAppReg;
             if (ae != null)
                 ae(this, new ObservableCollectionEventArgs<ApplicationRegistry>(item));
@@ -52,8 +49,7 @@ namespace netDxf.Blocks
 
         public event XDataRemoveAppRegEventHandler XDataRemoveAppReg;
 
-        protected virtual void OnXDataRemoveAppRegEvent(ApplicationRegistry item)
-        {
+        protected virtual void OnXDataRemoveAppRegEvent(ApplicationRegistry item) {
             XDataRemoveAppRegEventHandler ae = this.XDataRemoveAppReg;
             if (ae != null)
                 ae(this, new ObservableCollectionEventArgs<ApplicationRegistry>(item));
@@ -80,8 +76,7 @@ namespace netDxf.Blocks
         /// </summary>
         /// <param name="name">Block definition name.</param>
         internal BlockRecord(string name)
-            : base(DxfObjectCode.BlockRecord)
-        {
+            : base(DxfObjectCode.BlockRecord) {
             if (string.IsNullOrEmpty(name))
                 throw new ArgumentNullException(nameof(name));
             this.name = name;
@@ -103,8 +98,7 @@ namespace netDxf.Blocks
         /// Block record names are case insensitive.<br />
         /// The block which name starts with "*" are for internal purpose only.
         /// </remarks>
-        public string Name
-        {
+        public string Name {
             get { return this.name; }
             internal set { this.name = value; }
         }
@@ -112,8 +106,7 @@ namespace netDxf.Blocks
         /// <summary>
         /// Gets the associated Layout.
         /// </summary>
-        public Layout Layout
-        {
+        public Layout Layout {
             get { return this.layout; }
             internal set { this.layout = value; }
         }
@@ -121,8 +114,7 @@ namespace netDxf.Blocks
         /// <summary>
         /// Gets or sets the block insertion units.
         /// </summary>
-        public DrawingUnits Units
-        {
+        public DrawingUnits Units {
             get { return this.units; }
             set { this.units = value; }
         }
@@ -131,8 +123,7 @@ namespace netDxf.Blocks
         /// Gets or sets the default block units.
         /// </summary>
         /// <remarks>These are the units that all new blocks will use as default.</remarks>
-        public static DrawingUnits DefaultUnits
-        {
+        public static DrawingUnits DefaultUnits {
             get { return defaultUnits; }
             set { defaultUnits = value; }
         }
@@ -143,8 +134,7 @@ namespace netDxf.Blocks
         /// <remarks>
         /// This property is only compatible with dxf version AutoCad2007 and upwards.
         /// </remarks>
-        public bool AllowExploding
-        {
+        public bool AllowExploding {
             get { return this.allowExploding; }
             set { this.allowExploding = value; }
         }
@@ -155,8 +145,7 @@ namespace netDxf.Blocks
         /// <remarks>
         /// This property is only compatible with dxf version AutoCad2007 and upwards.
         /// </remarks>
-        public bool ScaleUniformly
-        {
+        public bool ScaleUniformly {
             get { return this.scaleUniformly; }
             set { this.scaleUniformly = value; }
         }
@@ -164,9 +153,8 @@ namespace netDxf.Blocks
         /// <summary>
         /// Gets the owner of the actual dxf object.
         /// </summary>
-        public new BlockRecords Owner
-        {
-            get { return (BlockRecords) base.Owner; }
+        public new BlockRecords Owner {
+            get { return (BlockRecords)base.Owner; }
             internal set { base.Owner = value; }
         }
 
@@ -176,16 +164,14 @@ namespace netDxf.Blocks
         /// <remarks>
         /// All blocks which name starts with "*" are for internal use and should not be modified.
         /// </remarks>
-        public bool IsForInternalUseOnly
-        {
+        public bool IsForInternalUseOnly {
             get { return this.name.StartsWith("*"); }
         }
 
         /// <summary>
         /// Gets the block record <see cref="XDataDictionary">extended data</see>.
         /// </summary>
-        public XDataDictionary XData
-        {
+        public XDataDictionary XData {
             get { return this.xData; }
         }
 
@@ -197,8 +183,7 @@ namespace netDxf.Blocks
         /// Converts the value of this instance to its equivalent string representation.
         /// </summary>
         /// <returns>The string representation.</returns>
-        public override string ToString()
-        {
+        public override string ToString() {
             return this.Name;
         }
 

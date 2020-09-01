@@ -22,13 +22,11 @@
 
 using System;
 
-namespace netDxf.Units
-{
+namespace netDxf.Units {
     /// <summary>
     /// Represents the parameters to convert linear and angular units to its string representation.
     /// </summary>
-    public class UnitStyleFormat
-    {
+    public class UnitStyleFormat {
         #region private fields
 
         private short linearDecimalPlaces;
@@ -58,8 +56,7 @@ namespace netDxf.Units
         /// <summary>
         /// Initializes a new instance of the <c>UnitStyleFormat</c> class.
         /// </summary>
-        public UnitStyleFormat()
-        {
+        public UnitStyleFormat() {
             this.linearDecimalPlaces = 2;
             this.angularDecimalPlaces = 0;
             this.decimalSeparator = ".";
@@ -91,11 +88,9 @@ namespace netDxf.Units
         /// <remarks>
         /// For architectural and fractional the precision used for the minimum fraction is 1/2^LinearDecimalPlaces.
         /// </remarks>
-        public short LinearDecimalPlaces
-        {
+        public short LinearDecimalPlaces {
             get { return this.linearDecimalPlaces; }
-            set
-            {
+            set {
                 if (value < 0)
                     throw new ArgumentOutOfRangeException(nameof(value), value, "The number of decimal places must be equals or greater than zero.");
                 this.linearDecimalPlaces = value;
@@ -105,11 +100,9 @@ namespace netDxf.Units
         /// <summary>
         /// Gets or sets the number of decimal places for angular units.
         /// </summary>
-        public short AngularDecimalPlaces
-        {
+        public short AngularDecimalPlaces {
             get { return this.angularDecimalPlaces; }
-            set
-            {
+            set {
                 if (value < 0)
                     throw new ArgumentOutOfRangeException(nameof(value), value, "The number of decimal places must be equals or greater than zero.");
                 this.angularDecimalPlaces = value;
@@ -119,8 +112,7 @@ namespace netDxf.Units
         /// <summary>
         /// Gets or set the decimal separator.
         /// </summary>
-        public string DecimalSeparator
-        {
+        public string DecimalSeparator {
             get { return this.decimalSeparator; }
             set { this.decimalSeparator = value; }
         }
@@ -128,8 +120,7 @@ namespace netDxf.Units
         /// <summary>
         /// Gets or sets the separator between feet and inches.
         /// </summary>
-        public string FeetInchesSeparator
-        {
+        public string FeetInchesSeparator {
             get { return this.feetInchesSeparator; }
             set { this.feetInchesSeparator = value; }
         }
@@ -137,8 +128,7 @@ namespace netDxf.Units
         /// <summary>
         /// Gets or set the angle degrees symbol.
         /// </summary>
-        public string DegreesSymbol
-        {
+        public string DegreesSymbol {
             get { return this.degreesSymbol; }
             set { this.degreesSymbol = value; }
         }
@@ -146,8 +136,7 @@ namespace netDxf.Units
         /// <summary>
         /// Gets or set the angle minutes symbol.
         /// </summary>
-        public string MinutesSymbol
-        {
+        public string MinutesSymbol {
             get { return this.minutesSymbol; }
             set { this.minutesSymbol = value; }
         }
@@ -155,8 +144,7 @@ namespace netDxf.Units
         /// <summary>
         /// Gets or set the angle seconds symbol.
         /// </summary>
-        public string SecondsSymbol
-        {
+        public string SecondsSymbol {
             get { return this.secondsSymbol; }
             set { this.secondsSymbol = value; }
         }
@@ -164,8 +152,7 @@ namespace netDxf.Units
         /// <summary>
         /// Gets or set the angle radians symbol.
         /// </summary>
-        public string RadiansSymbol
-        {
+        public string RadiansSymbol {
             get { return this.radiansSymbol; }
             set { this.radiansSymbol = value; }
         }
@@ -173,8 +160,7 @@ namespace netDxf.Units
         /// <summary>
         /// Gets or set the angle gradians symbol.
         /// </summary>
-        public string GradiansSymbol
-        {
+        public string GradiansSymbol {
             get { return this.gradiansSymbol; }
             set { this.gradiansSymbol = value; }
         }
@@ -182,8 +168,7 @@ namespace netDxf.Units
         /// <summary>
         /// Gets or set the feet symbol.
         /// </summary>
-        public string FeetSymbol
-        {
+        public string FeetSymbol {
             get { return this.feetSymbol; }
             set { this.feetSymbol = value; }
         }
@@ -191,8 +176,7 @@ namespace netDxf.Units
         /// <summary>
         /// Gets or set the inches symbol.
         /// </summary>
-        public string InchesSymbol
-        {
+        public string InchesSymbol {
             get { return this.inchesSymbol; }
             set { this.inchesSymbol = value; }
         }
@@ -200,11 +184,9 @@ namespace netDxf.Units
         /// <summary>
         /// Gets or sets the scale of fractions relative to dimension text height.
         /// </summary>
-        public double FractionHeightScale
-        {
+        public double FractionHeightScale {
             get { return this.fractionHeigthScale; }
-            set
-            {
+            set {
                 if (value <= 0)
                     throw new ArgumentOutOfRangeException(nameof(value), value, "The fraction height scale must be greater than zero.");
                 this.fractionHeigthScale = value;
@@ -219,8 +201,7 @@ namespace netDxf.Units
         /// Diagonal stacking<br/>
         /// Not stacked (for example, 1/2)
         /// </remarks>
-        public FractionFormatType FractionType
-        {
+        public FractionFormatType FractionType {
             get { return this.fractionType; }
             set { this.fractionType = value; }
         }
@@ -228,8 +209,7 @@ namespace netDxf.Units
         /// <summary>
         /// Suppresses leading zeros in linear decimal dimensions (for example, 0.5000 becomes .5000).
         /// </summary>
-        public bool SupressLinearLeadingZeros
-        {
+        public bool SupressLinearLeadingZeros {
             get { return this.supressLinearLeadingZeros; }
             set { this.supressLinearLeadingZeros = value; }
         }
@@ -237,8 +217,7 @@ namespace netDxf.Units
         /// <summary>
         /// Suppresses trailing zeros in linear decimal dimensions (for example, 12.5000 becomes 12.5).
         /// </summary>
-        public bool SupressLinearTrailingZeros
-        {
+        public bool SupressLinearTrailingZeros {
             get { return this.supressLinearTrailingZeros; }
             set { this.supressLinearTrailingZeros = value; }
         }
@@ -246,8 +225,7 @@ namespace netDxf.Units
         /// <summary>
         /// Suppresses leading zeros in angular decimal dimensions (for example, 0.5000 becomes .5000).
         /// </summary>
-        public bool SupressAngularLeadingZeros
-        {
+        public bool SupressAngularLeadingZeros {
             get { return this.supressAngularLeadingZeros; }
             set { this.supressAngularLeadingZeros = value; }
         }
@@ -255,8 +233,7 @@ namespace netDxf.Units
         /// <summary>
         /// Suppresses trailing zeros in angular decimal dimensions (for example, 12.5000 becomes 12.5).
         /// </summary>
-        public bool SupressAngularTrailingZeros
-        {
+        public bool SupressAngularTrailingZeros {
             get { return this.supressAngularTrailingZeros; }
             set { this.supressAngularTrailingZeros = value; }
         }
@@ -264,8 +241,7 @@ namespace netDxf.Units
         /// <summary>
         /// Suppresses zero feet in architectural dimensions.
         /// </summary>
-        public bool SupressZeroFeet
-        {
+        public bool SupressZeroFeet {
             get { return this.supressZeroFeet; }
             set { this.supressZeroFeet = value; }
         }
@@ -273,8 +249,7 @@ namespace netDxf.Units
         /// <summary>
         /// Suppresses zero inches in architectural dimensions.
         /// </summary>
-        public bool SupressZeroInches
-        {
+        public bool SupressZeroInches {
             get { return this.supressZeroInches; }
             set { this.supressZeroInches = value; }
         }

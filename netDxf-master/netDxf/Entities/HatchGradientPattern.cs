@@ -22,8 +22,7 @@
 
 using System;
 
-namespace netDxf.Entities
-{
+namespace netDxf.Entities {
     /// <summary>
     /// Represents the hatch gradient pattern style.
     /// </summary>
@@ -31,8 +30,7 @@ namespace netDxf.Entities
     /// Gradient patterns are only supported by AutoCad2004 and higher dxf versions. It will default to a solid pattern if saved as AutoCad2000.
     /// </remarks>
     public class HatchGradientPattern :
-        HatchPattern
-    {
+        HatchPattern {
         #region private fields
 
         private HatchGradientPatternType gradientType;
@@ -50,8 +48,7 @@ namespace netDxf.Entities
         /// Initializes a new instance of the <c>HatchGradientPattern</c> class as a default linear gradient. 
         /// </summary>
         public HatchGradientPattern()
-            : this(string.Empty)
-        {
+            : this(string.Empty) {
         }
 
         /// <summary>
@@ -59,8 +56,7 @@ namespace netDxf.Entities
         /// </summary>
         /// <param name="description">Description of the pattern (optional, this information is not saved in the dxf file). By default it will use the supplied name.</param>
         public HatchGradientPattern(string description)
-            : base("SOLID", description)
-        {
+            : base("SOLID", description) {
             this.color1 = AciColor.Blue;
             this.color2 = AciColor.Yellow;
             this.singleColor = false;
@@ -76,8 +72,7 @@ namespace netDxf.Entities
         /// <param name="tint">Gradient tint.</param>
         /// <param name="type">Gradient <see cref="HatchGradientPatternType">type</see>.</param>
         public HatchGradientPattern(AciColor color, double tint, HatchGradientPatternType type)
-            : this(color, tint, type, string.Empty)
-        {
+            : this(color, tint, type, string.Empty) {
         }
 
         /// <summary>
@@ -88,8 +83,7 @@ namespace netDxf.Entities
         /// <param name="type">Gradient <see cref="HatchGradientPatternType">type</see>.</param>
         /// <param name="description">Description of the pattern (optional, this information is not saved in the dxf file). By default it will use the supplied name.</param>
         public HatchGradientPattern(AciColor color, double tint, HatchGradientPatternType type, string description)
-            : base("SOLID", description)
-        {
+            : base("SOLID", description) {
             if (color == null)
                 throw new ArgumentNullException(nameof(color));
             this.color1 = color;
@@ -107,8 +101,7 @@ namespace netDxf.Entities
         /// <param name="color2">Gradient <see cref="AciColor">color</see> 2.</param>
         /// <param name="type">Gradient <see cref="HatchGradientPatternType">type</see>.</param>
         public HatchGradientPattern(AciColor color1, AciColor color2, HatchGradientPatternType type)
-            : this(color1, color2, type, string.Empty)
-        {
+            : this(color1, color2, type, string.Empty) {
         }
 
         /// <summary>
@@ -119,8 +112,7 @@ namespace netDxf.Entities
         /// <param name="type">Gradient <see cref="HatchGradientPatternType">type</see>.</param>
         /// <param name="description">Description of the pattern (optional, this information is not saved in the dxf file). By default it will use the supplied name.</param>
         public HatchGradientPattern(AciColor color1, AciColor color2, HatchGradientPatternType type, string description)
-            : base("SOLID", description)
-        {
+            : base("SOLID", description) {
             if (color1 == null)
                 throw new ArgumentNullException(nameof(color1));
             this.color1 = color1;
@@ -140,8 +132,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or set the gradient pattern <see cref="HatchGradientPatternType">type</see>.
         /// </summary>
-        public HatchGradientPatternType GradientType
-        {
+        public HatchGradientPatternType GradientType {
             get { return this.gradientType; }
             set { this.gradientType = value; }
         }
@@ -149,11 +140,9 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets the gradient <see cref="AciColor">color</see> 1.
         /// </summary>
-        public AciColor Color1
-        {
+        public AciColor Color1 {
             get { return this.color1; }
-            set
-            {
+            set {
                 if (value == null)
                     throw new ArgumentNullException(nameof(value));
                 this.color1 = value;
@@ -166,11 +155,9 @@ namespace netDxf.Entities
         /// <remarks>
         /// If color 2 is defined, automatically the single color property will be set to false.  
         /// </remarks>
-        public AciColor Color2
-        {
+        public AciColor Color2 {
             get { return this.color2; }
-            set
-            {
+            set {
                 if (value == null)
                     throw new ArgumentNullException(nameof(value));
                 this.singleColor = false;
@@ -181,11 +168,9 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets the gradient pattern color type.
         /// </summary>
-        public bool SingleColor
-        {
+        public bool SingleColor {
             get { return this.singleColor; }
-            set
-            {
+            set {
                 if (value)
                     this.Color2 = this.Color2FromTint(this.tint);
                 this.singleColor = value;
@@ -196,11 +181,9 @@ namespace netDxf.Entities
         /// Gets or sets the gradient pattern tint.
         /// </summary>
         /// <remarks>It only applies to single color gradient patterns.</remarks>
-        public double Tint
-        {
+        public double Tint {
             get { return this.tint; }
-            set
-            {
+            set {
                 if (this.singleColor)
                     this.Color2 = this.Color2FromTint(value);
                 this.tint = value;
@@ -214,8 +197,7 @@ namespace netDxf.Entities
         /// Each gradient has two definitions, shifted and unsifted. A shift value describes the blend of the two definitions that should be used.
         /// A value of 0.0 (false) means only the unsifted version should be used, and a value of 1.0 (true) means that only the shifted version should be used.
         /// </remarks>
-        public bool Centered
-        {
+        public bool Centered {
             get { return this.centered; }
             set { this.centered = value; }
         }
@@ -224,8 +206,7 @@ namespace netDxf.Entities
 
         #region private methods
 
-        private AciColor Color2FromTint(double value)
-        {
+        private AciColor Color2FromTint(double value) {
             double h, s, l;
             AciColor.ToHsl(this.color1, out h, out s, out l);
             return AciColor.FromHsl(h, s, value);
@@ -235,10 +216,8 @@ namespace netDxf.Entities
 
         #region ICloneable
 
-        public override object Clone()
-        {
-            HatchGradientPattern copy = new HatchGradientPattern
-            {
+        public override object Clone() {
+            HatchGradientPattern copy = new HatchGradientPattern {
                 // Pattern
                 Fill = this.Fill,
                 Type = this.Type,
@@ -248,8 +227,8 @@ namespace netDxf.Entities
                 Style = this.Style,
                 // GraientPattern
                 GradientType = this.gradientType,
-                Color1 = (AciColor) this.color1.Clone(),
-                Color2 = (AciColor) this.color2.Clone(),
+                Color1 = (AciColor)this.color1.Clone(),
+                Color2 = (AciColor)this.color2.Clone(),
                 SingleColor = this.singleColor,
                 Tint = this.tint,
                 Centered = this.centered

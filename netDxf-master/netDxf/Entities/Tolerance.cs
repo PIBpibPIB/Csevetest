@@ -20,30 +20,26 @@
 
 #endregion
 
+using netDxf.Tables;
 using System;
 using System.Text;
 using System.Text.RegularExpressions;
-using netDxf.Tables;
 
-namespace netDxf.Entities
-{
+namespace netDxf.Entities {
     /// <summary>
     /// Represents a tolerance <see cref="EntityObject">entity</see>.
     /// </summary>
     public class Tolerance :
-        EntityObject
-    {
+        EntityObject {
         #region delegates and events
 
         public delegate void ToleranceStyleChangedEventHandler(Tolerance sender, TableObjectChangedEventArgs<DimensionStyle> e);
 
         public event ToleranceStyleChangedEventHandler ToleranceStyleChanged;
 
-        protected virtual DimensionStyle OnDimensionStyleChangedEvent(DimensionStyle oldStyle, DimensionStyle newStyle)
-        {
+        protected virtual DimensionStyle OnDimensionStyleChangedEvent(DimensionStyle oldStyle, DimensionStyle newStyle) {
             ToleranceStyleChangedEventHandler ae = this.ToleranceStyleChanged;
-            if (ae != null)
-            {
+            if (ae != null) {
                 TableObjectChangedEventArgs<DimensionStyle> eventArgs = new TableObjectChangedEventArgs<DimensionStyle>(oldStyle, newStyle);
                 ae(this, eventArgs);
                 return eventArgs.NewValue;
@@ -73,8 +69,7 @@ namespace netDxf.Entities
         /// Initializes a new instance of the <c>Tolerance</c> class.
         /// </summary>
         public Tolerance()
-            : this(null, Vector3.Zero)
-        {
+            : this(null, Vector3.Zero) {
         }
 
         /// <summary>
@@ -82,8 +77,7 @@ namespace netDxf.Entities
         /// </summary>
         /// <param name="tolerance"></param>
         public Tolerance(ToleranceEntry tolerance)
-            : this(tolerance, Vector3.Zero)
-        {
+            : this(tolerance, Vector3.Zero) {
         }
 
         /// <summary>
@@ -92,8 +86,7 @@ namespace netDxf.Entities
         /// <param name="tolerance"></param>
         /// <param name="position"></param>
         public Tolerance(ToleranceEntry tolerance, Vector2 position)
-            : this(tolerance, new Vector3(position.X, position.Y, 0.0))
-        {
+            : this(tolerance, new Vector3(position.X, position.Y, 0.0)) {
         }
 
         /// <summary>
@@ -102,8 +95,7 @@ namespace netDxf.Entities
         /// <param name="tolerance"></param>
         /// <param name="position"></param>
         public Tolerance(ToleranceEntry tolerance, Vector3 position)
-            : base(EntityType.Tolerance, DxfObjectCode.Tolerance)
-        {
+            : base(EntityType.Tolerance, DxfObjectCode.Tolerance) {
             this.entry1 = tolerance;
             this.entry2 = null;
             this.height = string.Empty;
@@ -122,8 +114,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets the first tolerance entry.
         /// </summary>
-        public ToleranceEntry Entry1
-        {
+        public ToleranceEntry Entry1 {
             get { return this.entry1; }
             set { this.entry1 = value; }
         }
@@ -131,8 +122,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets the second tolerance entry.
         /// </summary>
-        public ToleranceEntry Entry2
-        {
+        public ToleranceEntry Entry2 {
             get { return this.entry2; }
             set { this.entry2 = value; }
         }
@@ -144,8 +134,7 @@ namespace netDxf.Entities
         /// A projected tolerance zone controls the variation in height of the extended portion of a fixed perpendicular part
         /// and refines the tolerance to that specified by positional tolerances.
         /// </remarks>
-        public string Height
-        {
+        public string Height {
             get { return this.height; }
             set { this.height = value; }
         }
@@ -153,8 +142,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets if the projected tolerance zone symbol will be shown after the projected tolerance zone value.
         /// </summary>
-        public bool ShowProjectedToleranceZoneSymbol
-        {
+        public bool ShowProjectedToleranceZoneSymbol {
             get { return this.showProjectedToleranceZoneSymbol; }
             set { this.showProjectedToleranceZoneSymbol = value; }
         }
@@ -166,8 +154,7 @@ namespace netDxf.Entities
         /// A datum is a theoretically exact geometric reference from which you can establish the location and tolerance zones of other features.
         /// A point, line, plane, cylinder, or other geometry can serve as a datum.
         /// </remarks>
-        public string DatumIdentifier
-        {
+        public string DatumIdentifier {
             get { return this.datumIdentifier; }
             set { this.datumIdentifier = value; }
         }
@@ -175,11 +162,9 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets the <see cref="DimensionStyle">leader style</see>.
         /// </summary>
-        public DimensionStyle Style
-        {
+        public DimensionStyle Style {
             get { return this.style; }
-            set
-            {
+            set {
                 if (value == null)
                     throw new ArgumentNullException(nameof(value));
                 this.style = this.OnDimensionStyleChangedEvent(this.style, value);
@@ -189,8 +174,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets the leader <see cref="Vector3">position</see> in world coordinates.
         /// </summary>
-        public Vector3 Position
-        {
+        public Vector3 Position {
             get { return this.position; }
             set { this.position = value; }
         }
@@ -198,8 +182,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets the leader rotation in degrees.
         /// </summary>
-        public double Rotation
-        {
+        public double Rotation {
             get { return this.rotation; }
             set { this.rotation = MathHelper.NormalizeAngle(value); }
         }
@@ -212,19 +195,16 @@ namespace netDxf.Entities
         /// Converts the actual tolerance to its string representation.
         /// </summary>
         /// <returns>The tolerance string representation.</returns>
-        public string ToStringRepresentation()
-        {
+        public string ToStringRepresentation() {
             StringBuilder value = new StringBuilder();
             bool newLine = false;
 
-            if (this.entry1 != null)
-            {
+            if (this.entry1 != null) {
                 value.Append(ToleranceEntryToString(this.entry1));
                 newLine = true;
             }
 
-            if (this.entry2 != null)
-            {
+            if (this.entry2 != null) {
                 if (newLine)
                     value.Append("^J");
 
@@ -232,8 +212,7 @@ namespace netDxf.Entities
                 newLine = true;
             }
 
-            if (!(string.IsNullOrEmpty(this.height) && !this.showProjectedToleranceZoneSymbol))
-            {
+            if (!(string.IsNullOrEmpty(this.height) && !this.showProjectedToleranceZoneSymbol)) {
                 if (newLine)
                     value.Append("^J");
 
@@ -243,8 +222,7 @@ namespace netDxf.Entities
                 newLine = true;
             }
 
-            if (!string.IsNullOrEmpty(this.datumIdentifier))
-            {
+            if (!string.IsNullOrEmpty(this.datumIdentifier)) {
                 if (newLine)
                     value.Append("^J");
 
@@ -259,8 +237,7 @@ namespace netDxf.Entities
         /// </summary>
         /// <param name="s">A string that represents a tolerance to convert.</param>
         /// <returns>The Tolerance entity equivalent to the tolerance contained in s.</returns>
-        public static Tolerance ParseRepresentation(string s)
-        {
+        public static Tolerance ParseRepresentation(string s) {
             string[] lines = Regex.Split(s, "\\^J");
 
             ToleranceEntry t1 = null;
@@ -269,13 +246,10 @@ namespace netDxf.Entities
             bool showProjSymbol = false;
             string datumIdentifier = string.Empty;
 
-            for (int i = 0; i < lines.Length; i++)
-            {
+            for (int i = 0; i < lines.Length; i++) {
                 string line = lines[i];
-                if (line.StartsWith("{") || line.StartsWith("%%v"))
-                {
-                    switch (i)
-                    {
+                if (line.StartsWith("{") || line.StartsWith("%%v")) {
+                    switch (i) {
                         case 0:
                             t1 = ParseToleranceEntry(line);
                             break;
@@ -283,29 +257,20 @@ namespace netDxf.Entities
                             t2 = ParseToleranceEntry(line);
                             break;
                     }
-                }
-                else
-                {
-                    if (i == lines.Length - 1)
-                    {
+                } else {
+                    if (i == lines.Length - 1) {
                         datumIdentifier = line;
-                    }
-                    else
-                    {
+                    } else {
                         StringBuilder value = new StringBuilder();
 
                         CharEnumerator chars = line.GetEnumerator();
-                        while (chars.MoveNext())
-                        {
+                        while (chars.MoveNext()) {
                             char token = chars.Current;
-                            if (token == '{')
-                            {
+                            if (token == '{') {
                                 char symbol = Symbol(chars);
                                 if (symbol == 'p')
                                     showProjSymbol = true;
-                            }
-                            else
-                            {
+                            } else {
                                 value.Append(token);
                             }
                         }
@@ -314,8 +279,7 @@ namespace netDxf.Entities
                 }
             }
 
-            Tolerance tolerance = new Tolerance
-            {
+            Tolerance tolerance = new Tolerance {
                 Entry1 = t1,
                 Entry2 = t2,
                 Height = height,
@@ -333,14 +297,10 @@ namespace netDxf.Entities
         /// <param name="s">A string that represents the tolerance to convert.</param>
         /// <param name="result">If the conversion has been successful, it contains the tolerance entity equivalent to the string representation; otherwise, null.</param>
         /// <returns>True if the string was converted successfully; otherwise, false.</returns>
-        public static bool TryParseRepresentation(string s, out Tolerance result)
-        {
-            try
-            {
+        public static bool TryParseRepresentation(string s, out Tolerance result) {
+            try {
                 result = ParseRepresentation(s);
-            }
-            catch
-            {
+            } catch {
                 result = null;
                 return false;
             }
@@ -351,11 +311,9 @@ namespace netDxf.Entities
 
         #region private ToString methods
 
-        private static string ToleranceEntryToString(ToleranceEntry entry)
-        {
+        private static string ToleranceEntryToString(ToleranceEntry entry) {
             StringBuilder value = new StringBuilder();
-            switch (entry.GeometricSymbol)
-            {
+            switch (entry.GeometricSymbol) {
                 case ToleranceGeometricSymbol.None:
                     break;
                 case ToleranceGeometricSymbol.Position:
@@ -411,18 +369,15 @@ namespace netDxf.Entities
             return value.ToString();
         }
 
-        private static string ToleranceValueToString(ToleranceValue tolerance)
-        {
+        private static string ToleranceValueToString(ToleranceValue tolerance) {
             StringBuilder value = new StringBuilder();
             value.Append("%%v");
 
-            if (tolerance != null)
-            {
+            if (tolerance != null) {
                 if (tolerance.ShowDiameterSymbol)
                     value.Append("{\\Fgdt;n}");
                 value.Append(tolerance.Value);
-                switch (tolerance.MaterialCondition)
-                {
+                switch (tolerance.MaterialCondition) {
                     case ToleranceMaterialCondition.None:
                         break;
                     case ToleranceMaterialCondition.Maximum:
@@ -440,16 +395,13 @@ namespace netDxf.Entities
             return value.ToString();
         }
 
-        private static string DatumValueToString(DatumReferenceValue datum)
-        {
+        private static string DatumValueToString(DatumReferenceValue datum) {
             StringBuilder value = new StringBuilder();
             value.Append("%%v");
 
-            if (datum != null)
-            {
+            if (datum != null) {
                 value.Append(datum.Value);
-                switch (datum.MaterialCondition)
-                {
+                switch (datum.MaterialCondition) {
                     case ToleranceMaterialCondition.None:
                         break;
                     case ToleranceMaterialCondition.Maximum:
@@ -471,8 +423,7 @@ namespace netDxf.Entities
 
         #region private Parse methods
 
-        private static ToleranceEntry ParseToleranceEntry(string line)
-        {
+        private static ToleranceEntry ParseToleranceEntry(string line) {
             string[] values = Regex.Split(line, "%%v");
 
             ToleranceGeometricSymbol geom = ToleranceGeometricSymbol.None;
@@ -482,10 +433,8 @@ namespace netDxf.Entities
             DatumReferenceValue d2 = null;
             DatumReferenceValue d3 = null;
 
-            if (!string.IsNullOrEmpty(values[0]))
-            {
-                if (values[0].StartsWith("{"))
-                {
+            if (!string.IsNullOrEmpty(values[0])) {
+                if (values[0].StartsWith("{")) {
                     // geometric symbol
                     CharEnumerator chars = values[0].GetEnumerator();
                     char symbol = Symbol(chars);
@@ -493,12 +442,10 @@ namespace netDxf.Entities
                 }
             }
 
-            for (int i = 1; i < values.Length; i++)
-            {
+            for (int i = 1; i < values.Length; i++) {
                 string value = values[i];
 
-                switch (i)
-                {
+                switch (i) {
                     case 1:
                         t1 = ParseToleranceValue(value);
                         break;
@@ -519,8 +466,7 @@ namespace netDxf.Entities
                 }
             }
 
-            ToleranceEntry t = new ToleranceEntry
-            {
+            ToleranceEntry t = new ToleranceEntry {
                 GeometricSymbol = geom,
                 Tolerance1 = t1,
                 Tolerance2 = t2,
@@ -532,17 +478,12 @@ namespace netDxf.Entities
             return t;
         }
 
-        private static char Symbol(CharEnumerator chars)
-        {
-            while (chars.MoveNext())
-            {
-                if (chars.Current == ';')
-                {
-                    if (chars.MoveNext())
-                    {
+        private static char Symbol(CharEnumerator chars) {
+            while (chars.MoveNext()) {
+                if (chars.Current == ';') {
+                    if (chars.MoveNext()) {
                         char s = chars.Current;
-                        if (chars.MoveNext())
-                        {
+                        if (chars.MoveNext()) {
                             if (chars.Current == '}')
                                 return s;
 
@@ -556,11 +497,9 @@ namespace netDxf.Entities
             throw new FormatException("The tolerance string representation is not well formatted");
         }
 
-        private static ToleranceGeometricSymbol ParseGeometricSymbol(char symbol)
-        {
+        private static ToleranceGeometricSymbol ParseGeometricSymbol(char symbol) {
             ToleranceGeometricSymbol geom;
-            switch (symbol)
-            {
+            switch (symbol) {
                 case 'j':
                     geom = ToleranceGeometricSymbol.Position;
                     break;
@@ -611,11 +550,9 @@ namespace netDxf.Entities
             return geom;
         }
 
-        private static ToleranceMaterialCondition ParseMaterialCondition(char symbol)
-        {
+        private static ToleranceMaterialCondition ParseMaterialCondition(char symbol) {
             ToleranceMaterialCondition mat;
-            switch (symbol)
-            {
+            switch (symbol) {
                 case 'm':
                     mat = ToleranceMaterialCondition.Maximum;
                     break;
@@ -633,8 +570,7 @@ namespace netDxf.Entities
             return mat;
         }
 
-        private static ToleranceValue ParseToleranceValue(string s)
-        {
+        private static ToleranceValue ParseToleranceValue(string s) {
             if (string.IsNullOrEmpty(s))
                 return null;
 
@@ -643,25 +579,20 @@ namespace netDxf.Entities
             ToleranceMaterialCondition mat = ToleranceMaterialCondition.None;
 
             CharEnumerator chars = s.GetEnumerator();
-            while (chars.MoveNext())
-            {
+            while (chars.MoveNext()) {
                 char token = chars.Current;
-                if (token == '{')
-                {
+                if (token == '{') {
                     char symbol = Symbol(chars);
                     if (symbol == 'n')
                         hasDiameterSymbol = true;
                     else
                         mat = ParseMaterialCondition(symbol);
-                }
-                else
-                {
+                } else {
                     value.Append(token);
                 }
             }
 
-            ToleranceValue t = new ToleranceValue
-            {
+            ToleranceValue t = new ToleranceValue {
                 ShowDiameterSymbol = hasDiameterSymbol,
                 Value = value.ToString(),
                 MaterialCondition = mat
@@ -670,8 +601,7 @@ namespace netDxf.Entities
             return t;
         }
 
-        private static DatumReferenceValue ParseDatumReferenceValue(string s)
-        {
+        private static DatumReferenceValue ParseDatumReferenceValue(string s) {
             if (string.IsNullOrEmpty(s))
                 return null;
 
@@ -679,22 +609,17 @@ namespace netDxf.Entities
             ToleranceMaterialCondition mat = ToleranceMaterialCondition.None;
 
             CharEnumerator chars = s.GetEnumerator();
-            while (chars.MoveNext())
-            {
+            while (chars.MoveNext()) {
                 char token = chars.Current;
-                if (token == '{')
-                {
+                if (token == '{') {
                     char symbol = Symbol(chars);
                     mat = ParseMaterialCondition(symbol);
-                }
-                else
-                {
+                } else {
                     value.Append(token);
                 }
             }
 
-            DatumReferenceValue d = new DatumReferenceValue
-            {
+            DatumReferenceValue d = new DatumReferenceValue {
                 Value = value.ToString(),
                 MaterialCondition = mat
             };
@@ -706,32 +631,30 @@ namespace netDxf.Entities
 
         #region overrides
 
-        public override object Clone()
-        {
-            Tolerance entity = new Tolerance
-            {
+        public override object Clone() {
+            Tolerance entity = new Tolerance {
                 //EntityObject properties
-                Layer = (Layer) this.Layer.Clone(),
-                Linetype = (Linetype) this.Linetype.Clone(),
-                Color = (AciColor) this.Color.Clone(),
+                Layer = (Layer)this.Layer.Clone(),
+                Linetype = (Linetype)this.Linetype.Clone(),
+                Color = (AciColor)this.Color.Clone(),
                 Lineweight = this.Lineweight,
-                Transparency = (Transparency) this.Transparency.Clone(),
+                Transparency = (Transparency)this.Transparency.Clone(),
                 LinetypeScale = this.LinetypeScale,
                 Normal = this.Normal,
                 IsVisible = this.IsVisible,
                 //Tolerance properties
-                Entry1 = (ToleranceEntry) this.entry1.Clone(),
-                Entry2 = (ToleranceEntry) this.entry2.Clone(),
+                Entry1 = (ToleranceEntry)this.entry1.Clone(),
+                Entry2 = (ToleranceEntry)this.entry2.Clone(),
                 Height = this.height,
                 ShowProjectedToleranceZoneSymbol = this.showProjectedToleranceZoneSymbol,
                 DatumIdentifier = this.datumIdentifier,
-                Style = (DimensionStyle) this.style.Clone(),
+                Style = (DimensionStyle)this.style.Clone(),
                 Position = this.position,
                 Rotation = this.rotation
             };
 
             foreach (XData data in this.XData.Values)
-                entity.XData.Add((XData) data.Clone());
+                entity.XData.Add((XData)data.Clone());
 
             return entity;
         }

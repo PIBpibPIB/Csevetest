@@ -22,15 +22,13 @@
 
 using System;
 
-namespace netDxf.Entities
-{
+namespace netDxf.Entities {
     /// <summary>
     /// Defines the polyline type.
     /// </summary>
     /// <remarks>Bit flag.</remarks>
     [Flags]
-    internal enum PolylinetypeFlags
-    {
+    internal enum PolylinetypeFlags {
         /// <summary>
         /// Default, open polyline.
         /// </summary>

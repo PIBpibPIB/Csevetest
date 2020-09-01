@@ -20,13 +20,11 @@
 
 #endregion
 
-namespace netDxf.Entities
-{
+namespace netDxf.Entities {
     /// <summary>
     /// Specifies the knot parameterization, computational methods that determines how the component curves between successive fit points within a spline are blended.
     /// </summary>
-    public enum SplineKnotParameterization
-    {
+    public enum SplineKnotParameterization {
         /// <summary>
         /// Chord-Length method.
         /// </summary>

@@ -20,13 +20,11 @@
 
 #endregion
 
-namespace netDxf.Entities
-{
+namespace netDxf.Entities {
     /// <summary>
     /// Defines the multiline text attachment point.
     /// </summary>
-    public enum MTextAttachmentPoint
-    {
+    public enum MTextAttachmentPoint {
         /// <summary>
         /// Top left.
         /// </summary>

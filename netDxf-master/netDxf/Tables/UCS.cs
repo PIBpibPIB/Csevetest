@@ -20,17 +20,15 @@
 
 #endregion
 
-using System;
 using netDxf.Collections;
+using System;
 
-namespace netDxf.Tables
-{
+namespace netDxf.Tables {
     /// <summary>
     /// Represents a User Coordinate System.
     /// </summary>
     public class UCS :
-        TableObject
-    {
+        TableObject {
         #region private fields
 
         private Vector3 origin;
@@ -48,13 +46,11 @@ namespace netDxf.Tables
         /// </summary>
         /// <param name="name">User coordinate system name.</param>
         public UCS(string name)
-            : this(name, true)
-        {
+            : this(name, true) {
         }
 
         internal UCS(string name, bool checkName)
-            : base(name, DxfObjectCode.Ucs, checkName)
-        {
+            : base(name, DxfObjectCode.Ucs, checkName) {
             if (string.IsNullOrEmpty(name))
                 throw new ArgumentNullException(nameof(name), "The UCS name should be at least one character long.");
 
@@ -76,13 +72,11 @@ namespace netDxf.Tables
         /// The x-axis direction and y-axis direction must be perpendicular.
         /// </remarks>
         public UCS(string name, Vector3 origin, Vector3 xDirection, Vector3 yDirection)
-            : this(name, origin, xDirection, yDirection, true)
-        {
+            : this(name, origin, xDirection, yDirection, true) {
         }
 
         internal UCS(string name, Vector3 origin, Vector3 xDirection, Vector3 yDirection, bool checkName)
-            : base(name, DxfObjectCode.Ucs, checkName)
-        {
+            : base(name, DxfObjectCode.Ucs, checkName) {
             if (!Vector3.ArePerpendicular(xDirection, yDirection))
                 throw new ArgumentException("X-axis direction and Y-axis direction must be perpendicular.");
             this.origin = origin;
@@ -101,8 +95,7 @@ namespace netDxf.Tables
         /// <summary>
         /// Gets or sets the user coordinate system origin in WCS.
         /// </summary>
-        public Vector3 Origin
-        {
+        public Vector3 Origin {
             get { return this.origin; }
             set { this.origin = value; }
         }
@@ -110,32 +103,28 @@ namespace netDxf.Tables
         /// <summary>
         /// Gets the user coordinate system x-axis direction in WCS.
         /// </summary>
-        public Vector3 XAxis
-        {
+        public Vector3 XAxis {
             get { return this.xAxis; }
         }
 
         /// <summary>
         /// Gets the user coordinate system y-axis direction in WCS.
         /// </summary>
-        public Vector3 YAxis
-        {
+        public Vector3 YAxis {
             get { return this.yAxis; }
         }
 
         /// <summary>
         /// Gets the user coordinate system z-axis direction in WCS.
         /// </summary>
-        public Vector3 ZAxis
-        {
+        public Vector3 ZAxis {
             get { return this.zAxis; }
         }
 
         /// <summary>
         /// Gets or sets the user coordinate system elevation.
         /// </summary>
-        public double Elevation
-        {
+        public double Elevation {
             get { return this.elevation; }
             set { this.elevation = value; }
         }
@@ -143,9 +132,8 @@ namespace netDxf.Tables
         /// <summary>
         /// Gets the owner of the actual user coordinate system.
         /// </summary>
-        public new UCSs Owner
-        {
-            get { return (UCSs) base.Owner; }
+        public new UCSs Owner {
+            get { return (UCSs)base.Owner; }
             internal set { base.Owner = value; }
         }
 
@@ -158,8 +146,7 @@ namespace netDxf.Tables
         /// </summary>
         /// <param name="xDirection">X-axis direction in WCS.</param>
         /// <param name="yDirection">Y-axis direction in WCS.</param>
-        public void SetAxis(Vector3 xDirection, Vector3 yDirection)
-        {
+        public void SetAxis(Vector3 xDirection, Vector3 yDirection) {
             if (!Vector3.ArePerpendicular(xDirection, yDirection))
                 throw new ArgumentException("X-axis direction and Y-axis direction must be perpendicular.");
             this.xAxis = xDirection;
@@ -177,8 +164,7 @@ namespace netDxf.Tables
         /// <param name="xDirection">X-axis direction in WCS.</param>
         /// <param name="pointOnPlaneXY">Point on the XYplane.</param>
         /// <returns>A new user coordinate system.</returns>
-        public static UCS FromXAxisAndPointOnXYplane(string name, Vector3 origin, Vector3 xDirection, Vector3 pointOnPlaneXY)
-        {
+        public static UCS FromXAxisAndPointOnXYplane(string name, Vector3 origin, Vector3 xDirection, Vector3 pointOnPlaneXY) {
             UCS ucs = new UCS(name);
             ucs.origin = origin;
             ucs.xAxis = xDirection;
@@ -198,8 +184,7 @@ namespace netDxf.Tables
         /// <param name="rotation">The counter-clockwise angle in radians along the normal (z-axis).</param>
         /// <returns>A new user coordinate system.</returns>
         /// <remarks>This method uses the ArbitraryAxis algorithm to obtain the user coordinate system x-axis and y-axis.</remarks>
-        public static UCS FromNormal(string name, Vector3 origin, Vector3 normal, double rotation)
-        {
+        public static UCS FromNormal(string name, Vector3 origin, Vector3 normal, double rotation) {
             Matrix3 mat = MathHelper.ArbitraryAxis(normal);
             Matrix3 rot = Matrix3.RotationZ(rotation);
             mat *= rot;
@@ -220,10 +205,8 @@ namespace netDxf.Tables
         /// </summary>
         /// <param name="newName">UCS name of the copy.</param>
         /// <returns>A new UCS that is a copy of this instance.</returns>
-        public override TableObject Clone(string newName)
-        {
-            UCS copy = new UCS(newName)
-            {
+        public override TableObject Clone(string newName) {
+            UCS copy = new UCS(newName) {
                 Origin = this.origin,
                 xAxis = this.xAxis,
                 yAxis = this.yAxis,
@@ -241,8 +224,7 @@ namespace netDxf.Tables
         /// Creates a new UCS that is a copy of the current instance.
         /// </summary>
         /// <returns>A new UCS that is a copy of this instance.</returns>
-        public override object Clone()
-        {
+        public override object Clone() {
             return this.Clone(this.Name);
         }
 

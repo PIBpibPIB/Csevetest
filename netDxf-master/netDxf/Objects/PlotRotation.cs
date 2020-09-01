@@ -20,13 +20,11 @@
 
 #endregion
 
-namespace netDxf.Objects
-{
+namespace netDxf.Objects {
     /// <summary>
     /// Plot rotation
     /// </summary>
-    public enum PlotRotation
-    {
+    public enum PlotRotation {
         /// <summary>
         /// No rotation.
         /// </summary>

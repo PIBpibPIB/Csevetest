@@ -22,11 +22,9 @@
 
 using System;
 
-namespace netDxf.Tables
-{
+namespace netDxf.Tables {
     public class LinetypeSegmentChangeEventArgs :
-        EventArgs
-    {
+        EventArgs {
         #region private fields
 
         private readonly LinetypeSegment item;
@@ -39,8 +37,7 @@ namespace netDxf.Tables
         /// Initializes a new instance of <c>LinetypeSegmentChangeEventArgs</c>.
         /// </summary>
         /// <param name="item">The item that is being added or removed from the line type segment list.</param>
-        public LinetypeSegmentChangeEventArgs(LinetypeSegment item)
-        {
+        public LinetypeSegmentChangeEventArgs(LinetypeSegment item) {
             this.item = item;
         }
 
@@ -51,8 +48,7 @@ namespace netDxf.Tables
         /// <summary>
         /// Gets the item that is being added or removed from the line type segment list.
         /// </summary>
-        public LinetypeSegment Item
-        {
+        public LinetypeSegment Item {
             get { return this.item; }
         }
 

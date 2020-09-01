@@ -20,13 +20,11 @@
 
 #endregion
 
-namespace netDxf
-{
+namespace netDxf {
     /// <summary>
     /// Image clipping boundary type.
     /// </summary>
-    public enum ClippingBoundaryType
-    {
+    public enum ClippingBoundaryType {
         /// <summary>
         /// Rectangular.
         /// </summary>

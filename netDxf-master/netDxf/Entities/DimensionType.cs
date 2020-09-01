@@ -20,13 +20,11 @@
 
 #endregion
 
-namespace netDxf.Entities
-{
+namespace netDxf.Entities {
     /// <summary>
     /// Dimension type.
     /// </summary>
-    public enum DimensionType
-    {
+    public enum DimensionType {
         /// <summary>
         /// Rotated, horizontal, or vertical.
         /// </summary>

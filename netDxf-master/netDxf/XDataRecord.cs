@@ -23,13 +23,11 @@
 using System;
 using System.Globalization;
 
-namespace netDxf
-{
+namespace netDxf {
     /// <summary>
     /// Represents an entry in the extended data of an entity.
     /// </summary>
-    public class XDataRecord
-    {
+    public class XDataRecord {
         #region private fields
 
         private readonly XDataCode code;
@@ -44,8 +42,7 @@ namespace netDxf
         /// These braces enable applications to organize their data by subdividing the data into lists.
         /// The left brace begins a list, and the right brace terminates the most recent list. Lists can be nested.
         /// </summary>
-        public static XDataRecord OpenControlString
-        {
+        public static XDataRecord OpenControlString {
             get { return new XDataRecord(XDataCode.ControlString, "{"); }
         }
 
@@ -54,8 +51,7 @@ namespace netDxf
         /// These braces enable applications to organize their data by subdividing the data into lists.
         /// The left brace begins a list, and the right brace terminates the most recent list. Lists can be nested.
         /// </summary>
-        public static XDataRecord CloseControlString
-        {
+        public static XDataRecord CloseControlString {
             get { return new XDataRecord(XDataCode.ControlString, "}"); }
         }
 
@@ -68,13 +64,11 @@ namespace netDxf
         /// </summary>
         /// <param name="code">XData code.</param>
         /// <param name="value">XData value.</param>
-        public XDataRecord(XDataCode code, object value)
-        {
-            if(value == null)
+        public XDataRecord(XDataCode code, object value) {
+            if (value == null)
                 throw new ArgumentNullException(nameof(value));
 
-            switch (code)
-            {
+            switch (code) {
                 case XDataCode.AppReg:
                     throw new ArgumentException("An application registry cannot be an extended data record.", nameof(value));
                 case XDataCode.BinaryData:
@@ -92,7 +86,7 @@ namespace netDxf
                     if (!(value is string))
                         throw new ArgumentException("The value of a XDataCode.DatabaseHandle must be an hexadecimal number.", nameof(value));
                     long test;
-                    if (!long.TryParse((string) value, NumberStyles.HexNumber, CultureInfo.InvariantCulture, out test))
+                    if (!long.TryParse((string)value, NumberStyles.HexNumber, CultureInfo.InvariantCulture, out test))
                         throw new ArgumentException("The value of a XDataCode.DatabaseHandle must be an hexadecimal number.", nameof(value));
                     value = test.ToString("X");
                     break;
@@ -112,20 +106,20 @@ namespace netDxf
                 case XDataCode.WorldSpaceDisplacementY:
                 case XDataCode.WorldSpaceDisplacementZ:
                     if (!(value is double))
-                        throw new ArgumentException(string.Format("The value of a XDataCode.{0} must be a {1}.", code, typeof (double)), nameof(value));
+                        throw new ArgumentException(string.Format("The value of a XDataCode.{0} must be a {1}.", code, typeof(double)), nameof(value));
                     break;
                 case XDataCode.Int16:
                     if (!(value is short))
-                        throw new ArgumentException(string.Format("The value of a XDataCode.{0} must be a {1}.", code, typeof (short)), nameof(value));
+                        throw new ArgumentException(string.Format("The value of a XDataCode.{0} must be a {1}.", code, typeof(short)), nameof(value));
                     break;
                 case XDataCode.Int32:
                     if (!(value is int))
-                        throw new ArgumentException(string.Format("The value of a XDataCode.{0} must be an {1}.", code, typeof (int)), nameof(value));
+                        throw new ArgumentException(string.Format("The value of a XDataCode.{0} must be an {1}.", code, typeof(int)), nameof(value));
                     break;
                 case XDataCode.LayerName:
                 case XDataCode.String:
                     if (!(value is string))
-                        throw new ArgumentException(string.Format("The value of a XDataCode.{0} must be a {1}.", code, typeof (string)), nameof(value));
+                        throw new ArgumentException(string.Format("The value of a XDataCode.{0} must be a {1}.", code, typeof(string)), nameof(value));
                     break;
             }
             this.code = code;
@@ -140,16 +134,14 @@ namespace netDxf
         /// Gets or set the XData code.
         /// </summary>
         /// <remarks>The only valid values are the ones defined in the <see cref="XDataCode">XDataCode</see> class.</remarks>
-        public XDataCode Code
-        {
+        public XDataCode Code {
             get { return this.code; }
         }
 
         /// <summary>
         /// Gets or sets the XData value.
         /// </summary>
-        public object Value
-        {
+        public object Value {
             get { return this.value; }
         }
 
@@ -161,8 +153,7 @@ namespace netDxf
         /// Obtains a string that represents the XDataRecord.
         /// </summary>
         /// <returns>A string text.</returns>
-        public override string ToString()
-        {
+        public override string ToString() {
             return string.Format("{0} - {1}", this.code, this.value);
         }
 

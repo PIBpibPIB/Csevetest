@@ -20,18 +20,16 @@
 
 #endregion
 
-using System;
 using netDxf.Blocks;
 using netDxf.Tables;
+using System;
 
-namespace netDxf.Entities
-{
+namespace netDxf.Entities {
     /// <summary>
     /// Represents a radial dimension <see cref="EntityObject">entity</see>.
     /// </summary>
     public class RadialDimension :
-        Dimension
-    {
+        Dimension {
         #region private fields
 
         private Vector2 center;
@@ -45,8 +43,7 @@ namespace netDxf.Entities
         /// Initializes a new instance of the <c>RadialDimension</c> class.
         /// </summary>
         public RadialDimension()
-            : this(Vector2.Zero, Vector2.UnitX, DimensionStyle.Default)
-        {
+            : this(Vector2.Zero, Vector2.UnitX, DimensionStyle.Default) {
         }
 
         /// <summary>
@@ -56,8 +53,7 @@ namespace netDxf.Entities
         /// <param name="rotation">Rotation in degrees of the dimension line.</param>
         /// <remarks>The center point and the definition point define the distance to be measure.</remarks>
         public RadialDimension(Arc arc, double rotation)
-            : this(arc, rotation, DimensionStyle.Default)
-        {
+            : this(arc, rotation, DimensionStyle.Default) {
         }
 
         /// <summary>
@@ -68,14 +64,13 @@ namespace netDxf.Entities
         /// <param name="style">The <see cref="DimensionStyle">style</see> to use with the dimension.</param>
         /// <remarks>The center point and the definition point define the distance to be measure.</remarks>
         public RadialDimension(Arc arc, double rotation, DimensionStyle style)
-            : base(DimensionType.Radius)
-        {
+            : base(DimensionType.Radius) {
             if (arc == null)
                 throw new ArgumentNullException(nameof(arc));
 
             Vector3 ocsCenter = MathHelper.Transform(arc.Center, arc.Normal, CoordinateSystem.World, CoordinateSystem.Object);
             this.center = new Vector2(ocsCenter.X, ocsCenter.Y);
-            this.refPoint = Vector2.Polar(this.center, arc.Radius, rotation*MathHelper.DegToRad);
+            this.refPoint = Vector2.Polar(this.center, arc.Radius, rotation * MathHelper.DegToRad);
 
             if (style == null)
                 throw new ArgumentNullException(nameof(style));
@@ -92,8 +87,7 @@ namespace netDxf.Entities
         /// <param name="rotation">Rotation in degrees of the dimension line.</param>
         /// <remarks>The center point and the definition point define the distance to be measure.</remarks>
         public RadialDimension(Circle circle, double rotation)
-            : this(circle, rotation, DimensionStyle.Default)
-        {
+            : this(circle, rotation, DimensionStyle.Default) {
         }
 
         /// <summary>
@@ -104,14 +98,13 @@ namespace netDxf.Entities
         /// <param name="style">The <see cref="DimensionStyle">style</see> to use with the dimension.</param>
         /// <remarks>The center point and the definition point define the distance to be measure.</remarks>
         public RadialDimension(Circle circle, double rotation, DimensionStyle style)
-            : base(DimensionType.Radius)
-        {
+            : base(DimensionType.Radius) {
             if (circle == null)
                 throw new ArgumentNullException(nameof(circle));
 
             Vector3 ocsCenter = MathHelper.Transform(circle.Center, circle.Normal, CoordinateSystem.World, CoordinateSystem.Object);
             this.center = new Vector2(ocsCenter.X, ocsCenter.Y);
-            this.refPoint = Vector2.Polar(this.center, circle.Radius, rotation*MathHelper.DegToRad);
+            this.refPoint = Vector2.Polar(this.center, circle.Radius, rotation * MathHelper.DegToRad);
 
             if (style == null)
                 throw new ArgumentNullException(nameof(style));
@@ -128,8 +121,7 @@ namespace netDxf.Entities
         /// <param name="referencePoint"><see cref="Vector2">Point</see> on circle or arc.</param>
         /// <remarks>The center point and the definition point define the distance to be measure.</remarks>
         public RadialDimension(Vector2 centerPoint, Vector2 referencePoint)
-            : this(centerPoint, referencePoint, DimensionStyle.Default)
-        {
+            : this(centerPoint, referencePoint, DimensionStyle.Default) {
         }
 
         /// <summary>
@@ -140,8 +132,7 @@ namespace netDxf.Entities
         /// <param name="style">The <see cref="DimensionStyle">style</see> to use with the dimension.</param>
         /// <remarks>The center point and the definition point define the distance to be measure.</remarks>
         public RadialDimension(Vector2 centerPoint, Vector2 referencePoint, DimensionStyle style)
-            : base(DimensionType.Radius)
-        {
+            : base(DimensionType.Radius) {
             this.center = centerPoint;
             this.refPoint = referencePoint;
 
@@ -158,8 +149,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets the center <see cref="Vector2">point</see> of the circumference in OCS (object coordinate system).
         /// </summary>
-        public Vector2 CenterPoint
-        {
+        public Vector2 CenterPoint {
             get { return this.center; }
             set { this.center = value; }
         }
@@ -167,8 +157,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets the <see cref="Vector2">point</see> on circumference or arc in OCS (object coordinate system).
         /// </summary>
-        public Vector2 ReferencePoint
-        {
+        public Vector2 ReferencePoint {
             get { return this.refPoint; }
             set { this.refPoint = value; }
         }
@@ -176,8 +165,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Actual measurement.
         /// </summary>
-        public override double Measurement
-        {
+        public override double Measurement {
             get { return Vector2.Distance(this.center, this.refPoint); }
         }
 
@@ -189,29 +177,24 @@ namespace netDxf.Entities
         /// Calculates the reference point and dimension offset from a point along the dimension line.
         /// </summary>
         /// <param name="point">Point along the dimension line.</param>
-        public void SetDimensionLinePosition(Vector2 point)
-        {
+        public void SetDimensionLinePosition(Vector2 point) {
             double radius = Vector2.Distance(this.center, this.refPoint);
             double rotation = Vector2.Angle(this.center, point);
             this.defPoint = this.center;
             this.refPoint = Vector2.Polar(this.center, radius, rotation);
 
-            if (!this.TextPositionManuallySet)
-            {
+            if (!this.TextPositionManuallySet) {
                 DimensionStyleOverride styleOverride;
                 double textGap = this.Style.TextOffset;
-                if (this.StyleOverrides.TryGetValue(DimensionStyleOverrideType.TextOffset, out styleOverride))
-                {
+                if (this.StyleOverrides.TryGetValue(DimensionStyleOverrideType.TextOffset, out styleOverride)) {
                     textGap = (double)styleOverride.Value;
                 }
                 double scale = this.Style.DimScaleOverall;
-                if (this.StyleOverrides.TryGetValue(DimensionStyleOverrideType.DimScaleOverall, out styleOverride))
-                {
+                if (this.StyleOverrides.TryGetValue(DimensionStyleOverrideType.DimScaleOverall, out styleOverride)) {
                     scale = (double)styleOverride.Value;
                 }
                 double arrowSize = this.Style.ArrowSize;
-                if (this.StyleOverrides.TryGetValue(DimensionStyleOverrideType.ArrowSize, out styleOverride))
-                {
+                if (this.StyleOverrides.TryGetValue(DimensionStyleOverrideType.ArrowSize, out styleOverride)) {
                     arrowSize = (double)styleOverride.Value;
                 }
 
@@ -225,31 +208,24 @@ namespace netDxf.Entities
 
         #region overrides
 
-        protected override void CalculteReferencePoints()
-        {            
+        protected override void CalculteReferencePoints() {
             this.defPoint = this.center;
 
-            if (this.TextPositionManuallySet)
-            {
+            if (this.TextPositionManuallySet) {
                 this.SetDimensionLinePosition(this.textRefPoint);
-            }
-            else
-            {
+            } else {
                 DimensionStyleOverride styleOverride;
 
                 double textGap = this.Style.TextOffset;
-                if (this.StyleOverrides.TryGetValue(DimensionStyleOverrideType.TextOffset, out styleOverride))
-                {
+                if (this.StyleOverrides.TryGetValue(DimensionStyleOverrideType.TextOffset, out styleOverride)) {
                     textGap = (double)styleOverride.Value;
                 }
                 double scale = this.Style.DimScaleOverall;
-                if (this.StyleOverrides.TryGetValue(DimensionStyleOverrideType.DimScaleOverall, out styleOverride))
-                {
+                if (this.StyleOverrides.TryGetValue(DimensionStyleOverrideType.DimScaleOverall, out styleOverride)) {
                     scale = (double)styleOverride.Value;
                 }
                 double arrowSize = this.Style.ArrowSize;
-                if (this.StyleOverrides.TryGetValue(DimensionStyleOverrideType.ArrowSize, out styleOverride))
-                {
+                if (this.StyleOverrides.TryGetValue(DimensionStyleOverrideType.ArrowSize, out styleOverride)) {
                     arrowSize = (double)styleOverride.Value;
                 }
 
@@ -264,8 +240,7 @@ namespace netDxf.Entities
         /// </summary>
         /// <param name="name">Name to be assigned to the generated block.</param>
         /// <returns>The block that represents the actual dimension.</returns>
-        protected override Block BuildBlock(string name)
-        {
+        protected override Block BuildBlock(string name) {
             return DimensionBlock.Build(this, name);
         }
 
@@ -273,21 +248,19 @@ namespace netDxf.Entities
         /// Creates a new RadialDimension that is a copy of the current instance.
         /// </summary>
         /// <returns>A new RadialDimension that is a copy of this instance.</returns>
-        public override object Clone()
-        {
-            RadialDimension entity = new RadialDimension
-            {
+        public override object Clone() {
+            RadialDimension entity = new RadialDimension {
                 //EntityObject properties
-                Layer = (Layer) this.Layer.Clone(),
-                Linetype = (Linetype) this.Linetype.Clone(),
-                Color = (AciColor) this.Color.Clone(),
+                Layer = (Layer)this.Layer.Clone(),
+                Linetype = (Linetype)this.Linetype.Clone(),
+                Color = (AciColor)this.Color.Clone(),
                 Lineweight = this.Lineweight,
-                Transparency = (Transparency) this.Transparency.Clone(),
+                Transparency = (Transparency)this.Transparency.Clone(),
                 LinetypeScale = this.LinetypeScale,
                 Normal = this.Normal,
                 IsVisible = this.IsVisible,
                 //Dimension properties
-                Style = (DimensionStyle) this.Style.Clone(),
+                Style = (DimensionStyle)this.Style.Clone(),
                 DefinitionPoint = this.DefinitionPoint,
                 TextReferencePoint = this.TextReferencePoint,
                 TextPositionManuallySet = this.TextPositionManuallySet,
@@ -302,8 +275,7 @@ namespace netDxf.Entities
                 ReferencePoint = this.refPoint
             };
 
-            foreach (DimensionStyleOverride styleOverride in this.StyleOverrides.Values)
-            {
+            foreach (DimensionStyleOverride styleOverride in this.StyleOverrides.Values) {
                 object copy;
                 ICloneable value = styleOverride.Value as ICloneable;
                 copy = value != null ? value.Clone() : styleOverride.Value;
@@ -312,7 +284,7 @@ namespace netDxf.Entities
             }
 
             foreach (XData data in this.XData.Values)
-                entity.XData.Add((XData) data.Clone());
+                entity.XData.Add((XData)data.Clone());
 
             return entity;
         }

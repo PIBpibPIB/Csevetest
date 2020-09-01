@@ -20,29 +20,25 @@
 
 #endregion
 
-using System;
-using System.Collections.Generic;
 using netDxf.Objects;
 using netDxf.Tables;
+using System;
+using System.Collections.Generic;
 
-namespace netDxf.Collections
-{
+namespace netDxf.Collections {
     /// <summary>
     /// Represents a collection of image definitions.
     /// </summary>
     public sealed class ImageDefinitions :
-        TableObjects<ImageDefinition>
-    {
+        TableObjects<ImageDefinition> {
         #region constructor
 
         internal ImageDefinitions(DxfDocument document)
-            : this(document, null)
-        {
+            : this(document, null) {
         }
 
         internal ImageDefinitions(DxfDocument document, string handle)
-            : base(document, DxfObjectCode.ImageDefDictionary, handle)
-        {
+            : base(document, DxfObjectCode.ImageDefDictionary, handle) {
             this.MaxCapacity = int.MaxValue;
         }
 
@@ -59,8 +55,7 @@ namespace netDxf.Collections
         /// If an image definition already exists with the same name as the instance that is being added the method returns the existing image definition,
         /// if not it will return the new image definition.
         /// </returns>
-        internal override ImageDefinition Add(ImageDefinition imageDefinition, bool assignHandle)
-        {
+        internal override ImageDefinition Add(ImageDefinition imageDefinition, bool assignHandle) {
             if (this.list.Count >= this.MaxCapacity)
                 throw new OverflowException(string.Format("Table overflow. The maximum number of elements the table {0} can have is {1}", this.CodeName, this.MaxCapacity));
             if (imageDefinition == null)
@@ -91,8 +86,7 @@ namespace netDxf.Collections
         /// <param name="name"><see cref="ImageDefinition">ImageDefinition</see> name to remove from the document.</param>
         /// <returns>True if the image definition has been successfully removed, or false otherwise.</returns>
         /// <remarks>Any image definition referenced by objects cannot be removed.</remarks>
-        public override bool Remove(string name)
-        {
+        public override bool Remove(string name) {
             return this.Remove(this[name]);
         }
 
@@ -102,8 +96,7 @@ namespace netDxf.Collections
         /// <param name="item"><see cref="ImageDefinition">ImageDefinition</see> to remove from the document.</param>
         /// <returns>True if the image definition has been successfully removed, or false otherwise.</returns>
         /// <remarks>Any image definition referenced by objects cannot be removed.</remarks>
-        public override bool Remove(ImageDefinition item)
-        {
+        public override bool Remove(ImageDefinition item) {
             if (item == null)
                 return false;
 
@@ -132,13 +125,12 @@ namespace netDxf.Collections
 
         #region TableObject events
 
-        private void Item_NameChanged(TableObject sender, TableObjectChangedEventArgs<string> e)
-        {
+        private void Item_NameChanged(TableObject sender, TableObjectChangedEventArgs<string> e) {
             if (this.Contains(e.NewValue))
                 throw new ArgumentException("There is already another image definition with the same name.");
 
             this.list.Remove(sender.Name);
-            this.list.Add(e.NewValue, (ImageDefinition) sender);
+            this.list.Add(e.NewValue, (ImageDefinition)sender);
 
             List<DxfObject> refs = this.references[sender.Name];
             this.references.Remove(sender.Name);

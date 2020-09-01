@@ -20,21 +20,19 @@
 
 #endregion
 
-using System;
 using netDxf.Blocks;
 using netDxf.Collections;
 using netDxf.Entities;
 using netDxf.Tables;
+using System;
 
-namespace netDxf.Objects
-{
+namespace netDxf.Objects {
     /// <summary>
     /// Represents a layout.
     /// </summary>
     public class Layout :
         TableObject,
-        IComparable<Layout>
-    {
+        IComparable<Layout> {
         #region private fields
 
         private PlotSettings plot;
@@ -67,8 +65,7 @@ namespace netDxf.Objects
         /// <remarks>
         /// There can be only one model space layout and it is always called "Model".
         /// </remarks>
-        public static Layout ModelSpace
-        {
+        public static Layout ModelSpace {
             get { return new Layout(ModelSpaceName, Block.ModelSpace, new PlotSettings()); }
         }
 
@@ -81,28 +78,23 @@ namespace netDxf.Objects
         /// </summary>
         /// <param name="name">Layout name.</param>
         public Layout(string name)
-            : this(name, null, new PlotSettings())
-        {
+            : this(name, null, new PlotSettings()) {
         }
 
         private Layout(string name, Block associatedBlock, PlotSettings plotSettings)
-            : base(name, DxfObjectCode.Layout, true)
-        {
+            : base(name, DxfObjectCode.Layout, true) {
             if (string.IsNullOrEmpty(name))
                 throw new ArgumentNullException(nameof(name), "The layout name should be at least one character long.");
 
-            if (name.Equals(ModelSpaceName, StringComparison.OrdinalIgnoreCase))
-            {
+            if (name.Equals(ModelSpaceName, StringComparison.OrdinalIgnoreCase)) {
                 this.IsReserved = true;
                 this.isPaperSpace = false;
                 this.viewport = null;
                 plotSettings.Flags = PlotFlags.Initializing | PlotFlags.UpdatePaper | PlotFlags.ModelType | PlotFlags.DrawViewportsFirst | PlotFlags.PrintLineweights | PlotFlags.PlotPlotStyles | PlotFlags.UseStandardScale;
-            }
-            else
-            {
+            } else {
                 this.IsReserved = false;
                 this.isPaperSpace = true;
-                this.viewport = new Viewport(1) {ViewCenter = new Vector2(50.0, 100.0)};
+                this.viewport = new Viewport(1) { ViewCenter = new Vector2(50.0, 100.0) };
             }
 
             this.tabOrder = 0;
@@ -131,11 +123,9 @@ namespace netDxf.Objects
         /// attached to the AutoCAD drawing frame window. Note that the "Model" tab always appears
         /// as the first tab regardless of its tab order (always zero).
         /// </remarks>
-        public short TabOrder
-        {
+        public short TabOrder {
             get { return this.tabOrder; }
-            set
-            {
+            set {
                 if (value <= 0)
                     throw new ArgumentException("The tab order index must be greater than zero.", nameof(value));
                 this.tabOrder = value;
@@ -145,8 +135,7 @@ namespace netDxf.Objects
         /// <summary>
         /// Gets or sets the plot settings
         /// </summary>
-        public PlotSettings PlotSettings
-        {
+        public PlotSettings PlotSettings {
             get { return this.plot; }
             set { this.plot = value; }
         }
@@ -154,8 +143,7 @@ namespace netDxf.Objects
         /// <summary>
         /// Gets or sets the minimum limits for this layout.
         /// </summary>
-        public Vector2 MinLimit
-        {
+        public Vector2 MinLimit {
             get { return this.minLimit; }
             set { this.minLimit = value; }
         }
@@ -163,8 +151,7 @@ namespace netDxf.Objects
         /// <summary>
         /// Gets or sets the maximum limits for this layout.
         /// </summary>
-        public Vector2 MaxLimit
-        {
+        public Vector2 MaxLimit {
             get { return this.maxLimit; }
             set { this.maxLimit = value; }
         }
@@ -172,8 +159,7 @@ namespace netDxf.Objects
         /// <summary>
         /// Gets or sets the maximum extents for this layout.
         /// </summary>
-        public Vector3 MinExtents
-        {
+        public Vector3 MinExtents {
             get { return this.minExtents; }
             set { this.minExtents = value; }
         }
@@ -181,8 +167,7 @@ namespace netDxf.Objects
         /// <summary>
         /// Gets or sets the maximum extents for this layout.
         /// </summary>
-        public Vector3 MaxExtents
-        {
+        public Vector3 MaxExtents {
             get { return this.maxExtents; }
             set { this.maxExtents = value; }
         }
@@ -190,8 +175,7 @@ namespace netDxf.Objects
         /// <summary>
         /// Gets or sets the insertion base point for this layout.
         /// </summary>
-        public Vector3 BasePoint
-        {
+        public Vector3 BasePoint {
             get { return this.basePoint; }
             set { this.basePoint = value; }
         }
@@ -199,8 +183,7 @@ namespace netDxf.Objects
         /// <summary>
         /// Gets or sets the elevation.
         /// </summary>
-        public double Elevation
-        {
+        public double Elevation {
             get { return this.elevation; }
             set { this.elevation = value; }
         }
@@ -208,8 +191,7 @@ namespace netDxf.Objects
         /// <summary>
         /// Gets or sets the UCS origin.
         /// </summary>
-        public Vector3 UcsOrigin
-        {
+        public Vector3 UcsOrigin {
             get { return this.origin; }
             set { this.origin = value; }
         }
@@ -217,8 +199,7 @@ namespace netDxf.Objects
         /// <summary>
         /// Gets or sets the UCS X axis.
         /// </summary>
-        public Vector3 UcsXAxis
-        {
+        public Vector3 UcsXAxis {
             get { return this.xAxis; }
             set { this.xAxis = value; }
         }
@@ -226,8 +207,7 @@ namespace netDxf.Objects
         /// <summary>
         /// Gets or sets the UCS Y axis.
         /// </summary>
-        public Vector3 UcsYAxis
-        {
+        public Vector3 UcsYAxis {
             get { return this.yAxis; }
             set { this.yAxis = value; }
         }
@@ -235,8 +215,7 @@ namespace netDxf.Objects
         /// <summary>
         /// Defines if this layout is a paper space.
         /// </summary>
-        public bool IsPaperSpace
-        {
+        public bool IsPaperSpace {
             get { return this.isPaperSpace; }
         }
 
@@ -244,8 +223,7 @@ namespace netDxf.Objects
         /// Gets the viewport associated with this layout. This is the viewport with Id 1 that represents the paper space itself, it has no graphical representation, and does not show the model.
         /// </summary>
         /// <remarks>The ModelSpace layout does not require a viewport and it will always return null.</remarks>
-        public Viewport Viewport
-        {
+        public Viewport Viewport {
             get { return this.viewport; }
             internal set { this.viewport = value; }
         }
@@ -253,17 +231,15 @@ namespace netDxf.Objects
         /// <summary>
         /// Gets the owner of the actual layout.
         /// </summary>
-        public new Layouts Owner
-        {
-            get { return (Layouts) base.Owner; }
+        public new Layouts Owner {
+            get { return (Layouts)base.Owner; }
             internal set { base.Owner = value; }
         }
 
         /// <summary>
         /// Gets the associated ModelSpace or PaperSpace block.
         /// </summary>
-        public Block AssociatedBlock
-        {
+        public Block AssociatedBlock {
             get { return this.associatedBlock; }
             internal set { this.associatedBlock = value; }
         }
@@ -278,13 +254,11 @@ namespace netDxf.Objects
         /// <param name="newName">Layout name of the copy.</param>
         /// <returns>A new Layout that is a copy of this instance.</returns>
         /// <remarks>The Model Layout cannot be cloned.</remarks>
-        public override TableObject Clone(string newName)
-        {
+        public override TableObject Clone(string newName) {
             if (this.Name == ModelSpaceName || newName == ModelSpaceName)
                 throw new NotSupportedException("The Model layout cannot be cloned.");
 
-            Layout copy = new Layout(newName, null, (PlotSettings) this.plot.Clone())
-            {
+            Layout copy = new Layout(newName, null, (PlotSettings)this.plot.Clone()) {
                 TabOrder = this.tabOrder,
                 MinLimit = this.minLimit,
                 MaxLimit = this.maxLimit,
@@ -295,7 +269,7 @@ namespace netDxf.Objects
                 UcsOrigin = this.origin,
                 UcsXAxis = this.xAxis,
                 UcsYAxis = this.yAxis,
-                Viewport = (Viewport) this.viewport.Clone()
+                Viewport = (Viewport)this.viewport.Clone()
             };
 
             foreach (XData data in this.XData.Values)
@@ -309,8 +283,7 @@ namespace netDxf.Objects
         /// </summary>
         /// <returns>A new Layout that is a copy of this instance.</returns>
         /// <remarks>The Model Layout cannot be cloned.</remarks>
-        public override object Clone()
-        {
+        public override object Clone() {
             return this.Clone(this.Name);
         }
 
@@ -323,8 +296,7 @@ namespace netDxf.Objects
         /// Some objects might consume more than one, is, for example, the case of polylines that will assign
         /// automatically a handle to its vertexes. The entity number will be converted to an hexadecimal number.
         /// </remarks>
-        internal override long AsignHandle(long entityNumber)
-        {
+        internal override long AsignHandle(long entityNumber) {
             entityNumber = this.Owner.AsignHandle(entityNumber);
             if (this.isPaperSpace)
                 entityNumber = this.viewport.AsignHandle(entityNumber);
@@ -344,8 +316,7 @@ namespace netDxf.Objects
         /// The return value has the following meanings: Value Meaning Less than zero This object is less than the other parameter.
         /// Zero This object is equal to other. Greater than zero This object is greater than other.
         /// </returns>
-        public int CompareTo(Layout other)
-        {
+        public int CompareTo(Layout other) {
             if (other == null)
                 throw new ArgumentNullException(nameof(other));
 

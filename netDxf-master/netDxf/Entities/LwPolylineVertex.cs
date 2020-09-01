@@ -22,14 +22,12 @@
 
 using System;
 
-namespace netDxf.Entities
-{
+namespace netDxf.Entities {
     /// <summary>
     /// Represents a <see cref="LwPolyline">LwPolyline</see> vertex.
     /// </summary>
     public class LwPolylineVertex :
-        ICloneable
-    {
+        ICloneable {
         #region private fields
 
         private Vector2 position;
@@ -45,8 +43,7 @@ namespace netDxf.Entities
         /// Initializes a new instance of the <c>LwPolylineVertex</c> class.
         /// </summary>
         public LwPolylineVertex()
-            : this(Vector2.Zero)
-        {
+            : this(Vector2.Zero) {
         }
 
         /// <summary>
@@ -55,8 +52,7 @@ namespace netDxf.Entities
         /// <param name="x">X coordinate.</param>
         /// <param name="y">Y coordinate.</param>
         public LwPolylineVertex(double x, double y)
-            : this(new Vector2(x, y), 0.0)
-        {
+            : this(new Vector2(x, y), 0.0) {
         }
 
         /// <summary>
@@ -66,8 +62,7 @@ namespace netDxf.Entities
         /// <param name="y">Y coordinate.</param>
         /// <param name="bulge">Vertex bulge  (default: 0.0).</param>
         public LwPolylineVertex(double x, double y, double bulge)
-            : this(new Vector2(x, y), bulge)
-        {
+            : this(new Vector2(x, y), bulge) {
         }
 
         /// <summary>
@@ -75,8 +70,7 @@ namespace netDxf.Entities
         /// </summary>
         /// <param name="position">Lightweight polyline <see cref="Vector2">vertex</see> coordinates.</param>
         public LwPolylineVertex(Vector2 position)
-            : this(position, 0.0)
-        {
+            : this(position, 0.0) {
         }
 
         /// <summary>
@@ -84,8 +78,7 @@ namespace netDxf.Entities
         /// </summary>
         /// <param name="position">Lightweight polyline <see cref="Vector2">vertex</see> coordinates.</param>
         /// <param name="bulge">Vertex bulge  (default: 0.0).</param>
-        public LwPolylineVertex(Vector2 position, double bulge)
-        {
+        public LwPolylineVertex(Vector2 position, double bulge) {
             this.position = position;
             this.bulge = bulge;
             this.startWidth = 0.0;
@@ -99,8 +92,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets the light weight polyline vertex <see cref="Vector2">position</see>.
         /// </summary>
-        public Vector2 Position
-        {
+        public Vector2 Position {
             get { return this.position; }
             set { this.position = value; }
         }
@@ -109,11 +101,9 @@ namespace netDxf.Entities
         /// Gets or sets the light weight polyline start segment width.
         /// </summary>
         /// <remarks>Widths greater than zero produce wide lines.</remarks>
-        public double StartWidth
-        {
+        public double StartWidth {
             get { return this.startWidth; }
-            set
-            {
+            set {
                 if (value < 0)
                     throw new ArgumentOutOfRangeException(nameof(value), value, "The LwPolylineVertex width must be equals or greater than zero.");
                 this.startWidth = value;
@@ -124,11 +114,9 @@ namespace netDxf.Entities
         /// Gets or sets the light weight polyline end segment width.
         /// </summary>
         /// <remarks>Widths greater than zero produce wide lines.</remarks>
-        public double EndWidth
-        {
+        public double EndWidth {
             get { return this.endWidth; }
-            set
-            {
+            set {
                 if (value < 0)
                     throw new ArgumentOutOfRangeException(nameof(value), value, "The LwPolylineVertex width must be equals or greater than zero.");
                 this.endWidth = value;
@@ -143,8 +131,7 @@ namespace netDxf.Entities
         /// made negative if the arc goes clockwise from the start point to the endpoint. 
         /// A bulge of 0 indicates a straight segment, and a bulge of 1 is a semicircle.
         /// </remarks>
-        public double Bulge
-        {
+        public double Bulge {
             get { return this.bulge; }
             set { this.bulge = value; }
         }
@@ -157,8 +144,7 @@ namespace netDxf.Entities
         /// Converts the value of this instance to its equivalent string representation.
         /// </summary>
         /// <returns>The string representation.</returns>
-        public override string ToString()
-        {
+        public override string ToString() {
             return string.Format("{0}: ({1})", "LwPolylineVertex", this.position);
         }
 
@@ -166,10 +152,8 @@ namespace netDxf.Entities
         /// Creates a new LwPolylineVertex that is a copy of the current instance.
         /// </summary>
         /// <returns>A new LwPolylineVertex that is a copy of this instance.</returns>
-        public object Clone()
-        {
-            return new LwPolylineVertex
-            {
+        public object Clone() {
+            return new LwPolylineVertex {
                 Position = this.position,
                 Bulge = this.bulge,
                 StartWidth = this.startWidth,

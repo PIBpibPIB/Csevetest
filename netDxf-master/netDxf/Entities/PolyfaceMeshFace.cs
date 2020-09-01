@@ -23,8 +23,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace netDxf.Entities
-{
+namespace netDxf.Entities {
     /// <summary>
     /// Represents a polyface mesh face. 
     /// </summary>
@@ -38,8 +37,7 @@ namespace netDxf.Entities
     /// </remarks>
     public class PolyfaceMeshFace :
         DxfObject,
-        ICloneable
-    {
+        ICloneable {
         #region private fields
 
         private readonly VertexTypeFlags flags;
@@ -56,8 +54,7 @@ namespace netDxf.Entities
         /// By default the face is made up of four vertexes.
         /// </remarks>
         public PolyfaceMeshFace()
-            : this(new short[4])
-        {
+            : this(new short[4]) {
         }
 
         /// <summary>
@@ -65,8 +62,7 @@ namespace netDxf.Entities
         /// </summary>
         /// <param name="vertexIndexes">Array of indexes to the vertex list of a polyface mesh that makes up the face.</param>
         public PolyfaceMeshFace(IEnumerable<short> vertexIndexes)
-            : base(DxfObjectCode.Vertex)
-        {
+            : base(DxfObjectCode.Vertex) {
             if (vertexIndexes == null)
                 throw new ArgumentNullException(nameof(vertexIndexes));
             this.flags = VertexTypeFlags.PolyfaceMeshVertex;
@@ -82,8 +78,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets the list of indexes to the vertex list of a polyface mesh that makes up the face.
         /// </summary>
-        public List<short> VertexIndexes
-        {
+        public List<short> VertexIndexes {
             get { return this.vertexIndexes; }
         }
 
@@ -94,8 +89,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets the vertex type.
         /// </summary>
-        internal VertexTypeFlags Flags
-        {
+        internal VertexTypeFlags Flags {
             get { return this.flags; }
         }
 
@@ -107,8 +101,7 @@ namespace netDxf.Entities
         /// Converts the value of this instance to its equivalent string representation.
         /// </summary>
         /// <returns>The string representation.</returns>
-        public override string ToString()
-        {
+        public override string ToString() {
             return "PolyfaceMeshFace";
         }
 
@@ -116,8 +109,7 @@ namespace netDxf.Entities
         /// Creates a new PolyfaceMeshFace that is a copy of the current instance.
         /// </summary>
         /// <returns>A new PolyfaceMeshFace that is a copy of this instance.</returns>
-        public object Clone()
-        {
+        public object Clone() {
             return new PolyfaceMeshFace(this.vertexIndexes);
         }
 

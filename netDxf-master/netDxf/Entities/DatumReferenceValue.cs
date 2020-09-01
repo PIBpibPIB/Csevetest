@@ -22,14 +22,12 @@
 
 using System;
 
-namespace netDxf.Entities
-{
+namespace netDxf.Entities {
     /// <summary>
     /// Represents datum reference, a theoretically exact point, axis, or plane from which you make measurements and verify dimensions. 
     /// </summary>
     public class DatumReferenceValue :
-        ICloneable
-    {
+        ICloneable {
         #region private fields
 
         private string datum;
@@ -42,8 +40,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Initializes a new instance of the <c>DatumReferenceValue</c> class.
         /// </summary>
-        public DatumReferenceValue()
-        {
+        public DatumReferenceValue() {
             this.datum = string.Empty;
             this.materialCondition = ToleranceMaterialCondition.None;
         }
@@ -53,8 +50,7 @@ namespace netDxf.Entities
         /// </summary>
         /// <param name="value">Datum reference value.</param>
         /// <param name="materialCondition">Datum material condition.</param>
-        public DatumReferenceValue(string value, ToleranceMaterialCondition materialCondition)
-        {
+        public DatumReferenceValue(string value, ToleranceMaterialCondition materialCondition) {
             this.datum = value;
             this.materialCondition = materialCondition;
         }
@@ -66,8 +62,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets the datum value.
         /// </summary>
-        public string Value
-        {
+        public string Value {
             get { return this.datum; }
             set { this.datum = value; }
         }
@@ -75,8 +70,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets the datum material condition. 
         /// </summary>
-        public ToleranceMaterialCondition MaterialCondition
-        {
+        public ToleranceMaterialCondition MaterialCondition {
             get { return this.materialCondition; }
             set { this.materialCondition = value; }
         }
@@ -89,10 +83,8 @@ namespace netDxf.Entities
         /// Creates a new DatumReferenceValue that is a copy of the current instance.
         /// </summary>
         /// <returns>A new DatumReferenceValue that is a copy of this instance.</returns>
-        public object Clone()
-        {
-            return new DatumReferenceValue
-            {
+        public object Clone() {
+            return new DatumReferenceValue {
                 Value = this.datum,
                 MaterialCondition = this.materialCondition
             };

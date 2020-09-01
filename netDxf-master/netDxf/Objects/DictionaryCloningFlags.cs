@@ -20,13 +20,11 @@
 
 #endregion
 
-namespace netDxf.Objects
-{
+namespace netDxf.Objects {
     /// <summary>
     /// Duplicate record cloning flag (determines how to merge duplicate entries).
     /// </summary>
-    public enum DictionaryCloningFlags
-    {
+    public enum DictionaryCloningFlags {
         /// <summary>
         /// Not applicable.
         /// </summary>

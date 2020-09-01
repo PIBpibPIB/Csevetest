@@ -20,14 +20,12 @@
 
 #endregion
 
-using System;
 using netDxf.Collections;
+using System;
 
-namespace netDxf.Tables
-{
+namespace netDxf.Tables {
     public class View :
-        TableObject
-    {
+        TableObject {
         #region private fields
 
         private Vector3 target;
@@ -52,13 +50,11 @@ namespace netDxf.Tables
         /// Initializes a new instance of the <c>View</c> class.
         /// </summary>
         public View(string name)
-            : this(name, true)
-        {
+            : this(name, true) {
         }
 
         internal View(string name, bool checkName)
-            : base(name, DxfObjectCode.View, checkName)
-        {
+            : base(name, DxfObjectCode.View, checkName) {
             if (string.IsNullOrEmpty(name))
                 throw new ArgumentNullException(nameof(name), "The view name should be at least one character long.");
 
@@ -78,56 +74,47 @@ namespace netDxf.Tables
 
         #region public properties
 
-        public Vector3 Target
-        {
+        public Vector3 Target {
             get { return this.target; }
             set { this.target = value; }
         }
 
-        public Vector3 Camera
-        {
+        public Vector3 Camera {
             get { return this.camera; }
             set { this.camera = value; }
         }
 
-        public double Height
-        {
+        public double Height {
             get { return this.height; }
             set { this.height = value; }
         }
 
-        public double Width
-        {
+        public double Width {
             get { return this.width; }
             set { this.width = value; }
         }
 
-        public double Rotation
-        {
+        public double Rotation {
             get { return this.rotation; }
             set { this.rotation = value; }
         }
 
-        public ViewModeFlags Viewmode
-        {
+        public ViewModeFlags Viewmode {
             get { return this.viewmode; }
             set { this.viewmode = value; }
         }
 
-        public double Fov
-        {
+        public double Fov {
             get { return this.fov; }
             set { this.fov = value; }
         }
 
-        public double FrontClippingPlane
-        {
+        public double FrontClippingPlane {
             get { return this.frontClippingPlane; }
             set { this.frontClippingPlane = value; }
         }
 
-        public double BackClippingPlane
-        {
+        public double BackClippingPlane {
             get { return this.backClippingPlane; }
             set { this.backClippingPlane = value; }
         }
@@ -135,9 +122,8 @@ namespace netDxf.Tables
         /// <summary>
         /// Gets the owner of the actual view.
         /// </summary>
-        public new Views Owner
-        {
-            get { return (Views) base.Owner; }
+        public new Views Owner {
+            get { return (Views)base.Owner; }
             internal set { base.Owner = value; }
         }
 
@@ -150,10 +136,8 @@ namespace netDxf.Tables
         /// </summary>
         /// <param name="newName">View name of the copy.</param>
         /// <returns>A new View that is a copy of this instance.</returns>
-        public override TableObject Clone(string newName)
-        {
-            View copy = new View(newName)
-            {
+        public override TableObject Clone(string newName) {
+            View copy = new View(newName) {
                 Target = this.target,
                 Camera = this.camera,
                 Height = this.height,
@@ -175,8 +159,7 @@ namespace netDxf.Tables
         /// Creates a new View that is a copy of the current instance.
         /// </summary>
         /// <returns>A new View that is a copy of this instance.</returns>
-        public override object Clone()
-        {
+        public override object Clone() {
             return this.Clone(this.Name);
         }
 

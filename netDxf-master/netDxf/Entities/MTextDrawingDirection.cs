@@ -20,13 +20,11 @@
 
 #endregion
 
-namespace netDxf.Entities
-{
+namespace netDxf.Entities {
     /// <summary>
     /// Drawing direction.
     /// </summary>
-    public enum MTextDrawingDirection
-    {
+    public enum MTextDrawingDirection {
         /// <summary>
         /// Left to right.
         /// </summary>

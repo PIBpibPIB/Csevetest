@@ -22,11 +22,9 @@
 
 using System;
 
-namespace netDxf.Entities
-{
+namespace netDxf.Entities {
     public class AttributeChangeEventArgs :
-        EventArgs
-    {
+        EventArgs {
         #region private fields
 
         private readonly Attribute item;
@@ -39,8 +37,7 @@ namespace netDxf.Entities
         /// Initializes a new instance of <c>AttributeChangeEventArgs</c>.
         /// </summary>
         /// <param name="item">The attribute that is being added or removed from the insert.</param>
-        public AttributeChangeEventArgs(Attribute item)
-        {
+        public AttributeChangeEventArgs(Attribute item) {
             this.item = item;
         }
 
@@ -51,8 +48,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets the attribute that is being added or removed.
         /// </summary>
-        public Attribute Item
-        {
+        public Attribute Item {
             get { return this.item; }
         }
 

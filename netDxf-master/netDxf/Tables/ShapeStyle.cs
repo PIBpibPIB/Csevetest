@@ -20,18 +20,16 @@
 
 #endregion
 
+using netDxf.Collections;
 using System;
 using System.IO;
-using netDxf.Collections;
 
-namespace netDxf.Tables
-{
+namespace netDxf.Tables {
     /// <summary>
     /// Represent a shape style.
     /// </summary>
     public class ShapeStyle :
-        TableObject
-    {
+        TableObject {
         #region private fields
 
         private readonly string file;
@@ -47,9 +45,8 @@ namespace netDxf.Tables
         /// Gets the default shape style
         /// </summary>
         /// <remarks>AutoCad stores the shapes for the predefined complex linetypes in the ltypeshp.shx file.</remarks>
-        public static ShapeStyle Default
-        {
-            get { return new ShapeStyle("LTYPESHP.SHX");}
+        public static ShapeStyle Default {
+            get { return new ShapeStyle("LTYPESHP.SHX"); }
         }
 
         #endregion
@@ -61,8 +58,7 @@ namespace netDxf.Tables
         /// </summary>
         /// <param name="file">Shape definitions SHX file.</param>
         public ShapeStyle(string file)
-            : this(Path.GetFileNameWithoutExtension(file), file, 0.0, 1.0, 0.0)
-        {
+            : this(Path.GetFileNameWithoutExtension(file), file, 0.0, 1.0, 0.0) {
         }
 
         /// <summary>
@@ -71,13 +67,11 @@ namespace netDxf.Tables
         /// <param name="name">Shape style name.</param>
         /// <param name="file">Shape definitions SHX file.</param>
         public ShapeStyle(string name, string file)
-            : this(name, file, 0.0, 1.0, 0.0)
-        {
+            : this(name, file, 0.0, 1.0, 0.0) {
         }
 
         internal ShapeStyle(string name, string file, double size, double widthFactor, double obliqueAngle)
-            : base(name, DxfObjectCode.TextStyle, true)
-        {
+            : base(name, DxfObjectCode.TextStyle, true) {
             if (string.IsNullOrEmpty(file))
                 throw new ArgumentNullException(nameof(file));
             this.file = file;
@@ -93,8 +87,7 @@ namespace netDxf.Tables
         /// <summary>
         /// Gets the shape SHX file name.
         /// </summary>
-        public string File
-        {
+        public string File {
             get { return this.file; }
         }
 
@@ -102,8 +95,7 @@ namespace netDxf.Tables
         /// Gets the shape size.
         /// </summary>
         /// <remarks>This value seems to have no effect on shapes or complex line types with shapes. Default: 0.0.</remarks>
-        public double Size
-        {
+        public double Size {
             get { return this.size; }
         }
 
@@ -111,8 +103,7 @@ namespace netDxf.Tables
         /// Gets the shape width factor.
         /// </summary>
         /// <remarks>This value seems to have no effect on shapes or complex line types with shapes. Default: 1.0.</remarks>
-        public double WidthFactor
-        {
+        public double WidthFactor {
             get { return this.widthFactor; }
         }
 
@@ -120,16 +111,14 @@ namespace netDxf.Tables
         /// Gets the shape oblique angle in degrees.
         /// </summary>
         /// <remarks>This value seems to have no effect on shapes or complex line types with shapes. Default: 0.0.</remarks>
-        public double ObliqueAngle
-        {
+        public double ObliqueAngle {
             get { return this.obliqueAngle; }
         }
 
         /// <summary>
         /// Gets the owner of the actual shape style.
         /// </summary>
-        public new ShapeStyles Owner
-        {
+        public new ShapeStyles Owner {
             get { return (ShapeStyles)base.Owner; }
             internal set { base.Owner = value; }
         }
@@ -144,21 +133,18 @@ namespace netDxf.Tables
         /// <param name="name">Shape name.</param>
         /// <returns>True if the shape style that contains a shape with the specified name, false otherwise.</returns>
         /// <remarks>If the actual shape style belongs to a document, it will look for the SHP file also in the document support folders.</remarks>
-        public bool ContainsShapeName(string name)
-        {
+        public bool ContainsShapeName(string name) {
             string f = Path.ChangeExtension(this.file, "SHP");
             if (this.Owner != null)
                 f = this.Owner.Owner.SupportFolders.FindFile(f);
             else
-                if(!System.IO.File.Exists(f)) f = string.Empty;
+                if (!System.IO.File.Exists(f)) f = string.Empty;
 
             // we will look for the shape name in the SHP file         
             if (string.IsNullOrEmpty(f)) return false;
 
-            using (StreamReader reader = new StreamReader(System.IO.File.Open(f, FileMode.Open, FileAccess.Read, FileShare.ReadWrite), true))
-            {
-                while (!reader.EndOfStream)
-                {
+            using (StreamReader reader = new StreamReader(System.IO.File.Open(f, FileMode.Open, FileAccess.Read, FileShare.ReadWrite), true)) {
+                while (!reader.EndOfStream) {
                     string line = reader.ReadLine();
                     if (line == null)
                         throw new FileLoadException("Unknown error reading SHP file.", f);
@@ -184,8 +170,7 @@ namespace netDxf.Tables
         /// <param name="name">Name of the shape.</param>
         /// <returns>The number of the shape, 0 in case the shape has not been found.</returns>
         /// <remarks>If the actual shape style belongs to a document, it will look for the SHP file also in the document support folders.</remarks>
-        public short ShapeNumber(string name)
-        {
+        public short ShapeNumber(string name) {
             // we will look for the shape name in the SHP file
             string f = Path.ChangeExtension(this.file, "SHP");
             if (this.Owner != null)
@@ -195,10 +180,8 @@ namespace netDxf.Tables
 
             if (string.IsNullOrEmpty(f)) return 0;
 
-            using (StreamReader reader = new StreamReader(System.IO.File.Open(f, FileMode.Open, FileAccess.Read, FileShare.ReadWrite), true))
-            {
-                while (!reader.EndOfStream)
-                {
+            using (StreamReader reader = new StreamReader(System.IO.File.Open(f, FileMode.Open, FileAccess.Read, FileShare.ReadWrite), true)) {
+                while (!reader.EndOfStream) {
                     string line = reader.ReadLine();
                     if (line == null)
                         throw new FileLoadException("Unknown error reading SHP file.", f);
@@ -224,8 +207,7 @@ namespace netDxf.Tables
         /// <param name="number">Number of the shape.</param>
         /// <returns>The name of the shape, empty in case the shape has not been found.</returns>
         /// <remarks>If the actual shape style belongs to a document, it will look for the SHP file also in the document support folders.</remarks>
-        public string ShapeName(short number)
-        {
+        public string ShapeName(short number) {
             // we will look for the shape name in the SHP file
             string f = Path.ChangeExtension(this.file, "SHP");
             if (this.Owner != null)
@@ -235,10 +217,8 @@ namespace netDxf.Tables
 
             if (string.IsNullOrEmpty(f)) return string.Empty;
 
-            using (StreamReader reader = new StreamReader(System.IO.File.Open(f, FileMode.Open, FileAccess.Read, FileShare.ReadWrite), true))
-            {
-                while (!reader.EndOfStream)
-                {
+            using (StreamReader reader = new StreamReader(System.IO.File.Open(f, FileMode.Open, FileAccess.Read, FileShare.ReadWrite), true)) {
+                while (!reader.EndOfStream) {
                     string line = reader.ReadLine();
                     if (line == null)
                         throw new FileLoadException("Unknown error reading SHP file.", f);
@@ -268,8 +248,7 @@ namespace netDxf.Tables
         /// </summary>
         /// <param name="newName">TextStyle name of the copy.</param>
         /// <returns>A new TextStyle that is a copy of this instance.</returns>
-        public override TableObject Clone(string newName)
-        {
+        public override TableObject Clone(string newName) {
             ShapeStyle copy = new ShapeStyle(newName, this.file, this.size, this.widthFactor, this.obliqueAngle);
 
             foreach (XData data in this.XData.Values)
@@ -282,8 +261,7 @@ namespace netDxf.Tables
         /// Creates a new TextStyle that is a copy of the current instance.
         /// </summary>
         /// <returns>A new TextStyle that is a copy of this instance.</returns>
-        public override object Clone()
-        {
+        public override object Clone() {
             return this.Clone(this.Name);
         }
 

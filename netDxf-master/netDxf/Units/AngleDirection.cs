@@ -20,13 +20,11 @@
 
 #endregion
 
-namespace netDxf.Units
-{
+namespace netDxf.Units {
     /// <summary>
     /// Specifies the direction of an angle.
     /// </summary>
-    public enum AngleDirection
-    {
+    public enum AngleDirection {
         /// <summary>
         /// Counterclockwise (right handedness).
         /// </summary>

@@ -20,13 +20,11 @@
 
 #endregion
 
-namespace netDxf.Units
-{
+namespace netDxf.Units {
     /// <summary>
     /// Helper methods for unit conversion.
     /// </summary>
-    public static class UnitHelper
-    {
+    public static class UnitHelper {
         #region constants
 
         private static readonly double[,] UnitFactors =
@@ -104,9 +102,8 @@ namespace netDxf.Units
         /// <param name="from">Original drawing units.</param>
         /// <param name="to">Destination drawing units.</param>
         /// <returns>The converted value to the new drawing units.</returns>
-        public static double ConvertUnit(double value, DrawingUnits from, DrawingUnits to)
-        {
-            return value*ConversionFactor(from, to);
+        public static double ConvertUnit(double value, DrawingUnits from, DrawingUnits to) {
+            return value * ConversionFactor(from, to);
         }
 
         /// <summary>
@@ -115,9 +112,8 @@ namespace netDxf.Units
         /// <param name="from">Original drawing units.</param>
         /// <param name="to">Destination drawing units.</param>
         /// <returns>The conversion factor between the drawing units.</returns>
-        public static double ConversionFactor(DrawingUnits from, DrawingUnits to)
-        {
-            return UnitFactors[(int) from, (int) to];
+        public static double ConversionFactor(DrawingUnits from, DrawingUnits to) {
+            return UnitFactors[(int)from, (int)to];
         }
 
         /// <summary>
@@ -126,12 +122,10 @@ namespace netDxf.Units
         /// <param name="from">Original image units.</param>
         /// <param name="to">Destination drawing units.</param>
         /// <returns>The conversion factor between the units.</returns>
-        public static double ConversionFactor(ImageUnits from, DrawingUnits to)
-        {
+        public static double ConversionFactor(ImageUnits from, DrawingUnits to) {
             // more on the dxf format none sense, they don't even use the same integers for the drawing and the image units
             int rasterUnits = 0;
-            switch (from)
-            {
+            switch (from) {
                 case ImageUnits.Unitless:
                     rasterUnits = 0;
                     break;
@@ -160,7 +154,7 @@ namespace netDxf.Units
                     rasterUnits = 3;
                     break;
             }
-            return UnitFactors[rasterUnits, (int) to];
+            return UnitFactors[rasterUnits, (int)to];
         }
 
         /// <summary>
@@ -169,9 +163,8 @@ namespace netDxf.Units
         /// <param name="from">Original value units.</param>
         /// <param name="to">Destination value units.</param>
         /// <returns>The conversion factor between the passed units.</returns>
-        public static double ConversionFactor(DrawingUnits from, ImageUnits to)
-        {
-            return 1/ConversionFactor(to, from);
+        public static double ConversionFactor(DrawingUnits from, ImageUnits to) {
+            return 1 / ConversionFactor(to, from);
         }
 
         #endregion

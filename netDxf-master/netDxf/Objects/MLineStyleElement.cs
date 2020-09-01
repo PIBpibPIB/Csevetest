@@ -20,29 +20,25 @@
 
 #endregion
 
-using System;
 using netDxf.Tables;
+using System;
 
-namespace netDxf.Objects
-{
+namespace netDxf.Objects {
     /// <summary>
     /// Represent each of the elements that make up a MLineStyle.
     /// </summary>
     public class MLineStyleElement :
         IComparable<MLineStyleElement>,
-        ICloneable
-    {
+        ICloneable {
         #region delegates and events
 
         public delegate void LinetypeChangedEventHandler(MLineStyleElement sender, TableObjectChangedEventArgs<Linetype> e);
 
         public event LinetypeChangedEventHandler LinetypeChanged;
 
-        protected virtual Linetype OnLinetypeChangedEvent(Linetype oldLinetype, Linetype newLinetype)
-        {
+        protected virtual Linetype OnLinetypeChangedEvent(Linetype oldLinetype, Linetype newLinetype) {
             LinetypeChangedEventHandler ae = this.LinetypeChanged;
-            if (ae != null)
-            {
+            if (ae != null) {
                 TableObjectChangedEventArgs<Linetype> eventArgs = new TableObjectChangedEventArgs<Linetype>(oldLinetype, newLinetype);
                 ae(this, eventArgs);
                 return eventArgs.NewValue;
@@ -67,8 +63,7 @@ namespace netDxf.Objects
         /// </summary>
         /// <param name="offset">Element offset.</param>
         public MLineStyleElement(double offset)
-            : this(offset, AciColor.ByLayer, Linetype.ByLayer)
-        {
+            : this(offset, AciColor.ByLayer, Linetype.ByLayer) {
         }
 
         /// <summary>
@@ -77,8 +72,7 @@ namespace netDxf.Objects
         /// <param name="offset">Element offset.</param>
         /// <param name="color">Element color.</param>
         /// <param name="linetype">Element line type.</param>
-        public MLineStyleElement(double offset, AciColor color, Linetype linetype)
-        {
+        public MLineStyleElement(double offset, AciColor color, Linetype linetype) {
             this.offset = offset;
             this.color = color;
             this.linetype = linetype;
@@ -91,8 +85,7 @@ namespace netDxf.Objects
         /// <summary>
         /// Gets or sets the element offset.
         /// </summary>
-        public double Offset
-        {
+        public double Offset {
             get { return this.offset; }
             set { this.offset = value; }
         }
@@ -103,11 +96,9 @@ namespace netDxf.Objects
         /// <remarks>
         /// AutoCad2000 dxf version does not support true colors for MLineStyleElement color.
         /// </remarks>
-        public AciColor Color
-        {
+        public AciColor Color {
             get { return this.color; }
-            set
-            {
+            set {
                 if (value == null)
                     throw new ArgumentNullException(nameof(value));
                 this.color = value;
@@ -117,11 +108,9 @@ namespace netDxf.Objects
         /// <summary>
         /// Gets or sets the element line type.
         /// </summary>
-        public Linetype Linetype
-        {
+        public Linetype Linetype {
             get { return this.linetype; }
-            set
-            {
+            set {
                 if (value == null)
                     throw new ArgumentNullException(nameof(value));
                 this.linetype = this.OnLinetypeChangedEvent(this.linetype, value);
@@ -141,8 +130,7 @@ namespace netDxf.Objects
         /// The return value has the following meanings: Value Meaning Less than zero This object is less than the other parameter.
         /// Zero This object is equal to other. Greater than zero This object is greater than other.
         /// </returns>
-        public int CompareTo(MLineStyleElement other)
-        {
+        public int CompareTo(MLineStyleElement other) {
             if (other == null)
                 throw new ArgumentNullException(nameof(other));
 
@@ -157,15 +145,14 @@ namespace netDxf.Objects
         /// <remarks>
         /// Two MLineStyleElement are considered equals if their offsets are the same.
         /// </remarks>
-        public override bool Equals(object other)
-        {
+        public override bool Equals(object other) {
             if (other == null)
                 return false;
 
             if (this.GetType() != other.GetType())
                 return false;
 
-            return this.Equals((MLineStyleElement) other);
+            return this.Equals((MLineStyleElement)other);
         }
 
         /// <summary>
@@ -176,8 +163,7 @@ namespace netDxf.Objects
         /// <remarks>
         /// Two MLineStyleElement are considered equals if their offsets are the same.
         /// </remarks>
-        public bool Equals(MLineStyleElement other)
-        {
+        public bool Equals(MLineStyleElement other) {
             if (other == null)
                 return false;
 
@@ -188,8 +174,7 @@ namespace netDxf.Objects
         /// Returns the hash code for this instance.
         /// </summary>
         /// <returns>A 32-bit signed integer that is the hash code for this instance.</returns>
-        public override int GetHashCode()
-        {
+        public override int GetHashCode() {
             return this.Offset.GetHashCode();
         }
 
@@ -263,12 +248,10 @@ namespace netDxf.Objects
         /// Creates a MLineStyleElement that is a copy of the current instance.
         /// </summary>
         /// <returns>A new MLineStyleElement is a copy of this instance.</returns>
-        public object Clone()
-        {
-            return new MLineStyleElement(this.offset)
-            {
-                Color = (AciColor) this.Color.Clone(),
-                Linetype = (Linetype) this.linetype.Clone()
+        public object Clone() {
+            return new MLineStyleElement(this.offset) {
+                Color = (AciColor)this.Color.Clone(),
+                Linetype = (Linetype)this.linetype.Clone()
             };
         }
 
@@ -280,8 +263,7 @@ namespace netDxf.Objects
         /// Converts the value of this instance to its equivalent string representation.
         /// </summary>
         /// <returns>The string representation.</returns>
-        public override string ToString()
-        {
+        public override string ToString() {
             return string.Format("{0}, color:{1}, line type:{2}", this.offset, this.color, this.linetype);
         }
 

@@ -20,17 +20,15 @@
 
 #endregion
 
-using System;
 using netDxf.Tables;
+using System;
 
-namespace netDxf.Entities
-{
+namespace netDxf.Entities {
     /// <summary>
     /// Represents a shape entity.
     /// </summary>
     public class Shape :
-        EntityObject
-    {
+        EntityObject {
         #region private fields
 
         private string name;
@@ -51,8 +49,7 @@ namespace netDxf.Entities
         /// </summary>
         /// <param name="name">Name of the shape which geometry is defined in the shape <see cref="ShapeStyle">style</see>.</param>
         /// <param name="style">Shape <see cref="TextStyle">style</see>.</param>
-        public Shape(string name, ShapeStyle style) : this(name, style, Vector3.Zero, 1.0, 0.0)
-        {
+        public Shape(string name, ShapeStyle style) : this(name, style, Vector3.Zero, 1.0, 0.0) {
         }
 
         /// <summary>
@@ -63,8 +60,7 @@ namespace netDxf.Entities
         /// <param name="position">Shape insertion point.</param>
         /// <param name="size">Shape size.</param>
         /// <param name="rotation">Shape rotation.</param>
-        public Shape(string name, ShapeStyle style, Vector3 position, double size, double rotation) : base(EntityType.Shape, DxfObjectCode.Shape)
-        {
+        public Shape(string name, ShapeStyle style, Vector3 position, double size, double rotation) : base(EntityType.Shape, DxfObjectCode.Shape) {
             if (string.IsNullOrEmpty(name))
                 throw new ArgumentNullException(nameof(name));
             this.name = name;
@@ -86,19 +82,16 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets the shape name.
         /// </summary>
-        public string Name
-        {
+        public string Name {
             get { return this.name; }
         }
 
         /// <summary>
         /// Gets the <see cref="ShapeStyle">shape style</see>.
         /// </summary>
-        public ShapeStyle Style
-        {
+        public ShapeStyle Style {
             get { return this.style; }
-            internal set
-            {
+            internal set {
                 if (value == null)
                     throw new ArgumentNullException(nameof(value));
                 this.style = value;
@@ -108,8 +101,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets the shape <see cref="Vector3">insertion point</see> in world coordinates.
         /// </summary>
-        public Vector3 Position
-        {
+        public Vector3 Position {
             get { return this.position; }
             set { this.position = value; }
         }
@@ -123,11 +115,9 @@ namespace netDxf.Entities
         /// it cannot be zero and, negative values will invert the shape in the local X and Y axis.<br />
         /// Values cannot be zero. Default: 1.0.
         /// </remarks>
-        public double Size
-        {
+        public double Size {
             get { return this.size; }
-            set
-            {
+            set {
                 if (MathHelper.IsZero(value))
                     throw new ArgumentOutOfRangeException(nameof(value), value, "The shape cannot be zero.");
                 this.size = value;
@@ -137,8 +127,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets the shape rotation in degrees.
         /// </summary>
-        public double Rotation
-        {
+        public double Rotation {
             get { return this.rotation; }
             set { this.rotation = MathHelper.NormalizeAngle(value); }
         }
@@ -146,8 +135,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets the shape oblique angle in degrees.
         /// </summary>
-        public double ObliqueAngle
-        {
+        public double ObliqueAngle {
             get { return this.obliqueAngle; }
             set { this.obliqueAngle = MathHelper.NormalizeAngle(value); }
         }
@@ -156,11 +144,9 @@ namespace netDxf.Entities
         /// Gets or sets the shape width factor.
         /// </summary>
         /// <remarks>Valid values must be greater than zero. Default: 1.0.</remarks>
-        public double WidthFactor
-        {
+        public double WidthFactor {
             get { return this.widthFactor; }
-            set
-            {
+            set {
                 if (value <= 0)
                     throw new ArgumentOutOfRangeException(nameof(value), value, "The shape width factor must be greater than zero.");
                 this.widthFactor = value;
@@ -170,8 +156,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or set the shape thickness.
         /// </summary>
-        public double Thickness
-        {
+        public double Thickness {
             get { return this.thickness; }
             set { this.thickness = value; }
         }
@@ -180,10 +165,8 @@ namespace netDxf.Entities
 
         #region overrides
 
-        public override object Clone()
-        {
-            Shape entity = new Shape(this.name, (ShapeStyle)this.style.Clone())
-            {
+        public override object Clone() {
+            Shape entity = new Shape(this.name, (ShapeStyle)this.style.Clone()) {
                 //EntityObject properties
                 Layer = (Layer)this.Layer.Clone(),
                 Linetype = (Linetype)this.Linetype.Clone(),
@@ -199,7 +182,7 @@ namespace netDxf.Entities
                 Rotation = this.rotation,
                 ObliqueAngle = this.obliqueAngle,
                 Thickness = this.thickness
-        };
+            };
 
             foreach (XData data in this.XData.Values)
                 entity.XData.Add((XData)data.Clone());

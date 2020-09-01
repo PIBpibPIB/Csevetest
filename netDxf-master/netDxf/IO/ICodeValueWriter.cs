@@ -20,10 +20,8 @@
 
 #endregion
 
-namespace netDxf.IO
-{
-    internal interface ICodeValueWriter
-    {
+namespace netDxf.IO {
+    internal interface ICodeValueWriter {
         /// <summary>
         /// Gets the dxf code.
         /// </summary>

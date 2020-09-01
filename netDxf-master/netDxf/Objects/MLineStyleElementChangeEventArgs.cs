@@ -22,11 +22,9 @@
 
 using System;
 
-namespace netDxf.Objects
-{
+namespace netDxf.Objects {
     public class MLineStyleElementChangeEventArgs :
-        EventArgs
-    {
+        EventArgs {
         #region private fields
 
         private readonly MLineStyleElement item;
@@ -39,8 +37,7 @@ namespace netDxf.Objects
         /// Initializes a new instance of <c>MLineStyleElementChangeEventArgs</c>.
         /// </summary>
         /// <param name="item">The item that is being added or removed from the MLineStyle elements list.</param>
-        public MLineStyleElementChangeEventArgs(MLineStyleElement item)
-        {
+        public MLineStyleElementChangeEventArgs(MLineStyleElement item) {
             this.item = item;
         }
 
@@ -51,8 +48,7 @@ namespace netDxf.Objects
         /// <summary>
         /// Gets the item that is being added or removed from the MLineStyle elements list.
         /// </summary>
-        public MLineStyleElement Item
-        {
+        public MLineStyleElement Item {
             get { return this.item; }
         }
 

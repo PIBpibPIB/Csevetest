@@ -20,28 +20,24 @@
 
 #endregion
 
-using System;
 using netDxf.Tables;
+using System;
 
-namespace netDxf.Entities
-{
+namespace netDxf.Entities {
     /// <summary>
     /// Represents a Text <see cref="EntityObject">entity</see>.
     /// </summary>
     public class Text :
-        EntityObject
-    {
+        EntityObject {
         #region delegates and events
 
         public delegate void TextStyleChangedEventHandler(Text sender, TableObjectChangedEventArgs<TextStyle> e);
 
         public event TextStyleChangedEventHandler TextStyleChanged;
 
-        protected virtual TextStyle OnTextStyleChangedEvent(TextStyle oldTextStyle, TextStyle newTextStyle)
-        {
+        protected virtual TextStyle OnTextStyleChangedEvent(TextStyle oldTextStyle, TextStyle newTextStyle) {
             TextStyleChangedEventHandler ae = this.TextStyleChanged;
-            if (ae != null)
-            {
+            if (ae != null) {
                 TableObjectChangedEventArgs<TextStyle> eventArgs = new TableObjectChangedEventArgs<TextStyle>(oldTextStyle, newTextStyle);
                 ae(this, eventArgs);
                 return eventArgs.NewValue;
@@ -70,8 +66,7 @@ namespace netDxf.Entities
         /// Initializes a new instance of the <c>Text</c> class.
         /// </summary>
         public Text()
-            : this(string.Empty, Vector3.Zero, 1.0, TextStyle.Default)
-        {
+            : this(string.Empty, Vector3.Zero, 1.0, TextStyle.Default) {
         }
 
         /// <summary>
@@ -81,8 +76,7 @@ namespace netDxf.Entities
         /// <param name="position">Text <see cref="Vector2">position</see> in world coordinates.</param>
         /// <param name="height">Text height.</param>
         public Text(string text, Vector2 position, double height)
-            : this(text, new Vector3(position.X, position.Y, 0.0), height, TextStyle.Default)
-        {
+            : this(text, new Vector3(position.X, position.Y, 0.0), height, TextStyle.Default) {
         }
 
         /// <summary>
@@ -92,8 +86,7 @@ namespace netDxf.Entities
         /// <param name="position">Text <see cref="Vector3">position</see> in world coordinates.</param>
         /// <param name="height">Text height.</param>
         public Text(string text, Vector3 position, double height)
-            : this(text, position, height, TextStyle.Default)
-        {
+            : this(text, position, height, TextStyle.Default) {
         }
 
 
@@ -105,8 +98,7 @@ namespace netDxf.Entities
         /// <param name="height">Text height.</param>
         /// <param name="style">Text <see cref="TextStyle">style</see>.</param>
         public Text(string text, Vector2 position, double height, TextStyle style)
-            : this(text, new Vector3(position.X, position.Y, 0.0), height, style)
-        {
+            : this(text, new Vector3(position.X, position.Y, 0.0), height, style) {
         }
 
         /// <summary>
@@ -117,8 +109,7 @@ namespace netDxf.Entities
         /// <param name="height">Text height.</param>
         /// <param name="style">Text <see cref="TextStyle">style</see>.</param>
         public Text(string text, Vector3 position, double height, TextStyle style)
-            : base(EntityType.Text, DxfObjectCode.Text)
-        {
+            : base(EntityType.Text, DxfObjectCode.Text) {
             this.text = text;
             this.position = position;
             this.alignment = TextAlignment.BaselineLeft;
@@ -141,8 +132,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets Text <see cref="Vector3">position</see> in world coordinates.
         /// </summary>
-        public Vector3 Position
-        {
+        public Vector3 Position {
             get { return this.position; }
             set { this.position = value; }
         }
@@ -150,8 +140,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets the text rotation in degrees.
         /// </summary>
-        public double Rotation
-        {
+        public double Rotation {
             get { return this.rotation; }
             set { this.rotation = MathHelper.NormalizeAngle(value); }
         }
@@ -160,11 +149,9 @@ namespace netDxf.Entities
         /// Gets or sets the text height.
         /// </summary>
         /// <remarks>Valid values must be greater than zero. Default: 1.0.</remarks>
-        public double Height
-        {
+        public double Height {
             get { return this.height; }
-            set
-            {
+            set {
                 if (value <= 0)
                     throw new ArgumentOutOfRangeException(nameof(value), value, "The Text height must be greater than zero.");
                 this.height = value;
@@ -175,11 +162,9 @@ namespace netDxf.Entities
         /// Gets or sets the width factor.
         /// </summary>
         /// <remarks>Valid values range from 0.01 to 100. Default: 1.0.</remarks>
-        public double WidthFactor
-        {
+        public double WidthFactor {
             get { return this.widthFactor; }
-            set
-            {
+            set {
                 if (value < 0.01 || value > 100.0)
                     throw new ArgumentOutOfRangeException(nameof(value), value, "The Text width factor valid values range from 0.01 to 100.");
                 this.widthFactor = value;
@@ -190,11 +175,9 @@ namespace netDxf.Entities
         /// Gets or sets the font oblique angle.
         /// </summary>
         /// <remarks>Valid values range from -85 to 85. Default: 0.0.</remarks>
-        public double ObliqueAngle
-        {
+        public double ObliqueAngle {
             get { return this.obliqueAngle; }
-            set
-            {
+            set {
                 if (value < -85.0 || value > 85.0)
                     throw new ArgumentOutOfRangeException(nameof(value), value, "The Text oblique angle valid values range from -85 to 85.");
                 this.obliqueAngle = value;
@@ -204,8 +187,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets the text alignment.
         /// </summary>
-        public TextAlignment Alignment
-        {
+        public TextAlignment Alignment {
             get { return this.alignment; }
             set { this.alignment = value; }
         }
@@ -213,11 +195,9 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets the <see cref="TextStyle">text style</see>.
         /// </summary>
-        public TextStyle Style
-        {
+        public TextStyle Style {
             get { return this.style; }
-            set
-            {
+            set {
                 if (value == null)
                     throw new ArgumentNullException(nameof(value));
                 this.style = this.OnTextStyleChangedEvent(this.style, value);
@@ -227,8 +207,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets the text string.
         /// </summary>
-        public string Value
-        {
+        public string Value {
             get { return this.text; }
             set { this.text = value; }
         }
@@ -241,16 +220,14 @@ namespace netDxf.Entities
         /// Creates a new Text that is a copy of the current instance.
         /// </summary>
         /// <returns>A new Text that is a copy of this instance.</returns>
-        public override object Clone()
-        {
-            Text entity = new Text
-            {
+        public override object Clone() {
+            Text entity = new Text {
                 //EntityObject properties
-                Layer = (Layer) this.Layer.Clone(),
-                Linetype = (Linetype) this.Linetype.Clone(),
-                Color = (AciColor) this.Color.Clone(),
+                Layer = (Layer)this.Layer.Clone(),
+                Linetype = (Linetype)this.Linetype.Clone(),
+                Color = (AciColor)this.Color.Clone(),
                 Lineweight = this.Lineweight,
-                Transparency = (Transparency) this.Transparency.Clone(),
+                Transparency = (Transparency)this.Transparency.Clone(),
                 LinetypeScale = this.LinetypeScale,
                 Normal = this.Normal,
                 IsVisible = this.IsVisible,
@@ -261,12 +238,12 @@ namespace netDxf.Entities
                 WidthFactor = this.widthFactor,
                 ObliqueAngle = this.obliqueAngle,
                 Alignment = this.alignment,
-                Style = (TextStyle) this.style.Clone(),
+                Style = (TextStyle)this.style.Clone(),
                 Value = this.text
             };
 
             foreach (XData data in this.XData.Values)
-                entity.XData.Add((XData) data.Clone());
+                entity.XData.Add((XData)data.Clone());
 
             return entity;
         }

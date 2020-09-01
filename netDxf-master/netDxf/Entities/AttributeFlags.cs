@@ -22,12 +22,10 @@
 
 using System;
 
-namespace netDxf.Entities
-{
+namespace netDxf.Entities {
     ///<summary>Attribute flags.</summary>
     [Flags]
-    public enum AttributeFlags
-    {
+    public enum AttributeFlags {
         /// <summary>
         /// Attribute is visible.
         /// </summary>

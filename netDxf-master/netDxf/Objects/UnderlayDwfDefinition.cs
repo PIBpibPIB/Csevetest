@@ -20,18 +20,16 @@
 
 #endregion
 
-using System.IO;
 using netDxf.Collections;
 using netDxf.Tables;
+using System.IO;
 
-namespace netDxf.Objects
-{
+namespace netDxf.Objects {
     /// <summary>
     /// Represents a DWF underlay definition.
     /// </summary>
     public class UnderlayDwfDefinition :
-        UnderlayDefinition
-    {
+        UnderlayDefinition {
         #region constructor
 
         /// <summary>
@@ -39,8 +37,7 @@ namespace netDxf.Objects
         /// </summary>
         /// <param name="file">Underlay file name with full or relative path.</param>
         public UnderlayDwfDefinition(string file)
-            : this(Path.GetFileNameWithoutExtension(file), file)
-        {
+            : this(Path.GetFileNameWithoutExtension(file), file) {
         }
 
         /// <summary>
@@ -49,8 +46,7 @@ namespace netDxf.Objects
         /// <param name="name">Underlay definition name.</param>
         /// <param name="file">Underlay file name with full or relative path.</param>
         public UnderlayDwfDefinition(string name, string file)
-            : base(name, file, UnderlayType.DWF)
-        {
+            : base(name, file, UnderlayType.DWF) {
         }
 
         #endregion
@@ -60,8 +56,7 @@ namespace netDxf.Objects
         /// <summary>
         /// Gets the owner of the actual underlay DWF definition.
         /// </summary>
-        public new UnderlayDwfDefinitions Owner
-        {
+        public new UnderlayDwfDefinitions Owner {
             get { return (UnderlayDwfDefinitions)base.Owner; }
             internal set { base.Owner = value; }
         }
@@ -75,8 +70,7 @@ namespace netDxf.Objects
         /// </summary>
         /// <param name="newName">UnderlayDwfDefinition name of the copy.</param>
         /// <returns>A new UnderlayDwfDefinition that is a copy of this instance.</returns>
-        public override TableObject Clone(string newName)
-        {
+        public override TableObject Clone(string newName) {
             UnderlayDwfDefinition copy = new UnderlayDwfDefinition(newName, this.File);
 
             foreach (XData data in this.XData.Values)
@@ -89,8 +83,7 @@ namespace netDxf.Objects
         /// Creates a new UnderlayDwfDefinition that is a copy of the current instance.
         /// </summary>
         /// <returns>A new UnderlayDwfDefinition that is a copy of this instance.</returns>
-        public override object Clone()
-        {
+        public override object Clone() {
             return this.Clone(this.Name);
         }
 

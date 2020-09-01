@@ -20,13 +20,11 @@
 
 #endregion
 
-namespace netDxf
-{
+namespace netDxf {
     /// <summary>
     /// Defines the extended data code.
     /// </summary>
-    public enum XDataCode
-    {
+    public enum XDataCode {
         /// <summary>
         /// Strings in extended data can be up to 255 bytes long.
         /// </summary>

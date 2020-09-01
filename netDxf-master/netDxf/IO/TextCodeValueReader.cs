@@ -25,11 +25,9 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 
-namespace netDxf.IO
-{
+namespace netDxf.IO {
     internal class TextCodeValueReader :
-        ICodeValueReader
-    {
+        ICodeValueReader {
         #region private fields
 
         private readonly TextReader reader;
@@ -41,8 +39,7 @@ namespace netDxf.IO
 
         #region constructors
 
-        public TextCodeValueReader(TextReader reader)
-        {
+        public TextCodeValueReader(TextReader reader) {
             this.reader = reader;
             this.code = 0;
             this.value = null;
@@ -53,26 +50,22 @@ namespace netDxf.IO
 
         #region public properties
 
-        public short Code
-        {
+        public short Code {
             get { return this.code; }
         }
 
-        public object Value
-        {
+        public object Value {
             get { return this.value; }
         }
 
-        public long CurrentPosition
-        {
+        public long CurrentPosition {
             get { return this.currentPosition; }
         }
         #endregion
 
         #region public methods
 
-        public void Next()
-        {
+        public void Next() {
             string readCode = this.reader.ReadLine();
             this.currentPosition += 1;
             if (!short.TryParse(readCode, NumberStyles.Integer, CultureInfo.InvariantCulture, out this.code))
@@ -81,8 +74,7 @@ namespace netDxf.IO
             this.currentPosition += 1;
         }
 
-        public byte ReadByte()
-        {
+        public byte ReadByte() {
             byte result;
             if (byte.TryParse(this.value, NumberStyles.AllowLeadingWhite | NumberStyles.AllowTrailingWhite, CultureInfo.InvariantCulture, out result))
                 return result;
@@ -90,11 +82,9 @@ namespace netDxf.IO
             throw new Exception(string.Format("Value {0} not valid at line {1}", this.value, this.currentPosition));
         }
 
-        public byte[] ReadBytes()
-        {
+        public byte[] ReadBytes() {
             List<byte> bytes = new List<byte>();
-            for (int i = 0; i < this.value.Length; i++)
-            {
+            for (int i = 0; i < this.value.Length; i++) {
                 string hex = string.Concat(this.value[i], this.value[++i]);
                 byte result;
                 if (byte.TryParse(hex, NumberStyles.AllowHexSpecifier | NumberStyles.AllowLeadingWhite | NumberStyles.AllowTrailingWhite, CultureInfo.InvariantCulture, out result))
@@ -105,8 +95,7 @@ namespace netDxf.IO
             return bytes.ToArray();
         }
 
-        public short ReadShort()
-        {
+        public short ReadShort() {
             short result;
             if (short.TryParse(this.value, NumberStyles.Integer, CultureInfo.InvariantCulture, out result))
                 return result;
@@ -114,8 +103,7 @@ namespace netDxf.IO
             throw new Exception(string.Format("Value {0} not valid at line {1}", this.value, this.currentPosition));
         }
 
-        public int ReadInt()
-        {
+        public int ReadInt() {
             int result;
             if (int.TryParse(this.value, NumberStyles.Integer, CultureInfo.InvariantCulture, out result))
                 return result;
@@ -123,8 +111,7 @@ namespace netDxf.IO
             throw new Exception(string.Format("Value {0} not valid at line {1}", this.value, this.currentPosition));
         }
 
-        public long ReadLong()
-        {
+        public long ReadLong() {
             long result;
             if (long.TryParse(this.value, NumberStyles.Integer, CultureInfo.InvariantCulture, out result))
                 return result;
@@ -132,14 +119,12 @@ namespace netDxf.IO
             throw new Exception(string.Format("Value {0} not valid at line {1}", this.value, this.currentPosition));
         }
 
-        public bool ReadBool()
-        {
+        public bool ReadBool() {
             byte result = this.ReadByte();
             return result > 0;
         }
 
-        public double ReadDouble()
-        {
+        public double ReadDouble() {
             double result;
             if (double.TryParse(this.value, NumberStyles.Float, CultureInfo.InvariantCulture, out result))
                 return result;
@@ -147,13 +132,11 @@ namespace netDxf.IO
             throw new Exception(string.Format("Value {0} not valid at line {1}", this.value, this.currentPosition));
         }
 
-        public string ReadString()
-        {
+        public string ReadString() {
             return this.value;
         }
 
-        public string ReadHex()
-        {
+        public string ReadHex() {
             long test;
             if (long.TryParse(this.value, NumberStyles.HexNumber, CultureInfo.InvariantCulture, out test))
                 return test.ToString("X");
@@ -161,8 +144,7 @@ namespace netDxf.IO
             throw new Exception(string.Format("Value {0} not valid at line {1}", this.value, this.currentPosition));
         }
 
-        public override string ToString()
-        {
+        public override string ToString() {
             return string.Format("{0}:{1}", this.code, this.value);
         }
         #endregion      

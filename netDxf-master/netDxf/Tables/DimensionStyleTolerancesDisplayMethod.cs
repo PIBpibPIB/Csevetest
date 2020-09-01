@@ -20,8 +20,7 @@
 
 #endregion
 
-namespace netDxf.Tables
-{
+namespace netDxf.Tables {
     /// <summary>
     /// Defines the method for calculating the tolerance.
     /// </summary>
@@ -29,8 +28,7 @@ namespace netDxf.Tables
     /// The Basic method for displaying tolerances in dimensions is not available,
     /// use a negative number for the <c>TextOffet</c> of the dimension style. The result is exactly the same.
     /// </remarks>
-    public enum DimensionStyleTolerancesDisplayMethod
-    {
+    public enum DimensionStyleTolerancesDisplayMethod {
         /// <summary>
         /// Does not add a tolerance.
         /// </summary>

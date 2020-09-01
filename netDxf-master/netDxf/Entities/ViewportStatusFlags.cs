@@ -22,14 +22,12 @@
 
 using System;
 
-namespace netDxf.Entities
-{
+namespace netDxf.Entities {
     /// <summary>
     /// viewport status flags
     /// </summary>
     [Flags]
-    public enum ViewportStatusFlags
-    {
+    public enum ViewportStatusFlags {
         /// <summary>
         /// Enables perspective mode.
         /// </summary>

@@ -20,13 +20,11 @@
 
 #endregion
 
-namespace netDxf.Entities
-{
+namespace netDxf.Entities {
     /// <summary>
     /// Defines the axis that measures the ordinate dimension.
     /// </summary>
-    public enum OrdinateDimensionAxis
-    {
+    public enum OrdinateDimensionAxis {
         /// <summary>
         /// The ordinate dimension measure the X distance and the dimension line is aligned to the Y axis.
         /// </summary>

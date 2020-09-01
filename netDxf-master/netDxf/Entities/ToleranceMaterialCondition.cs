@@ -20,13 +20,11 @@
 
 #endregion
 
-namespace netDxf.Entities
-{
+namespace netDxf.Entities {
     /// <summary>
     /// Tolerance Material Condition.
     /// </summary>
-    public enum ToleranceMaterialCondition
-    {
+    public enum ToleranceMaterialCondition {
         /// <summary>
         /// No material condition.
         /// </summary>

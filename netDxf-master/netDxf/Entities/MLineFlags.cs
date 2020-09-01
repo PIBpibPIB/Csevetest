@@ -22,14 +22,12 @@
 
 using System;
 
-namespace netDxf.Entities
-{
+namespace netDxf.Entities {
     /// <summary>
     /// Flags (bit-coded values).
     /// </summary>
     [Flags]
-    internal enum MLineFlags
-    {
+    internal enum MLineFlags {
         /// <summary>
         /// Has at least one vertex (code 72 is greater than 0).
         /// </summary>

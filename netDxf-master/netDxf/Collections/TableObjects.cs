@@ -20,21 +20,19 @@
 
 #endregion
 
+using netDxf.Tables;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using netDxf.Tables;
 
-namespace netDxf.Collections
-{
+namespace netDxf.Collections {
     /// <summary>
     /// Represents a list of table objects
     /// </summary>
     /// <typeparam name="T"><see cref="TableObject">TableObject</see>.</typeparam>
     public abstract class TableObjects<T> :
         DxfObject,
-        IEnumerable<T> where T : TableObject
-    {
+        IEnumerable<T> where T : TableObject {
         #region private fields
 
         private int maxCapacity = int.MaxValue;
@@ -46,8 +44,7 @@ namespace netDxf.Collections
         #region constructor
 
         protected TableObjects(DxfDocument document, string codeName, string handle)
-            : base(codeName)
-        {
+            : base(codeName) {
             this.list = new Dictionary<string, T>(StringComparer.OrdinalIgnoreCase);
             this.references = new Dictionary<string, List<DxfObject>>(StringComparer.OrdinalIgnoreCase);
             this.Owner = document;
@@ -70,10 +67,8 @@ namespace netDxf.Collections
         /// <param name="name">Table object name.</param>
         /// <returns>The table object with the specified name.</returns>
         /// <remarks>Table object names are case insensitive.</remarks>
-        public T this[string name]
-        {
-            get
-            {
+        public T this[string name] {
+            get {
                 T item;
                 return this.list.TryGetValue(name, out item) ? item : null;
             }
@@ -82,24 +77,21 @@ namespace netDxf.Collections
         /// <summary>
         /// Gets the table object list.
         /// </summary>
-        public ICollection<T> Items
-        {
+        public ICollection<T> Items {
             get { return this.list.Values; }
         }
 
         /// <summary>
         /// Gets the ObjectTable names.
         /// </summary>
-        public ICollection<string> Names
-        {
+        public ICollection<string> Names {
             get { return this.list.Keys; }
         }
 
         /// <summary>
         /// Gets the number of table objects.
         /// </summary>
-        public int Count
-        {
+        public int Count {
             get { return this.list.Count; }
         }
 
@@ -109,8 +101,7 @@ namespace netDxf.Collections
         /// <remarks>
         /// This is an approximate value, the actual exact value is unknown. In any case is not recommended to get even close to this number for any practical use.
         /// </remarks>
-        public int MaxCapacity
-        {
+        public int MaxCapacity {
             get { return this.maxCapacity; }
             internal set { this.maxCapacity = value; }
         }
@@ -118,9 +109,8 @@ namespace netDxf.Collections
         /// <summary>
         /// Gets the owner of the actual dxf object.
         /// </summary>
-        public new DxfDocument Owner
-        {
-            get { return (DxfDocument) base.Owner; }
+        public new DxfDocument Owner {
+            get { return (DxfDocument)base.Owner; }
             internal set { base.Owner = value; }
         }
 
@@ -131,8 +121,7 @@ namespace netDxf.Collections
         /// <summary>
         /// Gets the <see cref="DxfObject">dxf objects</see> referenced by a T.
         /// </summary>
-        internal Dictionary<string, List<DxfObject>> References
-        {
+        internal Dictionary<string, List<DxfObject>> References {
             get { return this.references; }
         }
 
@@ -149,8 +138,7 @@ namespace netDxf.Collections
         /// If there is no table object with the specified name in the list the method an empty list.<br />
         /// The Groups collection method GetReferences will always return an empty list since there are no DxfObjects that references them.
         /// </remarks>
-        public List<DxfObject> GetReferences(string name)
-        {
+        public List<DxfObject> GetReferences(string name) {
             if (!this.Contains(name))
                 return new List<DxfObject>();
             return new List<DxfObject>(this.references[name]);
@@ -165,8 +153,7 @@ namespace netDxf.Collections
         /// If there is no table object with the specified name in the list the method an empty list.<br />
         /// The Groups collection method GetReferences will always return an empty list since there are no DxfObjects that references them.
         /// </remarks>
-        public List<DxfObject> GetReferences(T item)
-        {
+        public List<DxfObject> GetReferences(T item) {
             if (item == null)
                 throw new ArgumentNullException(nameof(item));
             return this.GetReferences(item.Name);
@@ -177,8 +164,7 @@ namespace netDxf.Collections
         /// </summary>
         /// <param name="name">Table object name.</param>
         /// <returns>True is a table object exists with the specified name, false otherwise.</returns>
-        public bool Contains(string name)
-        {
+        public bool Contains(string name) {
             return this.list.ContainsKey(name);
         }
 
@@ -187,8 +173,7 @@ namespace netDxf.Collections
         /// </summary>
         /// <param name="item">Table object.</param>
         /// <returns>True is a table object exists, false otherwise.</returns>
-        public bool Contains(T item)
-        {
+        public bool Contains(T item) {
             return this.list.ContainsValue(item);
         }
 
@@ -199,8 +184,7 @@ namespace netDxf.Collections
         /// <param name="item">When this method returns, contains the table object associated with the specified name, if the key is found;
         /// otherwise, the default value for the type of the value parameter. This parameter is passed uninitialized.</param>
         /// <returns>True if the table contains an element with the specified name; otherwise, false.</returns>
-        public bool TryGetValue(string name, out T item)
-        {
+        public bool TryGetValue(string name, out T item) {
             return this.list.TryGetValue(name, out item);
         }
 
@@ -212,8 +196,7 @@ namespace netDxf.Collections
         /// If a table object already exists with the same name as the instance that is being added the method returns the existing table object,
         /// if not it will return the new table object.
         /// </returns>
-        public T Add(T item)
-        {
+        public T Add(T item) {
             if (item == null)
                 throw new ArgumentNullException(nameof(item));
             return this.Add(item, true);
@@ -240,8 +223,7 @@ namespace netDxf.Collections
         /// <summary>
         /// Removes all table objects that are not reserved and have no references.
         /// </summary>
-        public void Clear()
-        {
+        public void Clear() {
             string[] names = new string[this.list.Count];
             this.list.Keys.CopyTo(names, 0);
             foreach (string o in names)
@@ -256,8 +238,7 @@ namespace netDxf.Collections
         /// Returns an enumerator that iterates through the table object collection.
         /// </summary>
         /// <returns>An enumerator for the table object collection.</returns>
-        public IEnumerator<T> GetEnumerator()
-        {
+        public IEnumerator<T> GetEnumerator() {
             return this.list.Values.GetEnumerator();
         }
 
@@ -265,8 +246,7 @@ namespace netDxf.Collections
         /// Returns an enumerator that iterates through the table object collection.
         /// </summary>
         /// <returns>An enumerator for the table object collection.</returns>
-        IEnumerator IEnumerable.GetEnumerator()
-        {
+        IEnumerator IEnumerable.GetEnumerator() {
             return this.list.Values.GetEnumerator();
         }
 

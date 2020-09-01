@@ -22,14 +22,12 @@
 
 using System;
 
-namespace netDxf.Tables
-{
+namespace netDxf.Tables {
     /// <summary>
     /// Represents a shape linetype segment.
     /// </summary>
     public class LinetypeShapeSegment :
-        LinetypeSegment
-    {
+        LinetypeSegment {
         #region private fields
 
         private string name;
@@ -54,8 +52,7 @@ namespace netDxf.Tables
         /// it stores the shape number. Therefore when saving a dxf file the shape number will be obtained reading the .shp file.<br />
         /// It is required that the equivalent .shp file to be also present in the same folder or one of the support folders defined in the DxfDocument.
         /// </remarks>
-        public LinetypeShapeSegment(string name, ShapeStyle style) : this(name, style, 0.0, Vector2.Zero, LinetypeSegmentRotationType.Relative, 0.0, 1.0)
-        {
+        public LinetypeShapeSegment(string name, ShapeStyle style) : this(name, style, 0.0, Vector2.Zero, LinetypeSegmentRotationType.Relative, 0.0, 1.0) {
         }
 
         /// <summary>
@@ -70,8 +67,7 @@ namespace netDxf.Tables
         /// it stores the shape number. Therefore when saving a dxf file the shape number will be obtained reading the .shp file.<br />
         /// It is required that the equivalent .shp file to be also present in the same folder or one of the support folders defined in the DxfDocument.
         /// </remarks>
-        public LinetypeShapeSegment(string name, ShapeStyle style, double length) : this(name, style, length, Vector2.Zero, LinetypeSegmentRotationType.Relative, 0.0, 1.0)
-        {
+        public LinetypeShapeSegment(string name, ShapeStyle style, double length) : this(name, style, length, Vector2.Zero, LinetypeSegmentRotationType.Relative, 0.0, 1.0) {
         }
 
         /// <summary>
@@ -90,8 +86,7 @@ namespace netDxf.Tables
         /// it stores the shape number. Therefore when saving a dxf file the shape number will be obtained reading the .shp file.<br />
         /// It is required that the equivalent .shp file to be also present in the same folder or one of the support folders defined in the DxfDocument.
         /// </remarks>
-        public LinetypeShapeSegment(string name, ShapeStyle style, double length, Vector2 offset, LinetypeSegmentRotationType rotationType, double rotation, double scale) : base(LinetypeSegmentType.Shape, length)
-        {
+        public LinetypeShapeSegment(string name, ShapeStyle style, double length, Vector2 offset, LinetypeSegmentRotationType rotationType, double rotation, double scale) : base(LinetypeSegmentType.Shape, length) {
             if (string.IsNullOrEmpty(name))
                 throw new ArgumentNullException(nameof(name), "The linetype shape name should be at least one character long.");
             this.name = name;
@@ -118,11 +113,9 @@ namespace netDxf.Tables
         /// The dxf instead of saving the shape name, as the Shape entity or the shape linetype segments definition in a .lin file,
         /// it stores the shape number. Therefore when saving a dxf file the shape number will be obtained reading the .shp file.
         /// </remarks>
-        public string Name
-        {
+        public string Name {
             get { return this.name; }
-            internal set
-            {
+            internal set {
                 if (string.IsNullOrEmpty(value))
                     throw new ArgumentNullException(nameof(value), "The linetype shape name should be at least one character long.");
                 this.name = value;
@@ -135,11 +128,9 @@ namespace netDxf.Tables
         /// <remarks>
         /// It is required that the equivalent .shp file to be also present in the same folder or one of the support folders defined in the DxfDocument.
         /// </remarks>
-        public ShapeStyle Style
-        {
+        public ShapeStyle Style {
             get { return this.style; }
-            internal set
-            {
+            internal set {
                 if (value == null)
                     throw new ArgumentNullException(nameof(value));
                 this.style = value;
@@ -149,8 +140,7 @@ namespace netDxf.Tables
         /// <summary>
         /// Gets or sets the shift of the shape along the line.
         /// </summary>
-        public Vector2 Offset
-        {
+        public Vector2 Offset {
             get { return this.offset; }
             set { this.offset = value; }
         }
@@ -158,8 +148,7 @@ namespace netDxf.Tables
         /// <summary>
         /// Gets or sets the type of rotation defined by the rotation value upright, relative, or absolute.
         /// </summary>
-        public LinetypeSegmentRotationType RotationType
-        {
+        public LinetypeSegmentRotationType RotationType {
             get { return this.rotationType; }
             set { this.rotationType = value; }
         }
@@ -167,8 +156,7 @@ namespace netDxf.Tables
         /// <summary>
         /// Gets or sets the angle in degrees of the shape.
         /// </summary>
-        public double Rotation
-        {
+        public double Rotation {
             get { return this.rotation; }
             set { this.rotation = MathHelper.NormalizeAngle(value); }
         }
@@ -179,11 +167,9 @@ namespace netDxf.Tables
         /// <remarks>
         /// If the size of the shape style is 0, the scale value alone is used as the size.
         /// </remarks>
-        public double Scale
-        {
+        public double Scale {
             get { return this.scale; }
-            set
-            {
+            set {
                 if (value <= 0)
                     throw new ArgumentOutOfRangeException(nameof(value), value, "The linetype shape segment scale must be greater than zero.");
                 this.scale = value;
@@ -198,10 +184,8 @@ namespace netDxf.Tables
         /// Creates a new <c>LinetypeShapeSegment</c> that is a copy of the current instance.
         /// </summary>
         /// <returns>A new <c>LinetypeShapeSegment</c> that is a copy of this instance.</returns>
-        public override object Clone()
-        {
-            return new LinetypeShapeSegment(this.name, (ShapeStyle) this.style.Clone(), this.Length)
-            {
+        public override object Clone() {
+            return new LinetypeShapeSegment(this.name, (ShapeStyle)this.style.Clone(), this.Length) {
                 Offset = this.offset,
                 RotationType = this.rotationType,
                 Rotation = this.rotation,

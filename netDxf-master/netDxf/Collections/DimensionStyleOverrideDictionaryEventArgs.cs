@@ -20,17 +20,15 @@
 
 #endregion
 
-using System;
 using netDxf.Tables;
+using System;
 
-namespace netDxf.Collections
-{
+namespace netDxf.Collections {
     /// <summary>
     /// Represents the arguments thrown by the <see cref="DimensionStyleOverrideDictionary">DimensionStyleOverrideDictionary</see> events.
     /// </summary>
     public class DimensionStyleOverrideDictionaryEventArgs :
-        EventArgs
-    {
+        EventArgs {
         #region private fields
 
         private readonly DimensionStyleOverride item;
@@ -44,8 +42,7 @@ namespace netDxf.Collections
         /// Initializes a new instance of <c>DimensionStyleOverrideDictionaryEventArgs</c>.
         /// </summary>
         /// <param name="item">Item that is being added or removed from the dictionary.</param>
-        public DimensionStyleOverrideDictionaryEventArgs(DimensionStyleOverride item)
-        {
+        public DimensionStyleOverrideDictionaryEventArgs(DimensionStyleOverride item) {
             this.item = item;
             this.cancel = false;
         }
@@ -57,8 +54,7 @@ namespace netDxf.Collections
         /// <summary>
         /// Get the item that is being added to or removed from the dictionary.
         /// </summary>
-        public DimensionStyleOverride Item
-        {
+        public DimensionStyleOverride Item {
             get { return this.item; }
         }
 
@@ -66,8 +62,7 @@ namespace netDxf.Collections
         /// Gets or sets if the operation must be canceled.
         /// </summary>
         /// <remarks>This property is used by the BeforeAddItem and BeforeRemoveItem events to cancel the add or remove operations.</remarks>
-        public bool Cancel
-        {
+        public bool Cancel {
             get { return this.cancel; }
             set { this.cancel = value; }
         }

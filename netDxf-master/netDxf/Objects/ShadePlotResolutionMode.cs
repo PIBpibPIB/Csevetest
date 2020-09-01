@@ -20,13 +20,11 @@
 
 #endregion
 
-namespace netDxf.Objects
-{
+namespace netDxf.Objects {
     /// <summary>
     /// Defines the shade plot resolution mode.
     /// </summary>
-    public enum ShadePlotResolutionMode
-    {
+    public enum ShadePlotResolutionMode {
         /// <summary>
         /// Draft.
         /// </summary>

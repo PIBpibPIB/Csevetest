@@ -22,14 +22,12 @@
 
 using netDxf.Tables;
 
-namespace netDxf.Entities
-{
+namespace netDxf.Entities {
     /// <summary>
     /// Represents a point <see cref="EntityObject">entity</see>.
     /// </summary>
     public class Point :
-        EntityObject
-    {
+        EntityObject {
         #region private fields
 
         private Vector3 position;
@@ -45,8 +43,7 @@ namespace netDxf.Entities
         /// </summary>
         /// <param name="position">Point <see cref="Vector3">position</see>.</param>
         public Point(Vector3 position)
-            : base(EntityType.Point, DxfObjectCode.Point)
-        {
+            : base(EntityType.Point, DxfObjectCode.Point) {
             this.position = position;
             this.thickness = 0.0f;
             this.rotation = 0.0;
@@ -57,8 +54,7 @@ namespace netDxf.Entities
         /// </summary>
         /// <param name="position">Point <see cref="Vector2">position</see>.</param>
         public Point(Vector2 position)
-            : this(new Vector3(position.X, position.Y, 0.0))
-        {
+            : this(new Vector3(position.X, position.Y, 0.0)) {
         }
 
         /// <summary>
@@ -68,16 +64,14 @@ namespace netDxf.Entities
         /// <param name="y">Y coordinate.</param>
         /// <param name="z">Z coordinate.</param>
         public Point(double x, double y, double z)
-            : this(new Vector3(x, y, z))
-        {
+            : this(new Vector3(x, y, z)) {
         }
 
         /// <summary>
         /// Initializes a new instance of the <c>Point</c> class.
         /// </summary>
         public Point()
-            : this(Vector3.Zero)
-        {
+            : this(Vector3.Zero) {
         }
 
         #endregion
@@ -87,8 +81,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets the point <see cref="Vector3">position</see>.
         /// </summary>
-        public Vector3 Position
-        {
+        public Vector3 Position {
             get { return this.position; }
             set { this.position = value; }
         }
@@ -96,8 +89,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets the point thickness.
         /// </summary>
-        public double Thickness
-        {
+        public double Thickness {
             get { return this.thickness; }
             set { this.thickness = value; }
         }
@@ -105,8 +97,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets the point local rotation in degrees along its normal.
         /// </summary>
-        public double Rotation
-        {
+        public double Rotation {
             get { return this.rotation; }
             set { this.rotation = MathHelper.NormalizeAngle(value); }
         }
@@ -119,16 +110,14 @@ namespace netDxf.Entities
         /// Creates a new Point that is a copy of the current instance.
         /// </summary>
         /// <returns>A new Point that is a copy of this instance.</returns>
-        public override object Clone()
-        {
-            Point entity = new Point
-            {
+        public override object Clone() {
+            Point entity = new Point {
                 //EntityObject properties
-                Layer = (Layer) this.Layer.Clone(),
-                Linetype = (Linetype) this.Linetype.Clone(),
-                Color = (AciColor) this.Color.Clone(),
+                Layer = (Layer)this.Layer.Clone(),
+                Linetype = (Linetype)this.Linetype.Clone(),
+                Color = (AciColor)this.Color.Clone(),
                 Lineweight = this.Lineweight,
-                Transparency = (Transparency) this.Transparency.Clone(),
+                Transparency = (Transparency)this.Transparency.Clone(),
                 LinetypeScale = this.LinetypeScale,
                 Normal = this.Normal,
                 IsVisible = this.IsVisible,
@@ -139,7 +128,7 @@ namespace netDxf.Entities
             };
 
             foreach (XData data in this.XData.Values)
-                entity.XData.Add((XData) data.Clone());
+                entity.XData.Add((XData)data.Clone());
 
             return entity;
         }

@@ -22,14 +22,12 @@
 
 using netDxf.Tables;
 
-namespace netDxf.Entities
-{
+namespace netDxf.Entities {
     /// <summary>
     /// Represents a line <see cref="EntityObject">entity</see>.
     /// </summary>
     public class Line :
-        EntityObject
-    {
+        EntityObject {
         #region private fields
 
         private Vector3 start;
@@ -44,8 +42,7 @@ namespace netDxf.Entities
         /// Initializes a new instance of the <c>Line</c> class.
         /// </summary>
         public Line()
-            : this(Vector3.Zero, Vector3.Zero)
-        {
+            : this(Vector3.Zero, Vector3.Zero) {
         }
 
         /// <summary>
@@ -54,8 +51,7 @@ namespace netDxf.Entities
         /// <param name="startPoint">Line <see cref="Vector2">start point.</see></param>
         /// <param name="endPoint">Line <see cref="Vector2">end point.</see></param>
         public Line(Vector2 startPoint, Vector2 endPoint)
-            : this(new Vector3(startPoint.X, startPoint.Y, 0.0), new Vector3(endPoint.X, endPoint.Y, 0.0))
-        {
+            : this(new Vector3(startPoint.X, startPoint.Y, 0.0), new Vector3(endPoint.X, endPoint.Y, 0.0)) {
         }
 
         /// <summary>
@@ -64,8 +60,7 @@ namespace netDxf.Entities
         /// <param name="startPoint">Line start <see cref="Vector3">point.</see></param>
         /// <param name="endPoint">Line end <see cref="Vector3">point.</see></param>
         public Line(Vector3 startPoint, Vector3 endPoint)
-            : base(EntityType.Line, DxfObjectCode.Line)
-        {
+            : base(EntityType.Line, DxfObjectCode.Line) {
             this.start = startPoint;
             this.end = endPoint;
             this.thickness = 0.0;
@@ -78,8 +73,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets the line <see cref="Vector3">start point</see>.
         /// </summary>
-        public Vector3 StartPoint
-        {
+        public Vector3 StartPoint {
             get { return this.start; }
             set { this.start = value; }
         }
@@ -87,8 +81,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets the line <see cref="Vector3">end point</see>.
         /// </summary>
-        public Vector3 EndPoint
-        {
+        public Vector3 EndPoint {
             get { return this.end; }
             set { this.end = value; }
         }
@@ -96,16 +89,14 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets the direction of the line.
         /// </summary>
-        public Vector3 Direction
-        {
+        public Vector3 Direction {
             get { return this.end - this.start; }
         }
 
         /// <summary>
         /// Gets or sets the line thickness.
         /// </summary>
-        public double Thickness
-        {
+        public double Thickness {
             get { return this.thickness; }
             set { this.thickness = value; }
         }
@@ -117,8 +108,7 @@ namespace netDxf.Entities
         /// <summary>
         /// Switch the line direction.
         /// </summary>
-        public void Reverse()
-        {
+        public void Reverse() {
             Vector3 tmp = this.start;
             this.start = this.end;
             this.end = tmp;
@@ -132,16 +122,14 @@ namespace netDxf.Entities
         /// Creates a new Line that is a copy of the current instance.
         /// </summary>
         /// <returns>A new Line that is a copy of this instance.</returns>
-        public override object Clone()
-        {
-            Line entity = new Line
-            {
+        public override object Clone() {
+            Line entity = new Line {
                 //EntityObject properties
-                Layer = (Layer) this.Layer.Clone(),
-                Linetype = (Linetype) this.Linetype.Clone(),
-                Color = (AciColor) this.Color.Clone(),
+                Layer = (Layer)this.Layer.Clone(),
+                Linetype = (Linetype)this.Linetype.Clone(),
+                Color = (AciColor)this.Color.Clone(),
                 Lineweight = this.Lineweight,
-                Transparency = (Transparency) this.Transparency.Clone(),
+                Transparency = (Transparency)this.Transparency.Clone(),
                 LinetypeScale = this.LinetypeScale,
                 Normal = this.Normal,
                 IsVisible = this.IsVisible,
@@ -152,7 +140,7 @@ namespace netDxf.Entities
             };
 
             foreach (XData data in this.XData.Values)
-                entity.XData.Add((XData) data.Clone());
+                entity.XData.Add((XData)data.Clone());
 
             return entity;
         }

@@ -20,27 +20,24 @@
 
 #endregion
 
-using System.Collections.Generic;
 using netDxf.Collections;
 using netDxf.Entities;
 using netDxf.Tables;
+using System.Collections.Generic;
 
-namespace netDxf.Objects
-{
+namespace netDxf.Objects {
     /// <summary>
     /// Represents a group of entities.
     /// </summary>
     public class Group :
-        TableObject
-    {
+        TableObject {
         #region delegates and events
 
         public delegate void EntityAddedEventHandler(Group sender, GroupEntityChangeEventArgs e);
 
         public event EntityAddedEventHandler EntityAdded;
 
-        protected virtual void OnEntityAddedEvent(EntityObject item)
-        {
+        protected virtual void OnEntityAddedEvent(EntityObject item) {
             EntityAddedEventHandler ae = this.EntityAdded;
             if (ae != null)
                 ae(this, new GroupEntityChangeEventArgs(item));
@@ -50,8 +47,7 @@ namespace netDxf.Objects
 
         public event EntityRemovedEventHandler EntityRemoved;
 
-        protected virtual void OnEntityRemovedEvent(EntityObject item)
-        {
+        protected virtual void OnEntityRemovedEvent(EntityObject item) {
             EntityRemovedEventHandler ae = this.EntityRemoved;
             if (ae != null)
                 ae(this, new GroupEntityChangeEventArgs(item));
@@ -77,8 +73,7 @@ namespace netDxf.Objects
         /// A unique name will be generated when the group is added to the document.
         /// </remarks>
         public Group()
-            : this(string.Empty)
-        {
+            : this(string.Empty) {
         }
 
         /// <summary>
@@ -89,8 +84,7 @@ namespace netDxf.Objects
         /// If the name is set to null or empty, a unique name will be generated when the group is added to the document.
         /// </remarks>
         public Group(string name)
-            : this(name, null)
-        {
+            : this(name, null) {
         }
 
         /// <summary>
@@ -101,8 +95,7 @@ namespace netDxf.Objects
         /// A unique name will be generated when the group is added to the document.
         /// </remarks>
         public Group(IEnumerable<EntityObject> entities)
-            : this(string.Empty, entities)
-        {
+            : this(string.Empty, entities) {
         }
 
         /// <summary>
@@ -114,8 +107,7 @@ namespace netDxf.Objects
         /// If the name is set to null or empty, a unique name will be generated when the group is added to the document.
         /// </remarks>
         public Group(string name, IEnumerable<EntityObject> entities)
-            : base(name, DxfObjectCode.Group, !string.IsNullOrEmpty(name))
-        {
+            : base(name, DxfObjectCode.Group, !string.IsNullOrEmpty(name)) {
             this.isUnnamed = string.IsNullOrEmpty(name);
             this.description = string.Empty;
             this.isSelectable = true;
@@ -124,13 +116,12 @@ namespace netDxf.Objects
             this.entities.AddItem += this.Entities_AddItem;
             this.entities.BeforeRemoveItem += this.Entities_BeforeRemoveItem;
             this.entities.RemoveItem += this.Entities_RemoveItem;
-            if(entities != null)
+            if (entities != null)
                 this.entities.AddRange(entities);
         }
 
         internal Group(string name, bool checkName)
-            : base(name, DxfObjectCode.Group, checkName)
-        {
+            : base(name, DxfObjectCode.Group, checkName) {
             this.isUnnamed = string.IsNullOrEmpty(name) || name.StartsWith("*");
             this.description = string.Empty;
             this.isSelectable = true;
@@ -149,11 +140,9 @@ namespace netDxf.Objects
         /// Gets the name of the table object.
         /// </summary>
         /// <remarks>Table object names are case insensitive.</remarks>
-        public new string Name
-        {
+        public new string Name {
             get { return base.Name; }
-            set
-            {
+            set {
                 base.Name = value;
                 this.isUnnamed = false;
             }
@@ -162,8 +151,7 @@ namespace netDxf.Objects
         /// <summary>
         /// Gets or sets the description of the group.
         /// </summary>
-        public string Description
-        {
+        public string Description {
             get { return this.description; }
             set { this.description = value; }
         }
@@ -171,8 +159,7 @@ namespace netDxf.Objects
         /// <summary>
         /// Gets if the group has an automatic generated name.
         /// </summary>
-        public bool IsUnnamed
-        {
+        public bool IsUnnamed {
             get { return this.isUnnamed; }
             internal set { this.isUnnamed = value; }
         }
@@ -180,8 +167,7 @@ namespace netDxf.Objects
         /// <summary>
         /// Gets or sets if the group is selectable.
         /// </summary>
-        public bool IsSelectable
-        {
+        public bool IsSelectable {
             get { return this.isSelectable; }
             set { this.isSelectable = value; }
         }
@@ -193,17 +179,15 @@ namespace netDxf.Objects
         /// When the group is added to the document the entities in it will be automatically added too.<br/>
         /// An entity may be contained in different groups.
         /// </remarks>
-        public EntityCollection Entities
-        {
+        public EntityCollection Entities {
             get { return this.entities; }
         }
 
         /// <summary>
         /// Gets the owner of the actual dxf object.
         /// </summary>
-        public new Groups Owner
-        {
-            get { return (Groups) base.Owner; }
+        public new Groups Owner {
+            get { return (Groups)base.Owner; }
             internal set { base.Owner = value; }
         }
 
@@ -217,16 +201,13 @@ namespace netDxf.Objects
         /// <param name="newName">Group name of the copy.</param>
         /// <returns>A new Group that is a copy of this instance.</returns>
         /// <remarks>The entities that belong to the group will also be cloned.</remarks>
-        public override TableObject Clone(string newName)
-        {
+        public override TableObject Clone(string newName) {
             EntityObject[] refs = new EntityObject[this.entities.Count];
-            for (int i = 0; i < this.entities.Count; i++)
-            {
-                refs[i] = (EntityObject) this.entities[i].Clone();
+            for (int i = 0; i < this.entities.Count; i++) {
+                refs[i] = (EntityObject)this.entities[i].Clone();
             }
 
-            Group copy = new Group(newName, refs)
-            {
+            Group copy = new Group(newName, refs) {
                 Description = this.description,
                 IsSelectable = this.isSelectable
             };
@@ -241,8 +222,7 @@ namespace netDxf.Objects
         /// Creates a new Group that is a copy of the current instance.
         /// </summary>
         /// <returns>A new Group that is a copy of this instance.</returns>
-        public override object Clone()
-        {
+        public override object Clone() {
             return this.Clone(this.IsUnnamed ? string.Empty : this.Name);
         }
 
@@ -250,8 +230,7 @@ namespace netDxf.Objects
 
         #region Entities collection events
 
-        private void Entities_BeforeAddItem(EntityCollection sender, EntityCollectionEventArgs e)
-        {
+        private void Entities_BeforeAddItem(EntityCollection sender, EntityCollectionEventArgs e) {
             // null or duplicate items are not allowed in the entities list.
             if (e.Item == null)
                 e.Cancel = true;
@@ -261,18 +240,15 @@ namespace netDxf.Objects
                 e.Cancel = false;
         }
 
-        private void Entities_AddItem(EntityCollection sender, EntityCollectionEventArgs e)
-        {
+        private void Entities_AddItem(EntityCollection sender, EntityCollectionEventArgs e) {
             e.Item.AddReactor(this);
             this.OnEntityAddedEvent(e.Item);
         }
 
-        private void Entities_BeforeRemoveItem(EntityCollection sender, EntityCollectionEventArgs e)
-        {
+        private void Entities_BeforeRemoveItem(EntityCollection sender, EntityCollectionEventArgs e) {
         }
 
-        private void Entities_RemoveItem(EntityCollection sender, EntityCollectionEventArgs e)
-        {
+        private void Entities_RemoveItem(EntityCollection sender, EntityCollectionEventArgs e) {
             e.Item.RemoveReactor(this);
             this.OnEntityRemovedEvent(e.Item);
         }

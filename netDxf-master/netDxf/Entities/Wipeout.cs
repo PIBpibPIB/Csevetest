@@ -20,12 +20,11 @@
 
 #endregion
 
+using netDxf.Tables;
 using System;
 using System.Collections.Generic;
-using netDxf.Tables;
 
-namespace netDxf.Entities
-{
+namespace netDxf.Entities {
     /// <summary>
     /// Represents a wipeout <see cref="EntityObject">entity</see>.
     /// </summary>
@@ -34,8 +33,7 @@ namespace netDxf.Entities
     /// The Wipeout entity is related with the system variable WIPEOUTFRAME but this variable is not saved in a dxf.
     /// </remarks>
     public class Wipeout :
-        EntityObject
-    {
+        EntityObject {
         #region private fields
 
         private ClippingBoundary clippingBoundary;
@@ -53,8 +51,7 @@ namespace netDxf.Entities
         /// <param name="width">Rectangle width in local coordinates.</param>
         /// <param name="height">Rectangle height in local coordinates.</param>
         public Wipeout(double x, double y, double width, double height)
-            : this(new ClippingBoundary(x, y, width, height))
-        {
+            : this(new ClippingBoundary(x, y, width, height)) {
         }
 
         /// <summary>
@@ -63,8 +60,7 @@ namespace netDxf.Entities
         /// <param name="firstCorner">Rectangle firstCorner in local coordinates.</param>
         /// <param name="secondCorner">Rectangle secondCorner in local coordinates.</param>
         public Wipeout(Vector2 firstCorner, Vector2 secondCorner)
-            : this(new ClippingBoundary(firstCorner, secondCorner))
-        {
+            : this(new ClippingBoundary(firstCorner, secondCorner)) {
         }
 
         /// <summary>
@@ -72,8 +68,7 @@ namespace netDxf.Entities
         /// </summary>
         /// <param name="vertexes">The list of vertexes of the wipeout.</param>
         public Wipeout(IEnumerable<Vector2> vertexes)
-            : this(new ClippingBoundary(vertexes))
-        {
+            : this(new ClippingBoundary(vertexes)) {
         }
 
         /// <summary>
@@ -81,8 +76,7 @@ namespace netDxf.Entities
         /// </summary>
         /// <param name="clippingBoundary">The wipeout clipping boundary.</param>
         public Wipeout(ClippingBoundary clippingBoundary)
-            : base(EntityType.Wipeout, DxfObjectCode.Wipeout)
-        {
+            : base(EntityType.Wipeout, DxfObjectCode.Wipeout) {
             if (clippingBoundary == null)
                 throw new ArgumentNullException(nameof(clippingBoundary));
             this.clippingBoundary = clippingBoundary;
@@ -96,11 +90,9 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets the wipeout clipping boundary.
         /// </summary>
-        public ClippingBoundary ClippingBoundary
-        {
+        public ClippingBoundary ClippingBoundary {
             get { return this.clippingBoundary; }
-            set
-            {
+            set {
                 if (value == null)
                     throw new ArgumentNullException(nameof(value));
                 this.clippingBoundary = value;
@@ -111,8 +103,7 @@ namespace netDxf.Entities
         /// Gets or sets the wipeout elevation.
         /// </summary>
         /// <remarks>This is the distance from the origin to the plane of the wipeout boundary.</remarks>
-        public double Elevation
-        {
+        public double Elevation {
             get { return this.elevation; }
             set { this.elevation = value; }
         }
@@ -125,16 +116,14 @@ namespace netDxf.Entities
         /// Creates a new Wipeout that is a copy of the current instance.
         /// </summary>
         /// <returns>A new Wipeout that is a copy of this instance.</returns>
-        public override object Clone()
-        {
-            Wipeout entity = new Wipeout((ClippingBoundary) this.ClippingBoundary.Clone())
-            {
+        public override object Clone() {
+            Wipeout entity = new Wipeout((ClippingBoundary)this.ClippingBoundary.Clone()) {
                 //EntityObject properties
-                Layer = (Layer) this.Layer.Clone(),
-                Linetype = (Linetype) this.Linetype.Clone(),
-                Color = (AciColor) this.Color.Clone(),
+                Layer = (Layer)this.Layer.Clone(),
+                Linetype = (Linetype)this.Linetype.Clone(),
+                Color = (AciColor)this.Color.Clone(),
                 Lineweight = this.Lineweight,
-                Transparency = (Transparency) this.Transparency.Clone(),
+                Transparency = (Transparency)this.Transparency.Clone(),
                 LinetypeScale = this.LinetypeScale,
                 Normal = this.Normal,
                 IsVisible = this.IsVisible,
@@ -143,7 +132,7 @@ namespace netDxf.Entities
             };
 
             foreach (XData data in this.XData.Values)
-                entity.XData.Add((XData) data.Clone());
+                entity.XData.Add((XData)data.Clone());
 
             return entity;
         }

@@ -23,16 +23,14 @@
 using netDxf.Collections;
 using netDxf.Tables;
 
-namespace netDxf
-{
+namespace netDxf {
     public delegate void XDataAddAppRegEventHandler(IHasXData sender, ObservableCollectionEventArgs<ApplicationRegistry> e);
     public delegate void XDataRemoveAppRegEventHandler(IHasXData sender, ObservableCollectionEventArgs<ApplicationRegistry> e);
 
     /// <summary>
     /// Supports <see cref="DxfObject">DxfObjects</see> that contain extended data information.
     /// </summary>
-    public interface IHasXData
-    {
+    public interface IHasXData {
         event XDataAddAppRegEventHandler XDataAddAppReg;
         event XDataRemoveAppRegEventHandler XDataRemoveAppReg;
 

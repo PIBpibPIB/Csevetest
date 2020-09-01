@@ -20,30 +20,26 @@
 
 #endregion
 
+using netDxf.Entities;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using netDxf.Entities;
 
-namespace netDxf.Collections
-{
+namespace netDxf.Collections {
     /// <summary>
     /// Represents a dictionary of <see cref="AttributeDefinition">AttributeDefinitions</see>.
     /// </summary>
     public sealed class AttributeDefinitionDictionary :
-        IDictionary<string, AttributeDefinition>
-    {
+        IDictionary<string, AttributeDefinition> {
         #region delegates and events
 
         public delegate void BeforeAddItemEventHandler(AttributeDefinitionDictionary sender, AttributeDefinitionDictionaryEventArgs e);
 
         public event BeforeAddItemEventHandler BeforeAddItem;
 
-        private bool OnBeforeAddItemEvent(AttributeDefinition item)
-        {
+        private bool OnBeforeAddItemEvent(AttributeDefinition item) {
             BeforeAddItemEventHandler ae = this.BeforeAddItem;
-            if (ae != null)
-            {
+            if (ae != null) {
                 AttributeDefinitionDictionaryEventArgs e = new AttributeDefinitionDictionaryEventArgs(item);
                 ae(this, e);
                 return e.Cancel;
@@ -55,8 +51,7 @@ namespace netDxf.Collections
 
         public event AddItemEventHandler AddItem;
 
-        private void OnAddItemEvent(AttributeDefinition item)
-        {
+        private void OnAddItemEvent(AttributeDefinition item) {
             AddItemEventHandler ae = this.AddItem;
             if (ae != null)
                 ae(this, new AttributeDefinitionDictionaryEventArgs(item));
@@ -66,11 +61,9 @@ namespace netDxf.Collections
 
         public event BeforeRemoveItemEventHandler BeforeRemoveItem;
 
-        private bool OnBeforeRemoveItemEvent(AttributeDefinition item)
-        {
+        private bool OnBeforeRemoveItemEvent(AttributeDefinition item) {
             BeforeRemoveItemEventHandler ae = this.BeforeRemoveItem;
-            if (ae != null)
-            {
+            if (ae != null) {
                 AttributeDefinitionDictionaryEventArgs e = new AttributeDefinitionDictionaryEventArgs(item);
                 ae(this, e);
                 return e.Cancel;
@@ -82,8 +75,7 @@ namespace netDxf.Collections
 
         public event RemoveItemEventHandler RemoveItem;
 
-        private void OnRemoveItemEvent(AttributeDefinition item)
-        {
+        private void OnRemoveItemEvent(AttributeDefinition item) {
             RemoveItemEventHandler ae = this.RemoveItem;
             if (ae != null)
                 ae(this, new AttributeDefinitionDictionaryEventArgs(item));
@@ -102,8 +94,7 @@ namespace netDxf.Collections
         /// <summary>
         /// Initializes a new instance of <c>AttributeDefinitionDictionary</c>.
         /// </summary>
-        public AttributeDefinitionDictionary()
-        {
+        public AttributeDefinitionDictionary() {
             this.innerDictionary = new Dictionary<string, AttributeDefinition>(StringComparer.OrdinalIgnoreCase);
         }
 
@@ -111,8 +102,7 @@ namespace netDxf.Collections
         /// Initializes a new instance of <c>AttributeDefinitionDictionary</c> and has the specified initial capacity.
         /// </summary>
         /// <param name="capacity">The number of items the collection can initially store.</param>
-        public AttributeDefinitionDictionary(int capacity)
-        {
+        public AttributeDefinitionDictionary(int capacity) {
             this.innerDictionary = new Dictionary<string, AttributeDefinition>(capacity, StringComparer.OrdinalIgnoreCase);
         }
 
@@ -125,11 +115,9 @@ namespace netDxf.Collections
         /// </summary>
         /// <param name="tag">The tag of the attribute definition to get or set.</param>
         /// <returns>The <see cref="AttributeDefinition">attribute definition</see> with the specified tag.</returns>
-        public AttributeDefinition this[string tag]
-        {
+        public AttributeDefinition this[string tag] {
             get { return this.innerDictionary[tag]; }
-            set
-            {
+            set {
                 if (value == null)
                     throw new ArgumentNullException(nameof(value));
                 if (!string.Equals(tag, value.Tag, StringComparison.OrdinalIgnoreCase))
@@ -153,32 +141,28 @@ namespace netDxf.Collections
         /// <summary>
         /// Gets an ICollection containing the tags of the current dictionary.
         /// </summary>
-        public ICollection<string> Tags
-        {
+        public ICollection<string> Tags {
             get { return this.innerDictionary.Keys; }
         }
 
         /// <summary>
         /// Gets an ICollection containing the <see cref="AttributeDefinition">attribute definition</see> list of the current dictionary.
         /// </summary>
-        public ICollection<AttributeDefinition> Values
-        {
+        public ICollection<AttributeDefinition> Values {
             get { return this.innerDictionary.Values; }
         }
 
         /// <summary>
         /// Gets the number of <see cref="AttributeDefinition">attribute definition</see> contained in the current dictionary.
         /// </summary>
-        public int Count
-        {
+        public int Count {
             get { return this.innerDictionary.Count; }
         }
 
         /// <summary>
         /// Gets a value indicating whether the actual dictionary is read-only.
         /// </summary>
-        public bool IsReadOnly
-        {
+        public bool IsReadOnly {
             get { return false; }
         }
 
@@ -190,8 +174,7 @@ namespace netDxf.Collections
         /// Adds an <see cref="AttributeDefinition">attribute definition</see> to the dictionary.
         /// </summary>
         /// <param name="item">The <see cref="AttributeDefinition">attribute definition</see> to add.</param>
-        public void Add(AttributeDefinition item)
-        {
+        public void Add(AttributeDefinition item) {
             if (item == null)
                 throw new ArgumentNullException(nameof(item));
             if (this.OnBeforeAddItemEvent(item))
@@ -204,8 +187,7 @@ namespace netDxf.Collections
         /// Adds an <see cref="AttributeDefinition">attribute definition</see> list to the dictionary.
         /// </summary>
         /// <param name="collection">The collection whose elements should be added.</param>
-        public void AddRange(IEnumerable<AttributeDefinition> collection)
-        {
+        public void AddRange(IEnumerable<AttributeDefinition> collection) {
             if (collection == null)
                 throw new ArgumentNullException(nameof(collection));
             // we will make room for so the collection will fit without having to resize the internal array during the Add method
@@ -218,8 +200,7 @@ namespace netDxf.Collections
         /// </summary>
         /// <param name="tag">The tag of the <see cref="AttributeDefinition">attribute definition</see> to remove.</param>
         /// <returns>True if the <see cref="AttributeDefinition">attribute definition</see> is successfully removed; otherwise, false.</returns>
-        public bool Remove(string tag)
-        {
+        public bool Remove(string tag) {
             AttributeDefinition remove;
             if (!this.innerDictionary.TryGetValue(tag, out remove))
                 return false;
@@ -233,12 +214,10 @@ namespace netDxf.Collections
         /// <summary>
         /// Removes all <see cref="AttributeDefinition">attribute definition</see> from the current dictionary.
         /// </summary>
-        public void Clear()
-        {
+        public void Clear() {
             string[] tags = new string[this.innerDictionary.Count];
             this.innerDictionary.Keys.CopyTo(tags, 0);
-            foreach (string tag in tags)
-            {
+            foreach (string tag in tags) {
                 this.Remove(tag);
             }
         }
@@ -248,8 +227,7 @@ namespace netDxf.Collections
         /// </summary>
         /// <param name="tag">The tag to locate in the current dictionary.</param>
         /// <returns>True if the current dictionary contains an <see cref="AttributeDefinition">attribute definition</see> with the tag; otherwise, false.</returns>
-        public bool ContainsTag(string tag)
-        {
+        public bool ContainsTag(string tag) {
             return this.innerDictionary.ContainsKey(tag);
         }
 
@@ -258,8 +236,7 @@ namespace netDxf.Collections
         /// </summary>
         /// <param name="value">The <see cref="AttributeDefinition">attribute definition</see> to locate in the current dictionary.</param>
         /// <returns>True if the current dictionary contains the <see cref="AttributeDefinition">attribute definition</see>; otherwise, false.</returns>
-        public bool ContainsValue(AttributeDefinition value)
-        {
+        public bool ContainsValue(AttributeDefinition value) {
             return this.innerDictionary.ContainsValue(value);
         }
 
@@ -270,8 +247,7 @@ namespace netDxf.Collections
         /// <param name="value">When this method returns, the <see cref="AttributeDefinition">attribute definition</see> associated with the specified tag,
         /// if the tag is found; otherwise, null. This parameter is passed uninitialized.</param>
         /// <returns>True if the current dictionary contains an <see cref="AttributeDefinition">attribute definition</see> with the specified tag; otherwise, false.</returns>
-        public bool TryGetValue(string tag, out AttributeDefinition value)
-        {
+        public bool TryGetValue(string tag, out AttributeDefinition value) {
             return this.innerDictionary.TryGetValue(tag, out value);
         }
 
@@ -279,8 +255,7 @@ namespace netDxf.Collections
         /// Returns an enumerator that iterates through the dictionary.
         /// </summary>
         /// <returns>An enumerator that can be used to iterate through the dictionary.</returns>
-        public IEnumerator<KeyValuePair<string, AttributeDefinition>> GetEnumerator()
-        {
+        public IEnumerator<KeyValuePair<string, AttributeDefinition>> GetEnumerator() {
             return this.innerDictionary.GetEnumerator();
         }
 
@@ -288,8 +263,7 @@ namespace netDxf.Collections
 
         #region private properties
 
-        ICollection<string> IDictionary<string, AttributeDefinition>.Keys
-        {
+        ICollection<string> IDictionary<string, AttributeDefinition>.Keys {
             get { return this.innerDictionary.Keys; }
         }
 
@@ -297,40 +271,33 @@ namespace netDxf.Collections
 
         #region private methods
 
-        bool IDictionary<string, AttributeDefinition>.ContainsKey(string tag)
-        {
+        bool IDictionary<string, AttributeDefinition>.ContainsKey(string tag) {
             return this.innerDictionary.ContainsKey(tag);
         }
 
-        void IDictionary<string, AttributeDefinition>.Add(string key, AttributeDefinition value)
-        {
+        void IDictionary<string, AttributeDefinition>.Add(string key, AttributeDefinition value) {
             this.Add(value);
         }
 
-        void ICollection<KeyValuePair<string, AttributeDefinition>>.Add(KeyValuePair<string, AttributeDefinition> item)
-        {
+        void ICollection<KeyValuePair<string, AttributeDefinition>>.Add(KeyValuePair<string, AttributeDefinition> item) {
             this.Add(item.Value);
         }
 
-        bool ICollection<KeyValuePair<string, AttributeDefinition>>.Remove(KeyValuePair<string, AttributeDefinition> item)
-        {
+        bool ICollection<KeyValuePair<string, AttributeDefinition>>.Remove(KeyValuePair<string, AttributeDefinition> item) {
             if (!ReferenceEquals(item.Value, this.innerDictionary[item.Key]))
                 return false;
             return this.Remove(item.Key);
         }
 
-        bool ICollection<KeyValuePair<string, AttributeDefinition>>.Contains(KeyValuePair<string, AttributeDefinition> item)
-        {
-            return ((IDictionary<string, AttributeDefinition>) this.innerDictionary).Contains(item);
+        bool ICollection<KeyValuePair<string, AttributeDefinition>>.Contains(KeyValuePair<string, AttributeDefinition> item) {
+            return ((IDictionary<string, AttributeDefinition>)this.innerDictionary).Contains(item);
         }
 
-        void ICollection<KeyValuePair<string, AttributeDefinition>>.CopyTo(KeyValuePair<string, AttributeDefinition>[] array, int arrayIndex)
-        {
-            ((IDictionary<string, AttributeDefinition>) this.innerDictionary).CopyTo(array, arrayIndex);
+        void ICollection<KeyValuePair<string, AttributeDefinition>>.CopyTo(KeyValuePair<string, AttributeDefinition>[] array, int arrayIndex) {
+            ((IDictionary<string, AttributeDefinition>)this.innerDictionary).CopyTo(array, arrayIndex);
         }
 
-        IEnumerator IEnumerable.GetEnumerator()
-        {
+        IEnumerator IEnumerable.GetEnumerator() {
             return this.GetEnumerator();
         }
 

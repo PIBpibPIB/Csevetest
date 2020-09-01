@@ -20,13 +20,11 @@
 
 #endregion
 
-namespace netDxf.Units
-{
+namespace netDxf.Units {
     /// <summary>
     /// Defines the fraction format when DIMLUNIT is set to 4 (Architectural) or 5 (Fractional).
     /// </summary>
-    public enum FractionFormatType
-    {
+    public enum FractionFormatType {
         /// <summary>
         /// Horizontal stacking.
         /// </summary>

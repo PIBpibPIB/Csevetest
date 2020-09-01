@@ -22,14 +22,12 @@
 
 using System;
 
-namespace netDxf.Entities
-{
+namespace netDxf.Entities {
     /// <summary>
     /// Defines which edges are hidden.
     /// </summary>
     [Flags]
-    public enum Face3dEdgeFlags
-    {
+    public enum Face3dEdgeFlags {
         /// <summary>
         /// All edges are visible (default).
         /// </summary>

@@ -23,15 +23,13 @@
 using netDxf.Header;
 using System;
 
-namespace netDxf.IO
-{
+namespace netDxf.IO {
     /// <summary>
     /// Represents an error that occur when trying to load a DXF file which <see cref="DxfVersion">version</see> is not supported.
     /// </summary>
     /// <remarks>netDxf only supports DXF file versions AutoCad2000 and higher.</remarks>
     public class DxfVersionNotSupportedException :
-        Exception
-    {
+        Exception {
         #region private fields
 
         private readonly DxfVersion version;
@@ -44,8 +42,7 @@ namespace netDxf.IO
         /// Initializes a new instance of <c>DxfVersionNotSupportedException</c>
         /// </summary>
         /// <param name="version">DXF file version.</param>
-        public DxfVersionNotSupportedException(DxfVersion version)
-        {
+        public DxfVersionNotSupportedException(DxfVersion version) {
             this.version = version;
         }
 
@@ -55,8 +52,7 @@ namespace netDxf.IO
         /// <param name="message">Exception message.</param>
         /// <param name="version">DXF file version.</param>
         public DxfVersionNotSupportedException(string message, DxfVersion version)
-            :base(message)
-        {
+            : base(message) {
             this.version = version;
         }
 
@@ -68,8 +64,7 @@ namespace netDxf.IO
         /// <summary>
         /// Gets the DXF file version that generated the exception.
         /// </summary>
-        public DxfVersion Version
-        {
+        public DxfVersion Version {
             get { return this.version; }
         }
 

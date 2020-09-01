@@ -20,13 +20,11 @@
 
 #endregion
 
-namespace netDxf.Entities
-{
+namespace netDxf.Entities {
     /// <summary>
     /// Controls the way the leader is drawn.
     /// </summary>
-    public enum LeaderPathType
-    {
+    public enum LeaderPathType {
         /// <summary>
         /// Draws the leader line as a set of straight line segments.
         /// </summary>

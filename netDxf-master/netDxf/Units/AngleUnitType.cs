@@ -20,13 +20,11 @@
 
 #endregion
 
-namespace netDxf.Units
-{
+namespace netDxf.Units {
     /// <summary>
     /// Angular units format for creating objects.
     /// </summary>
-    public enum AngleUnitType
-    {
+    public enum AngleUnitType {
         /// <summary>
         /// Decimal degrees.
         /// </summary>

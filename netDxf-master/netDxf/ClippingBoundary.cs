@@ -20,12 +20,11 @@
 
 #endregion
 
+using netDxf.Entities;
 using System;
 using System.Collections.Generic;
-using netDxf.Entities;
 
-namespace netDxf
-{
+namespace netDxf {
     /// <summary>
     /// Represent a clipping boundary to display specific portions of
     /// an <see cref="Image">Image</see>,
@@ -33,8 +32,7 @@ namespace netDxf
     /// or a <see cref="Wipeout">Wipeout</see>.
     /// </summary>
     public class ClippingBoundary :
-        ICloneable
-    {
+        ICloneable {
         #region private fields
 
         private readonly ClippingBoundaryType type;
@@ -51,10 +49,9 @@ namespace netDxf
         /// <param name="y">Rectangle y-coordinate of the first corner.</param>
         /// <param name="width">Rectangle width.</param>
         /// <param name="height">Rectangle height.</param>
-        public ClippingBoundary(double x, double y, double width, double height)
-        {
+        public ClippingBoundary(double x, double y, double width, double height) {
             this.type = ClippingBoundaryType.Rectangular;
-            this.vertexes = new List<Vector2> {new Vector2(x, y), new Vector2(x + width, y + height)};
+            this.vertexes = new List<Vector2> { new Vector2(x, y), new Vector2(x + width, y + height) };
         }
 
         /// <summary>
@@ -62,18 +59,16 @@ namespace netDxf
         /// </summary>
         /// <param name="firstCorner">Rectangle first corner.</param>
         /// <param name="secondCorner">Rectangle second corner.</param>
-        public ClippingBoundary(Vector2 firstCorner, Vector2 secondCorner)
-        {
+        public ClippingBoundary(Vector2 firstCorner, Vector2 secondCorner) {
             this.type = ClippingBoundaryType.Rectangular;
-            this.vertexes = new List<Vector2> {firstCorner, secondCorner};
+            this.vertexes = new List<Vector2> { firstCorner, secondCorner };
         }
 
         /// <summary>
         /// Initializes a new instance of the <c>ClippingBoundary</c> class as a polygonal clipping boundary.
         /// </summary>
         /// <param name="vertexes">The list of vertexes of the polygonal boundary.</param>
-        public ClippingBoundary(IEnumerable<Vector2> vertexes)
-        {
+        public ClippingBoundary(IEnumerable<Vector2> vertexes) {
             this.type = ClippingBoundaryType.Polygonal;
             this.vertexes = new List<Vector2>(vertexes);
             if (this.vertexes.Count < 3)
@@ -87,16 +82,14 @@ namespace netDxf
         /// <summary>
         /// Gets the clipping boundary type, rectangular or polygonal.
         /// </summary>
-        public ClippingBoundaryType Type
-        {
+        public ClippingBoundaryType Type {
             get { return this.type; }
         }
 
         /// <summary>
         /// Gets the list of vertexes of the polygonal boundary, or the opposite vertexes if the boundary is rectangular.
         /// </summary>
-        public IReadOnlyList<Vector2> Vertexes
-        {
+        public IReadOnlyList<Vector2> Vertexes {
             get { return this.vertexes; }
         }
 
@@ -108,8 +101,7 @@ namespace netDxf
         /// Creates a new ClippingBoundary that is a copy of the current instance.
         /// </summary>
         /// <returns>A new ClippingBoundary that is a copy of this instance.</returns>
-        public object Clone()
-        {
+        public object Clone() {
             return this.type == ClippingBoundaryType.Rectangular ? new ClippingBoundary(this.vertexes[0], this.vertexes[1]) : new ClippingBoundary(this.vertexes);
         }
 

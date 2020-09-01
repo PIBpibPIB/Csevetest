@@ -23,14 +23,12 @@
 using System;
 using System.Threading;
 
-namespace netDxf
-{
+namespace netDxf {
     /// <summary>
     /// Represent a three component vector of double precision.
     /// </summary>
     public struct Vector3 :
-        IEquatable<Vector3>
-    {
+        IEquatable<Vector3> {
         #region private fields
 
         private double x;
@@ -46,8 +44,7 @@ namespace netDxf
         /// Initializes a new instance of Vector3.
         /// </summary>
         /// <param name="value">X, Y, Z component.</param>
-        public Vector3(double value)
-        {
+        public Vector3(double value) {
             this.x = value;
             this.y = value;
             this.z = value;
@@ -60,8 +57,7 @@ namespace netDxf
         /// <param name="x">X component.</param>
         /// <param name="y">Y component.</param>
         /// <param name="z">Z component.</param>
-        public Vector3(double x, double y, double z)
-        {
+        public Vector3(double x, double y, double z) {
             this.x = x;
             this.y = y;
             this.z = z;
@@ -72,8 +68,7 @@ namespace netDxf
         /// Initializes a new instance of Vector3.
         /// </summary>
         /// <param name="array">Array of three elements that represents the vector.</param>
-        public Vector3(double[] array)
-        {
+        public Vector3(double[] array) {
             if (array == null)
                 throw new ArgumentNullException(nameof(array));
 
@@ -92,40 +87,35 @@ namespace netDxf
         /// <summary>
         /// Zero vector.
         /// </summary>
-        public static Vector3 Zero
-        {
+        public static Vector3 Zero {
             get { return new Vector3(0, 0, 0); }
         }
 
         /// <summary>
         /// Unit X vector.
         /// </summary>
-        public static Vector3 UnitX
-        {
-            get { return new Vector3(1, 0, 0) {isNormalized = true}; }
+        public static Vector3 UnitX {
+            get { return new Vector3(1, 0, 0) { isNormalized = true }; }
         }
 
         /// <summary>
         /// Unit Y vector.
         /// </summary>
-        public static Vector3 UnitY
-        {
-            get { return new Vector3(0, 1, 0) {isNormalized = true}; }
+        public static Vector3 UnitY {
+            get { return new Vector3(0, 1, 0) { isNormalized = true }; }
         }
 
         /// <summary>
         /// Unit Z vector.
         /// </summary>
-        public static Vector3 UnitZ
-        {
-            get { return new Vector3(0, 0, 1) {isNormalized = true}; }
+        public static Vector3 UnitZ {
+            get { return new Vector3(0, 0, 1) { isNormalized = true }; }
         }
 
         /// <summary>
         /// Represents a vector with not a number components.
         /// </summary>
-        public static Vector3 NaN
-        {
+        public static Vector3 NaN {
             get { return new Vector3(double.NaN, double.NaN, double.NaN); }
         }
 
@@ -136,11 +126,9 @@ namespace netDxf
         /// <summary>
         /// Gets or sets the X component.
         /// </summary>
-        public double X
-        {
+        public double X {
             get { return this.x; }
-            set
-            {
+            set {
                 this.isNormalized = false;
                 this.x = value;
             }
@@ -149,11 +137,9 @@ namespace netDxf
         /// <summary>
         /// Gets or sets the Y component.
         /// </summary>
-        public double Y
-        {
+        public double Y {
             get { return this.y; }
-            set
-            {
+            set {
                 this.isNormalized = false;
                 this.y = value;
             }
@@ -162,11 +148,9 @@ namespace netDxf
         /// <summary>
         /// Gets or sets the Z component.
         /// </summary>
-        public double Z
-        {
+        public double Z {
             get { return this.z; }
-            set
-            {
+            set {
                 this.isNormalized = false;
                 this.z = value;
             }
@@ -176,12 +160,9 @@ namespace netDxf
         /// Gets or sets a vector element defined by its index.
         /// </summary>
         /// <param name="index">Index of the element.</param>
-        public double this[int index]
-        {
-            get
-            {
-                switch (index)
-                {
+        public double this[int index] {
+            get {
+                switch (index) {
                     case 0:
                         return this.x;
                     case 1:
@@ -192,11 +173,9 @@ namespace netDxf
                         throw new ArgumentOutOfRangeException(nameof(index));
                 }
             }
-            set
-            {
+            set {
                 this.isNormalized = false;
-                switch (index)
-                {
+                switch (index) {
                     case 0:
                         this.x = value;
                         break;
@@ -215,8 +194,7 @@ namespace netDxf
         /// <summary>
         /// Gets if the vector has been normalized.
         /// </summary>
-        public bool IsNormalized
-        {
+        public bool IsNormalized {
             get { return this.isNormalized; }
         }
 
@@ -229,8 +207,7 @@ namespace netDxf
         /// </summary>
         /// <param name="u">Vector3.</param>
         /// <returns>Returns true if any component of the specified vector evaluates to <see cref="System.Double.NaN"/>; otherwise, false.</returns>
-        public static bool IsNaN(Vector3 u)
-        {
+        public static bool IsNaN(Vector3 u) {
             return double.IsNaN(u.X) || double.IsNaN(u.Y) || double.IsNaN(u.Z);
         }
 
@@ -240,9 +217,8 @@ namespace netDxf
         /// <param name="u">Vector3.</param>
         /// <param name="v">Vector3.</param>
         /// <returns>The dot product.</returns>
-        public static double DotProduct(Vector3 u, Vector3 v)
-        {
-            return u.X*v.X + u.Y*v.Y + u.Z*v.Z;
+        public static double DotProduct(Vector3 u, Vector3 v) {
+            return u.X * v.X + u.Y * v.Y + u.Z * v.Z;
         }
 
         /// <summary>
@@ -251,11 +227,10 @@ namespace netDxf
         /// <param name="u">Vector3.</param>
         /// <param name="v">Vector3.</param>
         /// <returns>Vector3.</returns>
-        public static Vector3 CrossProduct(Vector3 u, Vector3 v)
-        {
-            double a = u.Y*v.Z - u.Z*v.Y;
-            double b = u.Z*v.X - u.X*v.Z;
-            double c = u.X*v.Y - u.Y*v.X;
+        public static Vector3 CrossProduct(Vector3 u, Vector3 v) {
+            double a = u.Y * v.Z - u.Z * v.Y;
+            double b = u.Z * v.X - u.X * v.Z;
+            double c = u.X * v.Y - u.Y * v.X;
             return new Vector3(a, b, c);
         }
 
@@ -265,9 +240,8 @@ namespace netDxf
         /// <param name="u">Vector3.</param>
         /// <param name="v">Vector3.</param>
         /// <returns>Distance.</returns>
-        public static double Distance(Vector3 u, Vector3 v)
-        {
-            return Math.Sqrt((u.X - v.X)*(u.X - v.X) + (u.Y - v.Y)*(u.Y - v.Y) + (u.Z - v.Z)*(u.Z - v.Z));
+        public static double Distance(Vector3 u, Vector3 v) {
+            return Math.Sqrt((u.X - v.X) * (u.X - v.X) + (u.Y - v.Y) * (u.Y - v.Y) + (u.Z - v.Z) * (u.Z - v.Z));
         }
 
         /// <summary>
@@ -276,9 +250,8 @@ namespace netDxf
         /// <param name="u">Vector3.</param>
         /// <param name="v">Vector3.</param>
         /// <returns>Square distance.</returns>
-        public static double SquareDistance(Vector3 u, Vector3 v)
-        {
-            return (u.X - v.X)*(u.X - v.X) + (u.Y - v.Y)*(u.Y - v.Y) + (u.Z - v.Z)*(u.Z - v.Z);
+        public static double SquareDistance(Vector3 u, Vector3 v) {
+            return (u.X - v.X) * (u.X - v.X) + (u.Y - v.Y) * (u.Y - v.Y) + (u.Z - v.Z) * (u.Z - v.Z);
         }
 
         /// <summary>
@@ -287,9 +260,8 @@ namespace netDxf
         /// <param name="u">Vector3.</param>
         /// <param name="v">Vector3.</param>
         /// <returns>Angle in radians.</returns>
-        public static double AngleBetween(Vector3 u, Vector3 v)
-        {
-            double cos = DotProduct(u, v)/(u.Modulus()*v.Modulus());
+        public static double AngleBetween(Vector3 u, Vector3 v) {
+            double cos = DotProduct(u, v) / (u.Modulus() * v.Modulus());
             if (cos >= 1.0)
                 return 0.0;
             if (cos <= -1.0)
@@ -304,9 +276,8 @@ namespace netDxf
         /// <param name="u">Vector3.</param>
         /// <param name="v">Vector3.</param>
         /// <returns>Vector3.</returns>
-        public static Vector3 MidPoint(Vector3 u, Vector3 v)
-        {
-            return new Vector3((v.X + u.X)*0.5, (v.Y + u.Y)*0.5, (v.Z + u.Z)*0.5);
+        public static Vector3 MidPoint(Vector3 u, Vector3 v) {
+            return new Vector3((v.X + u.X) * 0.5, (v.Y + u.Y) * 0.5, (v.Z + u.Z) * 0.5);
         }
 
         /// <summary>
@@ -315,8 +286,7 @@ namespace netDxf
         /// <param name="u">Vector3.</param>
         /// <param name="v">Vector3.</param>
         /// <returns>True if are perpendicular or false in any other case.</returns>
-        public static bool ArePerpendicular(Vector3 u, Vector3 v)
-        {
+        public static bool ArePerpendicular(Vector3 u, Vector3 v) {
             return ArePerpendicular(u, v, MathHelper.Epsilon);
         }
 
@@ -327,8 +297,7 @@ namespace netDxf
         /// <param name="v">Vector3.</param>
         /// <param name="threshold">Tolerance used.</param>
         /// <returns>True if are perpendicular or false in any other case.</returns>
-        public static bool ArePerpendicular(Vector3 u, Vector3 v, double threshold)
-        {
+        public static bool ArePerpendicular(Vector3 u, Vector3 v, double threshold) {
             return MathHelper.IsZero(DotProduct(u, v), threshold);
         }
 
@@ -338,8 +307,7 @@ namespace netDxf
         /// <param name="u">Vector3.</param>
         /// <param name="v">Vector3.</param>
         /// <returns>True if are parallel or false in any other case.</returns>
-        public static bool AreParallel(Vector3 u, Vector3 v)
-        {
+        public static bool AreParallel(Vector3 u, Vector3 v) {
             return AreParallel(u, v, MathHelper.Epsilon);
         }
 
@@ -350,8 +318,7 @@ namespace netDxf
         /// <param name="v">Vector3.</param>
         /// <param name="threshold">Tolerance used.</param>
         /// <returns>True if are parallel or false in any other case.</returns>
-        public static bool AreParallel(Vector3 u, Vector3 v, double threshold)
-        {
+        public static bool AreParallel(Vector3 u, Vector3 v, double threshold) {
             Vector3 cross = CrossProduct(u, v);
 
             if (!MathHelper.IsZero(cross.X, threshold))
@@ -369,8 +336,7 @@ namespace netDxf
         /// <param name="u">Vector to round.</param>
         /// <param name="numDigits">Number of decimal places in the return value.</param>
         /// <returns>The rounded vector.</returns>
-        public static Vector3 Round(Vector3 u, int numDigits)
-        {
+        public static Vector3 Round(Vector3 u, int numDigits) {
             return new Vector3(Math.Round(u.X, numDigits), Math.Round(u.Y, numDigits), Math.Round(u.Z, numDigits));
         }
 
@@ -379,15 +345,14 @@ namespace netDxf
         /// </summary>
         /// <param name="u">Vector to normalize</param>
         /// <returns>A normalized vector.</returns>
-        public static Vector3 Normalize(Vector3 u)
-        {
+        public static Vector3 Normalize(Vector3 u) {
             if (u.isNormalized) return u;
 
             double mod = u.Modulus();
             if (MathHelper.IsZero(mod))
                 return NaN;
-            double modInv = 1/mod;
-            Vector3 vec = new Vector3(u.x*modInv, u.y*modInv, u.z*modInv);
+            double modInv = 1 / mod;
+            Vector3 vec = new Vector3(u.x * modInv, u.y * modInv, u.z * modInv);
             vec.isNormalized = true;
             return vec;
         }
@@ -402,8 +367,7 @@ namespace netDxf
         /// <param name="u">Vector3.</param>
         /// <param name="v">Vector3.</param>
         /// <returns>True if the three components are equal or false in any other case.</returns>
-        public static bool operator ==(Vector3 u, Vector3 v)
-        {
+        public static bool operator ==(Vector3 u, Vector3 v) {
             return Equals(u, v);
         }
 
@@ -413,8 +377,7 @@ namespace netDxf
         /// <param name="u">Vector3.</param>
         /// <param name="v">Vector3.</param>
         /// <returns>True if the three components are different or false in any other case.</returns>
-        public static bool operator !=(Vector3 u, Vector3 v)
-        {
+        public static bool operator !=(Vector3 u, Vector3 v) {
             return !Equals(u, v);
         }
 
@@ -424,8 +387,7 @@ namespace netDxf
         /// <param name="u">Vector3.</param>
         /// <param name="v">Vector3.</param>
         /// <returns>The addition of u plus v.</returns>
-        public static Vector3 operator +(Vector3 u, Vector3 v)
-        {
+        public static Vector3 operator +(Vector3 u, Vector3 v) {
             return new Vector3(u.X + v.X, u.Y + v.Y, u.Z + v.Z);
         }
 
@@ -435,8 +397,7 @@ namespace netDxf
         /// <param name="u">Vector3.</param>
         /// <param name="v">Vector3.</param>
         /// <returns>The addition of u plus v.</returns>
-        public static Vector3 Add(Vector3 u, Vector3 v)
-        {
+        public static Vector3 Add(Vector3 u, Vector3 v) {
             return new Vector3(u.X + v.X, u.Y + v.Y, u.Z + v.Z);
         }
 
@@ -446,8 +407,7 @@ namespace netDxf
         /// <param name="u">Vector3.</param>
         /// <param name="v">Vector3.</param>
         /// <returns>The subtraction of u minus v.</returns>
-        public static Vector3 operator -(Vector3 u, Vector3 v)
-        {
+        public static Vector3 operator -(Vector3 u, Vector3 v) {
             return new Vector3(u.X - v.X, u.Y - v.Y, u.Z - v.Z);
         }
 
@@ -457,8 +417,7 @@ namespace netDxf
         /// <param name="u">Vector3.</param>
         /// <param name="v">Vector3.</param>
         /// <returns>The subtraction of u minus v.</returns>
-        public static Vector3 Subtract(Vector3 u, Vector3 v)
-        {
+        public static Vector3 Subtract(Vector3 u, Vector3 v) {
             return new Vector3(u.X - v.X, u.Y - v.Y, u.Z - v.Z);
         }
 
@@ -467,8 +426,7 @@ namespace netDxf
         /// </summary>
         /// <param name="u">Vector3.</param>
         /// <returns>The negative vector of u.</returns>
-        public static Vector3 operator -(Vector3 u)
-        {
+        public static Vector3 operator -(Vector3 u) {
             return new Vector3(-u.X, -u.Y, -u.Z) { isNormalized = u.IsNormalized };
         }
 
@@ -477,8 +435,7 @@ namespace netDxf
         /// </summary>
         /// <param name="u">Vector3.</param>
         /// <returns>The negative vector of u.</returns>
-        public static Vector3 Negate(Vector3 u)
-        {
+        public static Vector3 Negate(Vector3 u) {
             return new Vector3(-u.X, -u.Y, -u.Z) { isNormalized = u.IsNormalized };
         }
 
@@ -488,9 +445,8 @@ namespace netDxf
         /// <param name="u">Vector3.</param>
         /// <param name="a">Scalar.</param>
         /// <returns>The multiplication of u times a.</returns>
-        public static Vector3 operator *(Vector3 u, double a)
-        {
-            return new Vector3(u.X*a, u.Y*a, u.Z*a);
+        public static Vector3 operator *(Vector3 u, double a) {
+            return new Vector3(u.X * a, u.Y * a, u.Z * a);
         }
 
         /// <summary>
@@ -499,9 +455,8 @@ namespace netDxf
         /// <param name="u">Vector3.</param>
         /// <param name="a">Scalar.</param>
         /// <returns>The multiplication of u times a.</returns>
-        public static Vector3 Multiply(Vector3 u, double a)
-        {
-            return new Vector3(u.X*a, u.Y*a, u.Z*a);
+        public static Vector3 Multiply(Vector3 u, double a) {
+            return new Vector3(u.X * a, u.Y * a, u.Z * a);
         }
 
         /// <summary>
@@ -510,9 +465,8 @@ namespace netDxf
         /// <param name="a">Scalar.</param>
         /// <param name="u">Vector3.</param>
         /// <returns>The multiplication of u times a.</returns>
-        public static Vector3 operator *(double a, Vector3 u)
-        {
-            return new Vector3(u.X*a, u.Y*a, u.Z*a);
+        public static Vector3 operator *(double a, Vector3 u) {
+            return new Vector3(u.X * a, u.Y * a, u.Z * a);
         }
 
         /// <summary>
@@ -521,9 +475,8 @@ namespace netDxf
         /// <param name="a">Scalar.</param>
         /// <param name="u">Vector3.</param>
         /// <returns>The multiplication of u times a.</returns>
-        public static Vector3 Multiply(double a, Vector3 u)
-        {
-            return new Vector3(u.X*a, u.Y*a, u.Z*a);
+        public static Vector3 Multiply(double a, Vector3 u) {
+            return new Vector3(u.X * a, u.Y * a, u.Z * a);
         }
 
         /// <summary>
@@ -532,8 +485,7 @@ namespace netDxf
         /// <param name="u">Vector3.</param>
         /// <param name="v">Vector3.</param>
         /// <returns>The multiplication of u times v.</returns>
-        public static Vector3 operator *(Vector3 u, Vector3 v)
-        {
+        public static Vector3 operator *(Vector3 u, Vector3 v) {
             return new Vector3(u.X * v.X, u.Y * v.Y, u.Z * v.Z);
         }
 
@@ -543,8 +495,7 @@ namespace netDxf
         /// <param name="u">Vector2.</param>
         /// <param name="v">Vector2.</param>
         /// <returns>The multiplication of u times v.</returns>
-        public static Vector3 Multiply(Vector3 u, Vector3 v)
-        {
+        public static Vector3 Multiply(Vector3 u, Vector3 v) {
             return new Vector3(u.X * v.X, u.Y * v.Y, u.Z * v.Z);
         }
 
@@ -554,8 +505,7 @@ namespace netDxf
         /// <param name="u">Vector3.</param>
         /// <param name="a">Scalar.</param>
         /// <returns>The division of u times a.</returns>
-        public static Vector3 operator /(double a, Vector3 u)
-        {
+        public static Vector3 operator /(double a, Vector3 u) {
             return new Vector3(a * u.X, a * u.Y, a * u.Z);
         }
 
@@ -565,8 +515,7 @@ namespace netDxf
         /// <param name="a">Scalar.</param>
         /// <param name="u">Vector3.</param>
         /// <returns>The division of u times a.</returns>
-        public static Vector3 Divide(double a, Vector3 u)
-        {
+        public static Vector3 Divide(double a, Vector3 u) {
             return new Vector3(a * u.X, a * u.Y, a * u.Z);
         }
 
@@ -576,10 +525,9 @@ namespace netDxf
         /// <param name="a">Scalar.</param>
         /// <param name="u">Vector3.</param>
         /// <returns>The division of u times a.</returns>
-        public static Vector3 operator /(Vector3 u, double a)
-        {
-            double invEscalar = 1/a;
-            return new Vector3(u.X*invEscalar, u.Y*invEscalar, u.Z*invEscalar);
+        public static Vector3 operator /(Vector3 u, double a) {
+            double invEscalar = 1 / a;
+            return new Vector3(u.X * invEscalar, u.Y * invEscalar, u.Z * invEscalar);
         }
 
         /// <summary>
@@ -588,10 +536,9 @@ namespace netDxf
         /// <param name="u">Vector3.</param>
         /// <param name="a">Scalar.</param>
         /// <returns>The division of u times a.</returns>
-        public static Vector3 Divide(Vector3 u, double a)
-        {
-            double invEscalar = 1/a;
-            return new Vector3(u.X*invEscalar, u.Y*invEscalar, u.Z*invEscalar);
+        public static Vector3 Divide(Vector3 u, double a) {
+            double invEscalar = 1 / a;
+            return new Vector3(u.X * invEscalar, u.Y * invEscalar, u.Z * invEscalar);
         }
 
         /// <summary>
@@ -600,8 +547,7 @@ namespace netDxf
         /// <param name="u">Vector3.</param>
         /// <param name="v">Vector3.</param>
         /// <returns>The multiplication of u times v.</returns>
-        public static Vector3 operator /(Vector3 u, Vector3 v)
-        {
+        public static Vector3 operator /(Vector3 u, Vector3 v) {
             return new Vector3(u.X / v.X, u.Y / v.Y, u.Z / v.Z);
         }
 
@@ -611,8 +557,7 @@ namespace netDxf
         /// <param name="u">Vector2.</param>
         /// <param name="v">Vector2.</param>
         /// <returns>The multiplication of u times v.</returns>
-        public static Vector3 Divide(Vector3 u, Vector3 v)
-        {
+        public static Vector3 Divide(Vector3 u, Vector3 v) {
             return new Vector3(u.X / v.X, u.Y / v.Y, u.Z / v.Z);
         }
 
@@ -623,16 +568,14 @@ namespace netDxf
         /// <summary>
         /// Normalizes the current vector.
         /// </summary>
-        public void Normalize()
-        {
+        public void Normalize() {
             if (this.isNormalized) return;
 
             double mod = this.Modulus();
             if (MathHelper.IsZero(mod))
                 this = NaN;
-            else
-            {
-                double modInv = 1/mod;
+            else {
+                double modInv = 1 / mod;
                 this.x *= modInv;
                 this.y *= modInv;
                 this.z *= modInv;
@@ -644,8 +587,7 @@ namespace netDxf
         /// Obtains the modulus of the vector.
         /// </summary>
         /// <returns>Vector modulus.</returns>
-        public double Modulus()
-        {
+        public double Modulus() {
             return Math.Sqrt(DotProduct(this, this));
         }
 
@@ -653,9 +595,8 @@ namespace netDxf
         /// Returns an array that represents the vector.
         /// </summary>
         /// <returns>Array.</returns>
-        public double[] ToArray()
-        {
-            return new[] {this.x, this.y, this.z};
+        public double[] ToArray() {
+            return new[] { this.x, this.y, this.z };
         }
 
         #endregion
@@ -668,8 +609,7 @@ namespace netDxf
         /// <param name="a">Vector3.</param>
         /// <param name="b">Vector3.</param>
         /// <returns>True if the three components are almost equal or false in any other case.</returns>
-        public static bool Equals(Vector3 a, Vector3 b)
-        {
+        public static bool Equals(Vector3 a, Vector3 b) {
             return a.Equals(b, MathHelper.Epsilon);
         }
 
@@ -680,8 +620,7 @@ namespace netDxf
         /// <param name="b">Vector3.</param>
         /// <param name="threshold">Maximum tolerance.</param>
         /// <returns>True if the three components are almost equal or false in any other case.</returns>
-        public static bool Equals(Vector3 a, Vector3 b, double threshold)
-        {
+        public static bool Equals(Vector3 a, Vector3 b, double threshold) {
             return a.Equals(b, threshold);
         }
 
@@ -690,8 +629,7 @@ namespace netDxf
         /// </summary>
         /// <param name="other">Vector3.</param>
         /// <returns>True if the three components are almost equal or false in any other case.</returns>
-        public bool Equals(Vector3 other)
-        {
+        public bool Equals(Vector3 other) {
             return this.Equals(other, MathHelper.Epsilon);
         }
 
@@ -701,8 +639,7 @@ namespace netDxf
         /// <param name="other">Vector3.</param>
         /// <param name="threshold">Maximum tolerance.</param>
         /// <returns>True if the three components are almost equal or false in any other case.</returns>
-        public bool Equals(Vector3 other, double threshold)
-        {
+        public bool Equals(Vector3 other, double threshold) {
             return MathHelper.IsEqual(other.X, this.x, threshold) && MathHelper.IsEqual(other.Y, this.y, threshold) && MathHelper.IsEqual(other.Z, this.z, threshold);
         }
 
@@ -711,10 +648,9 @@ namespace netDxf
         /// </summary>
         /// <param name="other">Another object to compare to.</param>
         /// <returns>True if obj and this instance are the same type and represent the same value; otherwise, false.</returns>
-        public override bool Equals(object other)
-        {
+        public override bool Equals(object other) {
             if (other is Vector3)
-                return this.Equals((Vector3) other);
+                return this.Equals((Vector3)other);
             return false;
         }
 
@@ -722,8 +658,7 @@ namespace netDxf
         /// Returns the hash code for this instance.
         /// </summary>
         /// <returns>A 32-bit signed integer that is the hash code for this instance.</returns>
-        public override int GetHashCode()
-        {
+        public override int GetHashCode() {
             return this.X.GetHashCode() ^ this.Y.GetHashCode() ^ this.Z.GetHashCode();
         }
 
@@ -735,8 +670,7 @@ namespace netDxf
         /// Obtains a string that represents the vector.
         /// </summary>
         /// <returns>A string text.</returns>
-        public override string ToString()
-        {
+        public override string ToString() {
             return string.Format("{0}{3} {1}{3} {2}", this.x, this.y, this.z, Thread.CurrentThread.CurrentCulture.TextInfo.ListSeparator);
         }
 
@@ -745,8 +679,7 @@ namespace netDxf
         /// </summary>
         /// <param name="provider">An IFormatProvider interface implementation that supplies culture-specific formatting information. </param>
         /// <returns>A string text.</returns>
-        public string ToString(IFormatProvider provider)
-        {
+        public string ToString(IFormatProvider provider) {
             return string.Format("{0}{3} {1}{3} {2}", this.x.ToString(provider), this.y.ToString(provider), this.z.ToString(provider), Thread.CurrentThread.CurrentCulture.TextInfo.ListSeparator);
         }
 

@@ -26,11 +26,9 @@ using System.Globalization;
 using System.IO;
 using System.Text;
 
-namespace netDxf.IO
-{
+namespace netDxf.IO {
     internal class BinaryCodeValueReader :
-        ICodeValueReader
-    {
+        ICodeValueReader {
         #region private fields
 
         private readonly BinaryReader reader;
@@ -42,15 +40,13 @@ namespace netDxf.IO
 
         #region constructors
 
-        public BinaryCodeValueReader(BinaryReader reader, Encoding encoding)
-        {
+        public BinaryCodeValueReader(BinaryReader reader, Encoding encoding) {
             this.reader = reader;
             this.encoding = encoding;
             byte[] sentinel = this.reader.ReadBytes(22);
             StringBuilder sb = new StringBuilder(18);
-            for (int i = 0; i < 18; i++)
-            {
-                sb.Append((char) sentinel[i]);
+            for (int i = 0; i < 18; i++) {
+                sb.Append((char)sentinel[i]);
             }
             if (sb.ToString() != "AutoCAD Binary DXF")
                 throw new ArgumentException("Not a valid binary DXF.");
@@ -63,18 +59,15 @@ namespace netDxf.IO
 
         #region public properties
 
-        public short Code
-        {
+        public short Code {
             get { return this.code; }
         }
 
-        public object Value
-        {
+        public object Value {
             get { return this.value; }
         }
 
-        public long CurrentPosition
-        {
+        public long CurrentPosition {
             get { return this.reader.BaseStream.Position; }
         }
 
@@ -82,8 +75,7 @@ namespace netDxf.IO
 
         #region public methods
 
-        public void Next()
-        {
+        public void Next() {
             this.code = this.reader.ReadInt16();
             if (this.code >= 0 && this.code <= 9) // string
                 this.value = this.NullTerminatedString();
@@ -173,49 +165,40 @@ namespace netDxf.IO
                 throw new Exception(string.Format("Code {0} not valid at byte address {1}", this.code, this.reader.BaseStream.Position));
         }
 
-        public byte ReadByte()
-        {
+        public byte ReadByte() {
             return (byte)this.value;
         }
 
-        public byte[] ReadBytes()
-        {
+        public byte[] ReadBytes() {
             return (byte[])this.value;
         }
 
-        public short ReadShort()
-        {
+        public short ReadShort() {
             return (short)this.value;
         }
 
-        public int ReadInt()
-        {
+        public int ReadInt() {
             return (int)this.value;
         }
 
-        public long ReadLong()
-        {
+        public long ReadLong() {
             return (long)this.value;
         }
 
-        public bool ReadBool()
-        {
+        public bool ReadBool() {
             byte result = this.ReadByte();
             return result > 0;
         }
 
-        public double ReadDouble()
-        {
+        public double ReadDouble() {
             return (double)this.value;
         }
 
-        public string ReadString()
-        {
+        public string ReadString() {
             return (string)this.value;
         }
 
-        public string ReadHex()
-        {
+        public string ReadHex() {
             long test;
             if (long.TryParse((string)this.value, NumberStyles.HexNumber, CultureInfo.InvariantCulture, out test))
                 return test.ToString("X");
@@ -223,8 +206,7 @@ namespace netDxf.IO
             throw new Exception(string.Format("Value {0} not valid at line {1}", this.value, this.CurrentPosition));
         }
 
-        public override string ToString()
-        {
+        public override string ToString() {
             return string.Format("{0}:{1}", this.code, this.value);
         }
 
@@ -232,14 +214,12 @@ namespace netDxf.IO
 
         #region private methods
 
-        private byte[] ReadBinaryData()
-        {
+        private byte[] ReadBinaryData() {
             byte length = this.reader.ReadByte();
             return this.reader.ReadBytes(length);
         }
 
-        private string NullTerminatedString()
-        {
+        private string NullTerminatedString() {
             byte c = this.reader.ReadByte();
             List<byte> bytes = new List<byte>();
             while (c != 0) // strings always end with a 0 byte (char NULL)

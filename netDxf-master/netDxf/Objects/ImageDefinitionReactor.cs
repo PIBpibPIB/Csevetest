@@ -20,11 +20,9 @@
 
 #endregion
 
-namespace netDxf.Objects
-{
+namespace netDxf.Objects {
     internal class ImageDefinitionReactor :
-        DxfObject
-    {
+        DxfObject {
         #region private fields
 
         private string imageHandle;
@@ -34,8 +32,7 @@ namespace netDxf.Objects
         #region constructors
 
         public ImageDefinitionReactor(string imageHandle)
-            : base(DxfObjectCode.ImageDefReactor)
-        {
+            : base(DxfObjectCode.ImageDefReactor) {
             this.imageHandle = imageHandle;
         }
 
@@ -43,8 +40,7 @@ namespace netDxf.Objects
 
         #region public properties
 
-        public string ImageHandle
-        {
+        public string ImageHandle {
             get { return this.imageHandle; }
         }
 

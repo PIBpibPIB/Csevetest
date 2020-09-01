@@ -25,15 +25,12 @@ using System.Globalization;
 using System.IO;
 using System.Text;
 
-namespace netDxf.IO
-{
-    internal static class EncodingType
-    {
-        public static Encoding GetType(Stream fs)
-        {
-            byte[] unicode = {0xFF, 0xFE, 0x41};
-            byte[] unicodeBig = {0xFE, 0xFF, 0x00};
-            byte[] utf8 = {0xEF, 0xBB, 0xBF}; //with BOM
+namespace netDxf.IO {
+    internal static class EncodingType {
+        public static Encoding GetType(Stream fs) {
+            byte[] unicode = { 0xFF, 0xFE, 0x41 };
+            byte[] unicodeBig = { 0xFE, 0xFF, 0x00 };
+            byte[] utf8 = { 0xEF, 0xBB, 0xBF }; //with BOM
             Encoding reVal = Encoding.ASCII; //.Default;
 
             BinaryReader r = new BinaryReader(fs, Encoding.Default);
@@ -51,25 +48,19 @@ namespace netDxf.IO
             return reVal;
         }
 
-        private static bool IsUTF8Bytes(byte[] data)
-        {
+        private static bool IsUTF8Bytes(byte[] data) {
             int charByteCounter = 1;
-            for (int i = 0; i < data.Length; i++)
-            {
+            for (int i = 0; i < data.Length; i++) {
                 byte curByte = data[i];
-                if (charByteCounter == 1)
-                {
-                    if (curByte >= 0x80)
-                    {
+                if (charByteCounter == 1) {
+                    if (curByte >= 0x80) {
                         while (((curByte <<= 1) & 0x80) != 0)
                             charByteCounter++;
 
                         if (charByteCounter == 1 || charByteCounter > 6)
                             return false;
                     }
-                }
-                else
-                {
+                } else {
                     if ((curByte & 0xC0) != 0x80)
                         return false;
                     charByteCounter--;

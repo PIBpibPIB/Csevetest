@@ -22,14 +22,12 @@
 
 using System;
 
-namespace netDxf.Entities
-{
+namespace netDxf.Entities {
     /// <summary>
     /// Underlay display options.
     /// </summary>
     [Flags]
-    public enum UnderlayDisplayFlags
-    {
+    public enum UnderlayDisplayFlags {
         /// <summary>
         /// Clipping is on.
         /// </summary>

@@ -1,30 +1,21 @@
 ﻿using netDxf;
 using netDxf.Entities;
-using netDxf.Units;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Diagnostics;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using System.IO;
-using System.IO.Compression;
 using System.Deployment.Application;
+using System.Diagnostics;
+using System.IO;
+using System.Windows.Forms;
 
 namespace Csevetest {
     public partial class MainForm : Form {
-        string Version = "unknown";
+        readonly string Version = "unknown";
 
-        public decimal A { get { return numericUpDown_A.Value; } }
-        public decimal B { get { return numericUpDown_B.Value; } }
-        public decimal C { get { return numericUpDown_C.Value; } }
-        public decimal D { get { return numericUpDown_D.Value; } }
-        public decimal E { get { return numericUpDown_E.Value; } }
-        public decimal T { get { return numericUpDown_T.Value; } }
+        public decimal A => numericUpDown_A.Value;
+        public decimal B => numericUpDown_B.Value;
+        public decimal C => numericUpDown_C.Value;
+        public decimal D => numericUpDown_D.Value;
+        public decimal E => numericUpDown_E.Value;
+        public decimal T => numericUpDown_T.Value;
 
         public MainForm(string[] args) {
             InitializeComponent();
@@ -35,21 +26,8 @@ namespace Csevetest {
             }
         }
 
-        string DefaultFolderName {
-            get {
-                string s = "";
-                s += "A"; s += A.ToString(); s += "_";
-                s += "B"; s += B.ToString(); s += "_";
-                s += "C"; s += C.ToString(); s += "_";
-                s += "D"; s += D.ToString(); s += "_";
-                s += "E"; s += E.ToString(); s += "_";
-                s += "T"; s += T.ToString();
-                return s;
-            }
-        }
-
-        private void button1_Click(object sender, EventArgs e) {
-            FolderBrowserDialog fbd = new FolderBrowserDialog();
+        private void Button1_Click(object sender, EventArgs e) {
+            var fbd = new FolderBrowserDialog();
             fbd.ShowDialog();
             if (fbd.SelectedPath == "") {
                 MessageBox.Show("DXF generálás megszakítva!");
@@ -138,8 +116,7 @@ namespace Csevetest {
                 numericUpDown_C.Value = Properties.Settings.Default.D;
                 numericUpDown_E.Value = Properties.Settings.Default.E;
                 numericUpDown_T.Value = Properties.Settings.Default.Thickness;
-            }
-            catch {
+            } catch {
                 numericUpDown_A.Value = 35;
                 numericUpDown_B.Value = 38;
                 numericUpDown_D.Value = 92;
@@ -159,7 +136,7 @@ namespace Csevetest {
         }
 
         #region Help
-        private void pictureBox2_Click(object sender, EventArgs e) {
+        private void PictureBox2_Click(object sender, EventArgs e) {
             Help help = new Help(Version);
             help.FormClosed += Help_FormClosed;
             help.FormClosing += Help_FormClosing;

@@ -20,16 +20,14 @@
 
 #endregion
 
-namespace netDxf.Objects
-{
+namespace netDxf.Objects {
     /// <summary>
     /// Supported image formats.
     /// </summary>
     /// <remarks>
     /// These are the image formats in common between the net framework and AutoCAD.
     /// </remarks>
-    public enum SupportedImageFormats
-    {
+    public enum SupportedImageFormats {
         /// <summary>
         /// BMP image format.
         /// </summary>

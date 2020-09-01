@@ -20,28 +20,24 @@
 
 #endregion
 
+using netDxf.Tables;
 using System;
 using System.Collections.Generic;
-using netDxf.Tables;
 
-namespace netDxf.Collections
-{
+namespace netDxf.Collections {
     /// <summary>
     /// Represents a collection of application registries.
     /// </summary>
     public sealed class ApplicationRegistries :
-        TableObjects<ApplicationRegistry>
-    {
+        TableObjects<ApplicationRegistry> {
         #region constructor
 
         internal ApplicationRegistries(DxfDocument document)
-            : this(document, null)
-        {
+            : this(document, null) {
         }
 
         internal ApplicationRegistries(DxfDocument document, string handle)
-            : base(document, DxfObjectCode.ApplicationIdTable, handle)
-        {
+            : base(document, DxfObjectCode.ApplicationIdTable, handle) {
             this.MaxCapacity = short.MaxValue;
         }
 
@@ -58,8 +54,7 @@ namespace netDxf.Collections
         /// If a an application registry already exists with the same name as the instance that is being added the method returns the existing application registry,
         /// if not it will return the new application registry.
         /// </returns>
-        internal override ApplicationRegistry Add(ApplicationRegistry appReg, bool assignHandle)
-        {
+        internal override ApplicationRegistry Add(ApplicationRegistry appReg, bool assignHandle) {
             if (this.list.Count >= this.MaxCapacity)
                 throw new OverflowException(string.Format("Table overflow. The maximum number of elements the table {0} can have is {1}", this.CodeName, this.MaxCapacity));
             if (appReg == null)
@@ -90,8 +85,7 @@ namespace netDxf.Collections
         /// <param name="name"><see cref="ApplicationRegistry">ApplicationRegistry</see> name to remove from the document.</param>
         /// <returns>True if the application registry has been successfully removed, or false otherwise.</returns>
         /// <remarks>Reserved application registries or any other referenced by objects cannot be removed.</remarks>
-        public override bool Remove(string name)
-        {
+        public override bool Remove(string name) {
             return this.Remove(this[name]);
         }
 
@@ -101,8 +95,7 @@ namespace netDxf.Collections
         /// <param name="item"><see cref="ApplicationRegistry">ApplicationRegistry</see> to remove from the document.</param>
         /// <returns>True if the application registry has been successfully removed, or false otherwise.</returns>
         /// <remarks>Reserved application registries or any other referenced by objects cannot be removed.</remarks>
-        public override bool Remove(ApplicationRegistry item)
-        {
+        public override bool Remove(ApplicationRegistry item) {
             if (item == null)
                 return false;
 
@@ -131,13 +124,12 @@ namespace netDxf.Collections
 
         #region TableObject events
 
-        private void Item_NameChanged(TableObject sender, TableObjectChangedEventArgs<string> e)
-        {
+        private void Item_NameChanged(TableObject sender, TableObjectChangedEventArgs<string> e) {
             if (this.Contains(e.NewValue))
                 throw new ArgumentException("There is already another application registry with the same name.");
 
             this.list.Remove(sender.Name);
-            this.list.Add(e.NewValue, (ApplicationRegistry) sender);
+            this.list.Add(e.NewValue, (ApplicationRegistry)sender);
 
             List<DxfObject> refs = this.references[sender.Name];
             this.references.Remove(sender.Name);

@@ -23,14 +23,12 @@
 using System;
 using System.Threading;
 
-namespace netDxf.Entities
-{
+namespace netDxf.Entities {
     /// <summary>
     /// Represents an edge of a <see cref="EntityObject">mesh</see> entity.
     /// </summary>
     public class MeshEdge :
-        ICloneable
-    {
+        ICloneable {
         #region private fields
 
         private int startVertexIndex;
@@ -47,8 +45,7 @@ namespace netDxf.Entities
         /// <param name="startVertexIndex">The edge start vertex index.</param>
         /// <param name="endVertexIndex">The edge end vertex index.</param>
         public MeshEdge(int startVertexIndex, int endVertexIndex)
-            : this(startVertexIndex, endVertexIndex, 0.0)
-        {
+            : this(startVertexIndex, endVertexIndex, 0.0) {
         }
 
         /// <summary>
@@ -57,8 +54,7 @@ namespace netDxf.Entities
         /// <param name="startVertexIndex">The edge start vertex index.</param>
         /// <param name="endVertexIndex">The edge end vertex index.</param>
         /// <param name="crease">The highest smoothing level at which the crease is retained  (default: 0.0).</param>
-        public MeshEdge(int startVertexIndex, int endVertexIndex, double crease)
-        {
+        public MeshEdge(int startVertexIndex, int endVertexIndex, double crease) {
             if (startVertexIndex < 0)
                 throw new ArgumentOutOfRangeException(nameof(startVertexIndex), startVertexIndex, "The vertex index must be positive.");
             this.startVertexIndex = startVertexIndex;
@@ -79,11 +75,9 @@ namespace netDxf.Entities
         /// <remarks>
         /// This value must be positive represent the position of the vertex in the mesh vertex list.
         /// </remarks>
-        public int StartVertexIndex
-        {
+        public int StartVertexIndex {
             get { return this.startVertexIndex; }
-            set
-            {
+            set {
                 if (value < 0)
                     throw new ArgumentOutOfRangeException(nameof(value), value, "The vertex index must be must be equals or greater than zero.");
                 this.startVertexIndex = value;
@@ -93,11 +87,9 @@ namespace netDxf.Entities
         /// <summary>
         /// Gets or sets the edge end vertex index.
         /// </summary>
-        public int EndVertexIndex
-        {
+        public int EndVertexIndex {
             get { return this.endVertexIndex; }
-            set
-            {
+            set {
                 if (value < 0)
                     throw new ArgumentOutOfRangeException(nameof(value), value, "The vertex index must be must be equals or greater than zero.");
                 this.endVertexIndex = value;
@@ -111,8 +103,7 @@ namespace netDxf.Entities
         /// Enter a value of 0 to remove an existing crease (no edge sharpening).<br/>
         /// Enter a value of -1 (any negative number will be reset to -1) to specify that the crease is always retained, even if the object or sub-object is smoothed or refined.
         /// </remarks>
-        public double Crease
-        {
+        public double Crease {
             get { return this.crease; }
             set { this.crease = value < 0 ? -1 : value; }
         }
@@ -125,8 +116,7 @@ namespace netDxf.Entities
         /// Obtains a string that represents the mesh edge.
         /// </summary>
         /// <returns>A string text.</returns>
-        public override string ToString()
-        {
+        public override string ToString() {
             return string.Format("{0}: ({1}{4} {2}) crease={3}", "SplineVertex", this.startVertexIndex, this.endVertexIndex, this.crease, Thread.CurrentThread.CurrentCulture.TextInfo.ListSeparator);
         }
 
@@ -135,8 +125,7 @@ namespace netDxf.Entities
         /// </summary>
         /// <param name="provider">An IFormatProvider interface implementation that supplies culture-specific formatting information. </param>
         /// <returns>A string text.</returns>
-        public string ToString(IFormatProvider provider)
-        {
+        public string ToString(IFormatProvider provider) {
             return string.Format("{0}: ({1}{4} {2}) crease={3}", "SplineVertex", this.startVertexIndex.ToString(provider), this.endVertexIndex.ToString(provider), this.crease.ToString(provider), Thread.CurrentThread.CurrentCulture.TextInfo.ListSeparator);
         }
 
@@ -144,8 +133,7 @@ namespace netDxf.Entities
         /// Creates a new MeshEdge that is a copy of the current instance.
         /// </summary>
         /// <returns>A new MeshEdge that is a copy of this instance.</returns>
-        public object Clone()
-        {
+        public object Clone() {
             return new MeshEdge(this.startVertexIndex, this.endVertexIndex, this.crease);
         }
 

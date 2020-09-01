@@ -20,28 +20,24 @@
 
 #endregion
 
+using netDxf.Tables;
 using System;
 using System.Collections.Generic;
-using netDxf.Tables;
 
-namespace netDxf.Collections
-{
+namespace netDxf.Collections {
     /// <summary>
     /// Represents a collection of shape styles.
     /// </summary>
     public class ShapeStyles :
-        TableObjects<ShapeStyle>
-    {
+        TableObjects<ShapeStyle> {
         #region constructor
 
         internal ShapeStyles(DxfDocument document)
-            : this(document, null)
-        {
+            : this(document, null) {
         }
 
         internal ShapeStyles(DxfDocument document, string handle)
-            : base(document, DxfObjectCode.TextStyleTable, handle)
-        {
+            : base(document, DxfObjectCode.TextStyleTable, handle) {
             this.MaxCapacity = short.MaxValue;
         }
 
@@ -54,10 +50,8 @@ namespace netDxf.Collections
         /// </summary>
         /// <param name="name">Shape name.</param>
         /// <returns>The shape style that contains a shape with the specified name, null otherwise.</returns>
-        public ShapeStyle ContainsShapeName(string name)
-        {
-            foreach (ShapeStyle style in this.Items)
-            {
+        public ShapeStyle ContainsShapeName(string name) {
+            foreach (ShapeStyle style in this.Items) {
                 if (style.ContainsShapeName(name)) return style;
             }
             // there are no shape styles in the list that contain a shape with the specified name
@@ -77,8 +71,7 @@ namespace netDxf.Collections
         /// If a shape style already exists with the same name as the instance that is being added the method returns the existing shape style,
         /// if not it will return the new text style.
         /// </returns>
-        internal override ShapeStyle Add(ShapeStyle style, bool assignHandle)
-        {
+        internal override ShapeStyle Add(ShapeStyle style, bool assignHandle) {
             if (this.list.Count >= this.MaxCapacity)
                 throw new OverflowException(string.Format("Table overflow. The maximum number of elements the table {0} can have is {1}", this.CodeName, this.MaxCapacity));
             if (style == null)
@@ -109,8 +102,7 @@ namespace netDxf.Collections
         /// <param name="name"><see cref="ShapeStyle">ShapeStyle</see> name to remove from the document.</param>
         /// <returns>True if the shape style has been successfully removed, or false otherwise.</returns>
         /// <remarks>Reserved shape styles or any other referenced by objects cannot be removed.</remarks>
-        public override bool Remove(string name)
-        {
+        public override bool Remove(string name) {
             return this.Remove(this[name]);
         }
 
@@ -120,8 +112,7 @@ namespace netDxf.Collections
         /// <param name="item"><see cref="ShapeStyle">ShapeStyle</see> to remove from the document.</param>
         /// <returns>True if the shape style has been successfully removed, or false otherwise.</returns>
         /// <remarks>Reserved shape styles or any other referenced by objects cannot be removed.</remarks>
-        public override bool Remove(ShapeStyle item)
-        {
+        public override bool Remove(ShapeStyle item) {
             if (item == null)
                 return false;
 
@@ -150,8 +141,7 @@ namespace netDxf.Collections
 
         #region ShapeStyle events
 
-        private void Item_NameChanged(TableObject sender, TableObjectChangedEventArgs<string> e)
-        {
+        private void Item_NameChanged(TableObject sender, TableObjectChangedEventArgs<string> e) {
             if (this.Contains(e.NewValue))
                 throw new ArgumentException("There is already another shape style with the same name.");
 

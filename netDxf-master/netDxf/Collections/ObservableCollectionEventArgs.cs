@@ -22,15 +22,13 @@
 
 using System;
 
-namespace netDxf.Collections
-{
+namespace netDxf.Collections {
     /// <summary>
     /// Represents the arguments thrown by the <c>ObservableCollection</c> events.
     /// </summary>
     /// <typeparam name="T">Type of items.</typeparam>
     public class ObservableCollectionEventArgs<T> :
-        EventArgs
-    {
+        EventArgs {
         #region private fields
 
         private readonly T item;
@@ -44,8 +42,7 @@ namespace netDxf.Collections
         /// Initializes a new instance of <c>ObservableCollectionEventArgs</c>.
         /// </summary>
         /// <param name="item">Item that is being added or removed from the collection.</param>
-        public ObservableCollectionEventArgs(T item)
-        {
+        public ObservableCollectionEventArgs(T item) {
             this.item = item;
             this.cancel = false;
         }
@@ -57,8 +54,7 @@ namespace netDxf.Collections
         /// <summary>
         /// Get the item that is being added or removed from the collection.
         /// </summary>
-        public T Item
-        {
+        public T Item {
             get { return this.item; }
         }
 
@@ -66,8 +62,7 @@ namespace netDxf.Collections
         /// Gets or sets if the operation must be canceled.
         /// </summary>
         /// <remarks>This property is used by the OnBeforeAdd and OnBeforeRemove events to cancel the add or remove operation.</remarks>
-        public bool Cancel
-        {
+        public bool Cancel {
             get { return this.cancel; }
             set { this.cancel = value; }
         }

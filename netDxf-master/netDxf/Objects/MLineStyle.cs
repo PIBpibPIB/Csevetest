@@ -20,27 +20,24 @@
 
 #endregion
 
-using System;
-using System.Collections.Generic;
 using netDxf.Collections;
 using netDxf.Tables;
+using System;
+using System.Collections.Generic;
 
-namespace netDxf.Objects
-{
+namespace netDxf.Objects {
     /// <summary>
     /// Represents as MLine style.
     /// </summary>
     public class MLineStyle :
-        TableObject
-    {
+        TableObject {
         #region delegates and events
 
         public delegate void MLineStyleElementAddedEventHandler(MLineStyle sender, MLineStyleElementChangeEventArgs e);
 
         public event MLineStyleElementAddedEventHandler MLineStyleElementAdded;
 
-        protected virtual void OnMLineStyleElementAddedEvent(MLineStyleElement item)
-        {
+        protected virtual void OnMLineStyleElementAddedEvent(MLineStyleElement item) {
             MLineStyleElementAddedEventHandler ae = this.MLineStyleElementAdded;
             if (ae != null)
                 ae(this, new MLineStyleElementChangeEventArgs(item));
@@ -50,8 +47,7 @@ namespace netDxf.Objects
 
         public event MLineStyleElementRemovedEventHandler MLineStyleElementRemoved;
 
-        protected virtual void OnMLineStyleElementRemovedEvent(MLineStyleElement item)
-        {
+        protected virtual void OnMLineStyleElementRemovedEvent(MLineStyleElement item) {
             MLineStyleElementRemovedEventHandler ae = this.MLineStyleElementRemoved;
             if (ae != null)
                 ae(this, new MLineStyleElementChangeEventArgs(item));
@@ -61,11 +57,9 @@ namespace netDxf.Objects
 
         public event MLineStyleElementLinetypeChangedEventHandler MLineStyleElementLinetypeChanged;
 
-        protected virtual Linetype OnMLineStyleElementLinetypeChangedEvent(Linetype oldLinetype, Linetype newLinetype)
-        {
+        protected virtual Linetype OnMLineStyleElementLinetypeChangedEvent(Linetype oldLinetype, Linetype newLinetype) {
             MLineStyleElementLinetypeChangedEventHandler ae = this.MLineStyleElementLinetypeChanged;
-            if (ae != null)
-            {
+            if (ae != null) {
                 TableObjectChangedEventArgs<Linetype> eventArgs = new TableObjectChangedEventArgs<Linetype>(oldLinetype, newLinetype);
                 ae(this, eventArgs);
                 return eventArgs.NewValue;
@@ -96,8 +90,7 @@ namespace netDxf.Objects
         /// <summary>
         /// Gets the default MLine style.
         /// </summary>
-        public static MLineStyle Default
-        {
+        public static MLineStyle Default {
             get { return new MLineStyle(DefaultName); }
         }
 
@@ -111,8 +104,7 @@ namespace netDxf.Objects
         /// <param name="name">MLine style name.</param>
         /// <remarks>By default the multiline style has to elements with offsets 0.5 y -0.5.</remarks>
         public MLineStyle(string name)
-            : this(name, null, string.Empty)
-        {
+            : this(name, null, string.Empty) {
         }
 
         /// <summary>
@@ -122,8 +114,7 @@ namespace netDxf.Objects
         /// <param name="description">MLine style description.</param>
         /// <remarks>By default the multiline style has to elements with offsets 0.5 y -0.5.</remarks>
         public MLineStyle(string name, string description)
-            : this(name, null, description)
-        {
+            : this(name, null, description) {
         }
 
         /// <summary>
@@ -132,8 +123,7 @@ namespace netDxf.Objects
         /// <param name="name">MLine style name.</param>
         /// <param name="elements">Elements of the multiline, if null two default elements will be added.</param>
         public MLineStyle(string name, IEnumerable<MLineStyleElement> elements)
-            : this(name, elements, string.Empty)
-        {
+            : this(name, elements, string.Empty) {
         }
 
         /// <summary>
@@ -143,8 +133,7 @@ namespace netDxf.Objects
         /// <param name="elements">Elements of the multiline, if null two default elements will be added.</param>
         /// <param name="description">MLine style description (optional).</param>
         public MLineStyle(string name, IEnumerable<MLineStyleElement> elements, string description)
-            : base(name, DxfObjectCode.MLineStyle, true)
-        {
+            : base(name, DxfObjectCode.MLineStyle, true) {
             if (string.IsNullOrEmpty(name))
                 throw new ArgumentNullException(nameof(name), "The multiline style name should be at least one character long.");
 
@@ -173,8 +162,7 @@ namespace netDxf.Objects
         /// <summary>
         /// Gets or sets the MLine style flags.
         /// </summary>
-        public MLineStyleFlags Flags
-        {
+        public MLineStyleFlags Flags {
             get { return this.flags; }
             set { this.flags = value; }
         }
@@ -182,8 +170,7 @@ namespace netDxf.Objects
         /// <summary>
         /// Gets or sets the line type description (optional).
         /// </summary>
-        public string Description
-        {
+        public string Description {
             get { return this.description; }
             set { this.description = string.IsNullOrEmpty(value) ? string.Empty : value; }
         }
@@ -194,11 +181,9 @@ namespace netDxf.Objects
         /// <remarks>
         /// AutoCad2000 dxf version does not support true colors for MLineStyle fill color.
         /// </remarks>
-        public AciColor FillColor
-        {
+        public AciColor FillColor {
             get { return this.fillColor; }
-            set
-            {
+            set {
                 if (value == null)
                     throw new ArgumentNullException(nameof(value));
                 this.fillColor = value;
@@ -208,11 +193,9 @@ namespace netDxf.Objects
         /// <summary>
         /// Gets or sets the MLine start angle in degrees.
         /// </summary>
-        public double StartAngle
-        {
+        public double StartAngle {
             get { return this.startAngle; }
-            set
-            {
+            set {
                 if (value < 10.0 || value > 170.0)
                     throw new ArgumentOutOfRangeException(nameof(value), value, "The MLine style start angle valid values range from 10 to 170 degrees.");
                 this.startAngle = value;
@@ -222,11 +205,9 @@ namespace netDxf.Objects
         /// <summary>
         /// Gets or sets the MLine end angle in degrees.
         /// </summary>
-        public double EndAngle
-        {
+        public double EndAngle {
             get { return this.endAngle; }
-            set
-            {
+            set {
                 if (value < 10.0 || value > 170.0)
                     throw new ArgumentOutOfRangeException(nameof(value), value, "The MLine style end angle valid values range from 10 to 170 degrees.");
                 this.endAngle = value;
@@ -240,17 +221,15 @@ namespace netDxf.Objects
         /// The elements list must be ordered, this will be done automatically,
         /// but if new elements are added individually to the list it will have to be sorted manually calling the Sort() method.
         /// </remarks>
-        public ObservableCollection<MLineStyleElement> Elements
-        {
+        public ObservableCollection<MLineStyleElement> Elements {
             get { return this.elements; }
         }
 
         /// <summary>
         /// Gets the owner of the actual multi line style.
         /// </summary>
-        public new MLineStyles Owner
-        {
-            get { return (MLineStyles) base.Owner; }
+        public new MLineStyles Owner {
+            get { return (MLineStyles)base.Owner; }
             internal set { base.Owner = value; }
         }
 
@@ -263,17 +242,15 @@ namespace netDxf.Objects
         /// </summary>
         /// <param name="newName">MLineStyle name of the copy.</param>
         /// <returns>A new MLineStyle that is a copy of this instance.</returns>
-        public override TableObject Clone(string newName)
-        {
+        public override TableObject Clone(string newName) {
             List<MLineStyleElement> copyElements = new List<MLineStyleElement>();
             foreach (MLineStyleElement e in this.elements)
-                copyElements.Add((MLineStyleElement) e.Clone());
+                copyElements.Add((MLineStyleElement)e.Clone());
 
-            MLineStyle copy = new MLineStyle(newName, copyElements)
-            {
+            MLineStyle copy = new MLineStyle(newName, copyElements) {
                 Flags = this.flags,
                 Description = this.description,
-                FillColor = (AciColor) this.fillColor.Clone(),
+                FillColor = (AciColor)this.fillColor.Clone(),
                 StartAngle = this.startAngle,
                 EndAngle = this.endAngle,
             };
@@ -288,8 +265,7 @@ namespace netDxf.Objects
         /// Creates a new MLineStyle that is a copy of the current instance.
         /// </summary>
         /// <returns>A new MLineStyle that is a copy of this instance.</returns>
-        public override object Clone()
-        {
+        public override object Clone() {
             return this.Clone(this.Name);
         }
 
@@ -297,8 +273,7 @@ namespace netDxf.Objects
 
         #region Elements collection events
 
-        private void Elements_BeforeAddItem(ObservableCollection<MLineStyleElement> sender, ObservableCollectionEventArgs<MLineStyleElement> e)
-        {
+        private void Elements_BeforeAddItem(ObservableCollection<MLineStyleElement> sender, ObservableCollectionEventArgs<MLineStyleElement> e) {
             // null items are not allowed
             if (e.Item == null)
                 e.Cancel = true;
@@ -306,18 +281,15 @@ namespace netDxf.Objects
                 e.Cancel = false;
         }
 
-        private void Elements_AddItem(ObservableCollection<MLineStyleElement> sender, ObservableCollectionEventArgs<MLineStyleElement> e)
-        {
+        private void Elements_AddItem(ObservableCollection<MLineStyleElement> sender, ObservableCollectionEventArgs<MLineStyleElement> e) {
             this.OnMLineStyleElementAddedEvent(e.Item);
             e.Item.LinetypeChanged += this.MLineStyleElement_LinetypeChanged;
         }
 
-        private void Elements_BeforeRemoveItem(ObservableCollection<MLineStyleElement> sender, ObservableCollectionEventArgs<MLineStyleElement> e)
-        {
+        private void Elements_BeforeRemoveItem(ObservableCollection<MLineStyleElement> sender, ObservableCollectionEventArgs<MLineStyleElement> e) {
         }
 
-        private void Elements_RemoveItem(ObservableCollection<MLineStyleElement> sender, ObservableCollectionEventArgs<MLineStyleElement> e)
-        {
+        private void Elements_RemoveItem(ObservableCollection<MLineStyleElement> sender, ObservableCollectionEventArgs<MLineStyleElement> e) {
             this.OnMLineStyleElementRemovedEvent(e.Item);
             e.Item.LinetypeChanged -= this.MLineStyleElement_LinetypeChanged;
         }
@@ -326,8 +298,7 @@ namespace netDxf.Objects
 
         #region MLineStyleElement events
 
-        private void MLineStyleElement_LinetypeChanged(MLineStyleElement sender, TableObjectChangedEventArgs<Linetype> e)
-        {
+        private void MLineStyleElement_LinetypeChanged(MLineStyleElement sender, TableObjectChangedEventArgs<Linetype> e) {
             e.NewValue = this.OnMLineStyleElementLinetypeChangedEvent(e.OldValue, e.NewValue);
         }
 

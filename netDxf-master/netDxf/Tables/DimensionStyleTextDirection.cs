@@ -18,13 +18,11 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #endregion
 
-namespace netDxf.Tables
-{
+namespace netDxf.Tables {
     /// <summary>
     /// Specifies the direction of the dimension text.
     /// </summary>
-    public enum DimensionStyleTextDirection
-    {
+    public enum DimensionStyleTextDirection {
         /// <summary>
         /// Displays dimension text in a Left-to-Right reading style.
         /// </summary>

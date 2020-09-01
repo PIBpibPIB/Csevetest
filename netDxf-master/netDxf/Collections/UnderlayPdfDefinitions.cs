@@ -20,29 +20,25 @@
 
 #endregion
 
-using System;
-using System.Collections.Generic;
 using netDxf.Objects;
 using netDxf.Tables;
+using System;
+using System.Collections.Generic;
 
-namespace netDxf.Collections
-{
+namespace netDxf.Collections {
     /// <summary>
     /// Represents a collection of PDF underlay definitions.
     /// </summary>
     public sealed class UnderlayPdfDefinitions :
-        TableObjects<UnderlayPdfDefinition>
-    {
+        TableObjects<UnderlayPdfDefinition> {
         #region constructor
 
         internal UnderlayPdfDefinitions(DxfDocument document)
-            : this(document, null)
-        {
+            : this(document, null) {
         }
 
         internal UnderlayPdfDefinitions(DxfDocument document, string handle)
-            : base(document, DxfObjectCode.UnderlayPdfDefinitionDictionary, handle)
-        {
+            : base(document, DxfObjectCode.UnderlayPdfDefinitionDictionary, handle) {
             this.MaxCapacity = int.MaxValue;
         }
 
@@ -59,8 +55,7 @@ namespace netDxf.Collections
         /// If an underlay definition already exists with the same name as the instance that is being added the method returns the existing underlay definition,
         /// if not it will return the new underlay definition.
         /// </returns>
-        internal override UnderlayPdfDefinition Add(UnderlayPdfDefinition underlayPdfDefinition, bool assignHandle)
-        {
+        internal override UnderlayPdfDefinition Add(UnderlayPdfDefinition underlayPdfDefinition, bool assignHandle) {
             if (this.list.Count >= this.MaxCapacity)
                 throw new OverflowException(string.Format("Table overflow. The maximum number of elements the table {0} can have is {1}", this.CodeName, this.MaxCapacity));
             if (underlayPdfDefinition == null)
@@ -91,8 +86,7 @@ namespace netDxf.Collections
         /// <param name="name"><see cref="UnderlayPdfDefinition">UnderlayPdfDefinition</see> name to remove from the document.</param>
         /// <returns>True if the underlay definition has been successfully removed, or false otherwise.</returns>
         /// <remarks>Any underlay definition referenced by objects cannot be removed.</remarks>
-        public override bool Remove(string name)
-        {
+        public override bool Remove(string name) {
             return this.Remove(this[name]);
         }
 
@@ -102,8 +96,7 @@ namespace netDxf.Collections
         /// <param name="item"><see cref="UnderlayPdfDefinition">UnderlayPdfDefinition</see> to remove from the document.</param>
         /// <returns>True if the underlay definition has been successfully removed, or false otherwise.</returns>
         /// <remarks>Any underlay definition referenced by objects cannot be removed.</remarks>
-        public override bool Remove(UnderlayPdfDefinition item)
-        {
+        public override bool Remove(UnderlayPdfDefinition item) {
             if (item == null)
                 return false;
 
@@ -132,13 +125,12 @@ namespace netDxf.Collections
 
         #region TableObject events
 
-        private void Item_NameChanged(TableObject sender, TableObjectChangedEventArgs<string> e)
-        {
+        private void Item_NameChanged(TableObject sender, TableObjectChangedEventArgs<string> e) {
             if (this.Contains(e.NewValue))
                 throw new ArgumentException("There is already another PDF underlay definition with the same name.");
 
             this.list.Remove(sender.Name);
-            this.list.Add(e.NewValue, (UnderlayPdfDefinition) sender);
+            this.list.Add(e.NewValue, (UnderlayPdfDefinition)sender);
 
             List<DxfObject> refs = this.references[sender.Name];
             this.references.Remove(sender.Name);

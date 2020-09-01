@@ -20,17 +20,15 @@
 
 #endregion
 
-using System;
 using netDxf.Collections;
+using System;
 
-namespace netDxf.Tables
-{
+namespace netDxf.Tables {
     /// <summary>
     /// Represents a document viewport.
     /// </summary>
     public class VPort :
-        TableObject
-    {
+        TableObject {
         #region private fields
 
         private Vector2 center;
@@ -56,8 +54,7 @@ namespace netDxf.Tables
         /// <summary>
         /// Gets the active viewport.
         /// </summary>
-        public static VPort Active
-        {
+        public static VPort Active {
             get { return new VPort(DefaultName, false); }
         }
 
@@ -69,13 +66,11 @@ namespace netDxf.Tables
         /// Initializes a new instance of the <c>VPort</c> class.
         /// </summary>
         public VPort(string name)
-            : this(name, true)
-        {
+            : this(name, true) {
         }
 
         internal VPort(string name, bool checkName)
-            : base(name, DxfObjectCode.VPort, checkName)
-        {
+            : base(name, DxfObjectCode.VPort, checkName) {
             if (string.IsNullOrEmpty(name))
                 throw new ArgumentNullException(nameof(name), "The viewport name should be at least one character long.");
 
@@ -99,8 +94,7 @@ namespace netDxf.Tables
         /// <summary>
         /// Gets or sets the view center point in DCS (Display Coordinate System)
         /// </summary>
-        public Vector2 ViewCenter
-        {
+        public Vector2 ViewCenter {
             get { return this.center; }
             set { this.center = value; }
         }
@@ -108,8 +102,7 @@ namespace netDxf.Tables
         /// <summary>
         /// Gets or sets the snap base point in DCS (Display Coordinate System)
         /// </summary>
-        public Vector2 SnapBasePoint
-        {
+        public Vector2 SnapBasePoint {
             get { return this.snapBasePoint; }
             set { this.snapBasePoint = value; }
         }
@@ -117,8 +110,7 @@ namespace netDxf.Tables
         /// <summary>
         /// Gets or sets the snap spacing X and Y.
         /// </summary>
-        public Vector2 SnapSpacing
-        {
+        public Vector2 SnapSpacing {
             get { return this.snapSpacing; }
             set { this.snapSpacing = value; }
         }
@@ -126,8 +118,7 @@ namespace netDxf.Tables
         /// <summary>
         /// Gets or sets the grid spacing X and Y.
         /// </summary>
-        public Vector2 GridSpacing
-        {
+        public Vector2 GridSpacing {
             get { return this.gridSpacing; }
             set { this.gridSpacing = value; }
         }
@@ -135,11 +126,9 @@ namespace netDxf.Tables
         /// <summary>
         /// Gets or sets the view direction from target point in WCS (World Coordinate System).
         /// </summary>
-        public Vector3 ViewDirection
-        {
+        public Vector3 ViewDirection {
             get { return this.direction; }
-            set
-            {
+            set {
                 this.direction = Vector3.Normalize(value);
                 if (Vector3.IsNaN(this.direction))
                     throw new ArgumentException("The direction can not be the zero vector.", nameof(value));
@@ -149,8 +138,7 @@ namespace netDxf.Tables
         /// <summary>
         /// Gets or sets the view target point in WCS (World Coordinate System).
         /// </summary>
-        public Vector3 ViewTarget
-        {
+        public Vector3 ViewTarget {
             get { return this.target; }
             set { this.target = value; }
         }
@@ -158,8 +146,7 @@ namespace netDxf.Tables
         /// <summary>
         /// Gets or sets the view height.
         /// </summary>
-        public double ViewHeight
-        {
+        public double ViewHeight {
             get { return this.height; }
             set { this.height = value; }
         }
@@ -167,11 +154,9 @@ namespace netDxf.Tables
         /// <summary>
         /// Gets or sets the view aspect ratio (view width/view height).
         /// </summary>
-        public double ViewAspectRatio
-        {
+        public double ViewAspectRatio {
             get { return this.aspectRatio; }
-            set
-            {
+            set {
                 if (value <= 0)
                     throw new ArgumentOutOfRangeException(nameof(value), value,
                         "The VPort aspect ratio must be greater than zero.");
@@ -182,8 +167,7 @@ namespace netDxf.Tables
         /// <summary>
         /// Gets or sets the grid on/off.
         /// </summary>
-        public bool ShowGrid
-        {
+        public bool ShowGrid {
             get { return this.showGrid; }
             set { this.showGrid = value; }
         }
@@ -191,8 +175,7 @@ namespace netDxf.Tables
         /// <summary>
         /// Gets or sets the snap mode on/off.
         /// </summary>
-        public bool SnapMode
-        {
+        public bool SnapMode {
             get { return this.snapMode; }
             set { this.snapMode = value; }
         }
@@ -200,9 +183,8 @@ namespace netDxf.Tables
         /// <summary>
         /// Gets the owner of the actual viewport.
         /// </summary>
-        public new VPorts Owner
-        {
-            get { return (VPorts) base.Owner; }
+        public new VPorts Owner {
+            get { return (VPorts)base.Owner; }
             internal set { base.Owner = value; }
         }
 
@@ -215,10 +197,8 @@ namespace netDxf.Tables
         /// </summary>
         /// <param name="newName">VPort name of the copy.</param>
         /// <returns>A new VPort that is a copy of this instance.</returns>
-        public override TableObject Clone(string newName)
-        {
-            VPort copy = new VPort(newName)
-            {
+        public override TableObject Clone(string newName) {
+            VPort copy = new VPort(newName) {
                 ViewCenter = this.center,
                 SnapBasePoint = this.snapBasePoint,
                 SnapSpacing = this.snapSpacing,
@@ -240,8 +220,7 @@ namespace netDxf.Tables
         /// Creates a new VPort that is a copy of the current instance.
         /// </summary>
         /// <returns>A new VPort that is a copy of this instance.</returns>
-        public override object Clone()
-        {
+        public override object Clone() {
             return this.Clone(this.Name);
         }
 
