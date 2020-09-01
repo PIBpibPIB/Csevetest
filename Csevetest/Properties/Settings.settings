@@ -1,0 +1,24 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Csevetest.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="A" Type="System.Decimal" Scope="User">
+      <Value Profile="(Default)">35</Value>
+    </Setting>
+    <Setting Name="B" Type="System.Decimal" Scope="User">
+      <Value Profile="(Default)">38</Value>
+    </Setting>
+    <Setting Name="C" Type="System.Decimal" Scope="User">
+      <Value Profile="(Default)">92</Value>
+    </Setting>
+    <Setting Name="D" Type="System.Decimal" Scope="User">
+      <Value Profile="(Default)">92</Value>
+    </Setting>
+    <Setting Name="E" Type="System.Decimal" Scope="User">
+      <Value Profile="(Default)">70</Value>
+    </Setting>
+    <Setting Name="Thickness" Type="System.Decimal" Scope="User">
+      <Value Profile="(Default)">2.0</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
