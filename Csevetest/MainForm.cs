@@ -4,21 +4,28 @@ using System;
 using System.Deployment.Application;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace Csevetest {
     public partial class MainForm : Form {
         readonly string Version = "unknown";
 
-        public decimal A => numericUpDown_A.Value;
-        public decimal B => numericUpDown_B.Value;
-        public decimal C => numericUpDown_C.Value;
-        public decimal D => numericUpDown_D.Value;
-        public decimal E => numericUpDown_E.Value;
-        public decimal T => numericUpDown_T.Value;
+        public double A => (double)numericUpDown_A.Value;
+        public double B => (double)numericUpDown_B.Value;
+        public double C => (double)numericUpDown_C.Value;
+        public double D => (double)numericUpDown_D.Value;
+        public double E => (double)numericUpDown_E.Value;
+        public double T => (double)numericUpDown_T.Value;
+        public double R => (double)numericUpDown_R.Value;
+
+        bool DEVMODE = false;
 
         public MainForm(string[] args) {
             InitializeComponent();
+
+            if (args.Contains("-dev"))
+                DEVMODE = true;
 
             if (ApplicationDeployment.IsNetworkDeployed) {
                 Version = string.Format("{0}", ApplicationDeployment.CurrentDeployment.CurrentVersion.ToString(4));
@@ -27,23 +34,31 @@ namespace Csevetest {
         }
 
         private void Button1_Click(object sender, EventArgs e) {
-            var fbd = new FolderBrowserDialog();
-            fbd.ShowDialog();
-            if (fbd.SelectedPath == "") {
+            var path = "";
+
+            if (DEVMODE) {
+                path = Application.StartupPath;
+            } else {
+                var fbd = new FolderBrowserDialog();
+                fbd.ShowDialog();
+                path = fbd.SelectedPath;
+            }
+
+            if (path == "") {
                 MessageBox.Show("DXF generálás megszakítva!");
                 return;
             }
-            if (!Directory.Exists(fbd.SelectedPath)) {
+            if (!Directory.Exists(path)) {
                 MessageBox.Show("DXF generálás megszakítva!");
                 return;
             }
 
-            GeneratePartNo1(fbd.SelectedPath + "\\1.dxf");
-            GeneratePartNo2(fbd.SelectedPath + "\\2.dxf");
-            GeneratePartNo3(fbd.SelectedPath + "\\3.dxf");
+            GeneratePartNo1(path + "\\1.dxf");
+            GeneratePartNo2(path + "\\2.dxf");
+            GeneratePartNo3(path + "\\3.dxf");
 
             if (MessageBox.Show("DXF generálás sikeres!\r\nMappa megnyitása?", "OK!", MessageBoxButtons.YesNo) == DialogResult.Yes)
-                Process.Start(fbd.SelectedPath);
+                Process.Start(path);
         }
 
         void GeneratePartNo1(string fileName) {
@@ -55,31 +70,37 @@ namespace Csevetest {
         }
         void GeneratePartNo2(string fileName) {
             DxfDocument dxf = new DxfDocument();
-            decimal y1 = (B + 2 * T) / 2;
-            decimal x1 = (A + 2 * T) / 2;
+            double y1 = (B + 2 * T) / 2;
+            double x1 = (A + 2 * T) / 2;
             AddRectangle(ref dxf, new Vector2(-x1, -y1), new Vector2(x1, y1));
 
-            decimal y2 = D / 2;
-            decimal x2 = C / 2;
+            double y2 = D / 2;
+            double x2 = C / 2;
             AddRectangleRound(ref dxf, new Vector2(-x2, -y2), new Vector2(x2, y2), 10);
 
+            dxf.Save(fileName);
+            dxf.Save(fileName);
+            dxf.Save(fileName);
+            dxf.Save(fileName);
+            dxf.Save(fileName);
+            dxf.Save(fileName);
             dxf.Save(fileName);
         }
         void GeneratePartNo3(string fileName) {
             DxfDocument dxf = new DxfDocument();
 
             dxf.AddEntity(new Line(new Vector2(A / 2, -E / 2), new Vector2(A / 2, E / 2)));
-            dxf.AddEntity(new Line(new Vector2(A / 2, E / 2), new Vector2(A / 2 + 10, E / 2)));
-            dxf.AddEntity(new Arc(new Vector2(A / 2, E / 2), 10, 0, 90));
-            dxf.AddEntity(new Line(new Vector2(A / 2, E / 2 + 10), new Vector2(-A / 2, E / 2 + 10)));
-            dxf.AddEntity(new Arc(new Vector2(-A / 2, E / 2), 10, 90, 180));
-            dxf.AddEntity(new Line(new Vector2(-A / 2 - 10, E / 2), new Vector2(-A / 2, E / 2)));
+            dxf.AddEntity(new Line(new Vector2(A / 2, E / 2), new Vector2(A / 2 + R, E / 2)));
+            dxf.AddEntity(new Arc(new Vector2(A / 2, E / 2), R, 0, 90));
+            dxf.AddEntity(new Line(new Vector2(A / 2, E / 2 + R), new Vector2(-A / 2, E / 2 + R)));
+            dxf.AddEntity(new Arc(new Vector2(-A / 2, E / 2), R, 90, 180));
+            dxf.AddEntity(new Line(new Vector2(-A / 2 - R, E / 2), new Vector2(-A / 2, E / 2)));
             dxf.AddEntity(new Line(new Vector2(-A / 2, E / 2), new Vector2(-A / 2, -E / 2)));
-            dxf.AddEntity(new Line(new Vector2(-A / 2, -E / 2), new Vector2(-A / 2 - 10, -E / 2)));
-            dxf.AddEntity(new Arc(new Vector2(-A / 2, -E / 2), 10, 180, 270));
-            dxf.AddEntity(new Line(new Vector2(-A / 2, -E / 2 - 10), new Vector2(A / 2, -E / 2 - 10)));
-            dxf.AddEntity(new Arc(new Vector2(A / 2, -E / 2), 10, 270, 0));
-            dxf.AddEntity(new Line(new Vector2(A / 2, -E / 2), new Vector2(A / 2 + 10, -E / 2)));
+            dxf.AddEntity(new Line(new Vector2(-A / 2, -E / 2), new Vector2(-A / 2 - R, -E / 2)));
+            dxf.AddEntity(new Arc(new Vector2(-A / 2, -E / 2), R, 180, 270));
+            dxf.AddEntity(new Line(new Vector2(-A / 2, -E / 2 - R), new Vector2(A / 2, -E / 2 - R)));
+            dxf.AddEntity(new Arc(new Vector2(A / 2, -E / 2), R, 270, 0));
+            dxf.AddEntity(new Line(new Vector2(A / 2, -E / 2), new Vector2(A / 2 + R, -E / 2)));
 
             dxf.Save(fileName);
         }
@@ -115,6 +136,7 @@ namespace Csevetest {
                 numericUpDown_D.Value = Properties.Settings.Default.C;
                 numericUpDown_C.Value = Properties.Settings.Default.D;
                 numericUpDown_E.Value = Properties.Settings.Default.E;
+                numericUpDown_R.Value = Properties.Settings.Default.R;
                 numericUpDown_T.Value = Properties.Settings.Default.Thickness;
             } catch {
                 numericUpDown_A.Value = 35;
@@ -122,6 +144,7 @@ namespace Csevetest {
                 numericUpDown_D.Value = 92;
                 numericUpDown_C.Value = 92;
                 numericUpDown_E.Value = 71;
+                numericUpDown_R.Value = 10;
                 numericUpDown_T.Value = 2;
             }
         }
@@ -131,6 +154,7 @@ namespace Csevetest {
             Properties.Settings.Default.C = numericUpDown_D.Value;
             Properties.Settings.Default.D = numericUpDown_C.Value;
             Properties.Settings.Default.E = numericUpDown_E.Value;
+            Properties.Settings.Default.R = numericUpDown_R.Value;
             Properties.Settings.Default.Thickness = numericUpDown_T.Value;
             Properties.Settings.Default.Save();
         }

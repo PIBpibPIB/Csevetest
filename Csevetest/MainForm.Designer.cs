@@ -41,6 +41,8 @@
             this.button1 = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.numericUpDown_R = new System.Windows.Forms.NumericUpDown();
+            this.label7 = new System.Windows.Forms.Label();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_T)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_E)).BeginInit();
@@ -50,6 +52,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_B)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_A)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_R)).BeginInit();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -73,11 +76,13 @@
             this.tableLayoutPanel1.Controls.Add(this.numericUpDown_A, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.button1, 0, 10);
             this.tableLayoutPanel1.Controls.Add(this.panel1, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.label7, 0, 8);
+            this.tableLayoutPanel1.Controls.Add(this.numericUpDown_R, 1, 8);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 11;
+            this.tableLayoutPanel1.RowCount = 12;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 100F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 70F));
@@ -89,6 +94,7 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(1204, 709);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
@@ -163,7 +169,7 @@
             this.pictureBox1.Location = new System.Drawing.Point(303, 3);
             this.pictureBox1.Name = "pictureBox1";
             this.tableLayoutPanel1.SetRowSpan(this.pictureBox1, 11);
-            this.pictureBox1.Size = new System.Drawing.Size(898, 703);
+            this.pictureBox1.Size = new System.Drawing.Size(898, 683);
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             // 
@@ -322,7 +328,7 @@
             // 
             this.tableLayoutPanel1.SetColumnSpan(this.button1, 2);
             this.button1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.button1.Location = new System.Drawing.Point(3, 645);
+            this.button1.Location = new System.Drawing.Point(3, 625);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(294, 61);
             this.button1.TabIndex = 10;
@@ -351,6 +357,46 @@
             this.pictureBox2.TabStop = false;
             this.pictureBox2.Click += new System.EventHandler(this.PictureBox2_Click);
             // 
+            // numericUpDown_R
+            // 
+            this.numericUpDown_R.DecimalPlaces = 2;
+            this.numericUpDown_R.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.numericUpDown_R.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            65536});
+            this.numericUpDown_R.Location = new System.Drawing.Point(153, 533);
+            this.numericUpDown_R.Maximum = new decimal(new int[] {
+            500,
+            0,
+            0,
+            0});
+            this.numericUpDown_R.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            65536});
+            this.numericUpDown_R.Name = "numericUpDown_R";
+            this.numericUpDown_R.Size = new System.Drawing.Size(144, 44);
+            this.numericUpDown_R.TabIndex = 15;
+            this.numericUpDown_R.Value = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Dock = System.Windows.Forms.DockStyle.Right;
+            this.label7.Location = new System.Drawing.Point(18, 534);
+            this.label7.Margin = new System.Windows.Forms.Padding(3, 4, 3, 0);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(129, 36);
+            this.label7.TabIndex = 14;
+            this.label7.Text = "R [mm]:";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -378,6 +424,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_B)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_A)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_R)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -400,6 +447,8 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.PictureBox pictureBox2;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.NumericUpDown numericUpDown_R;
     }
 }
 

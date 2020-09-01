@@ -20,5 +20,8 @@
     <Setting Name="Thickness" Type="System.Decimal" Scope="User">
       <Value Profile="(Default)">2.0</Value>
     </Setting>
+    <Setting Name="R" Type="System.Decimal" Scope="User">
+      <Value Profile="(Default)">10.0</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
