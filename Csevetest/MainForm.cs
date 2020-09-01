@@ -3,6 +3,7 @@ using netDxf.Entities;
 using System;
 using System.Deployment.Application;
 using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
@@ -130,6 +131,8 @@ namespace Csevetest {
         }
 
         private void Form1_Load(object sender, EventArgs e) {
+            this.BackColor = Color.FromArgb(157, 163, 170);
+
             try {
                 numericUpDown_A.Value = Properties.Settings.Default.A;
                 numericUpDown_B.Value = Properties.Settings.Default.B;
